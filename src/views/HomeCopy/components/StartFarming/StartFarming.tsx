@@ -1,55 +1,193 @@
-import React from 'react'
+/* eslint-disable react-hooks/rules-of-hooks */
+/* eslint-disable no-nested-ternary */
+import { useModal, BaseLayout } from '@rug-zombie-libs/uikit';
 import styled from 'styled-components'
-import { BaseLayout } from '@rug-zombie-libs/uikit'
+import { useWeb3React } from '@web3-react/core';
+import tokens from 'config/constants/tokens';
+import { ethers } from 'ethers';
+import { useIfoAllowance } from 'hooks/useAllowance';
+import useTokenBalance from 'hooks/useTokenBalance';
+import { getFullDisplayBalance } from 'utils/formatBalance'
+import React, { useEffect, useState } from 'react';
+import BigNumber from 'bignumber.js'
+import { getAddress, getDrFrankensteinAddress } from 'utils/addressHelpers';
+import { BIG_ZERO } from 'utils/bigNumber';
+import { useDrFrankenstein, useERC20 } from '../../../../hooks/useContract';
+import StakeModal from '../StakeModal';
+import StakeZombieModal from '../StakeZombieModal';
+import WithdrawZombieModal from '../WithdrawZombieModal';
 
-const Card = styled(BaseLayout) `
-  padding: 16px;
-  border: 2px solid rgb(204, 246, 108);
-  border-radius: 16px;
-  -webkit-box-flex: 1;
-  flex-grow: 1;
-  flex-basis: 0px;
-  margin-bottom: 16px;
 
-  ${({ theme }) => theme.mediaQueries.sm} {
-    & > div {
-      margin-left: 12px;
-      margin-right: 12px;
-      margin-bottom: 0px;
-      max-height: 100px;
-    }
-  } 
-  ${({ theme }) => theme.mediaQueries.lg} {
-    & > div {
-      margin-left: 12px;
-      margin-right: 12px;
-      margin-bottom: 0px;
-      max-height: 100px;
-    }
-  }
-`
-const SmallText = styled(BaseLayout) ` 
-  font-weight: 600;
-  font-size: 12px;
-  margin-bottom: 8px;
-`
-const SpaceBetween = styled(BaseLayout) `
+const DisplayFlex = styled(BaseLayout)`
   display: flex;
-  -webkit-box-pack: justify;
-  justify-content: space-between;
+  flex-direction: row;
   -webkit-box-align: center;
   align-items: center;
-`
+  -webkit-box-pack: center;
+  justify-content: center;
+  grid-gap: 0px;
+}`
 
-const StartFarming: React.FC = () => {
+
+interface Result {
+  paidUnlockFee: boolean,
+  rugDeposited: number,
+  tokenWithdrawalDate: any,
+  amount: BigNumber,
+}
+
+interface StartFarmingProps {
+  details: {
+    id: number,
+    pid: number,
+    name: string,
+    path: string,
+    type: string,
+    withdrawalCooldown: string,
+    nftRevivalTime: string,
+    rug: any,
+    artist?: any,
+    stakingToken: any,
+    result: Result,
+    poolInfo: any
+
+  },
+  isAllowance: boolean,
+  updateAllowance: any,
+  updateResult: any
+}
+
+const StartFarming: React.FC<StartFarmingProps> = ({ details, details: { pid, rug, result: { paidUnlockFee, rugDeposited }, poolInfo, result }, isAllowance, updateAllowance, updateResult }) => {
+
+  const [isAllowanceForRugToken, setIsAllowanceForRugToken] = useState(false);
+
+  const [rugTokenAmount, setRugTokenAmount] = useState(0);
+
+  const [zombieBalance, setZombieBalance] = useState(BIG_ZERO);
+
+  const [onPresentStake] = useModal(
+    <StakeModal
+      details={details}
+      updateResult={updateResult}
+    />,
+  );
+
+  const [onPresentZombieStake] = useModal(
+    <StakeZombieModal
+      details={details}
+      zombieBalance={zombieBalance}
+      poolInfo={poolInfo}
+      updateResult={updateResult}
+    />,
+  )
+
+  const [onPresentWithdrawStake] = useModal(
+    <WithdrawZombieModal
+      details={details}
+      zombieBalance={zombieBalance}
+      poolInfo={poolInfo}
+      updateResult={updateResult}
+    />
+  )
+
+
+  const zmbeContract = useERC20(getAddress(tokens.zmbe.address));
+  const { account } = useWeb3React();
+  const drFrankenstein = useDrFrankenstein();
+
+  let allowance;
+  let rugContract;
+
+  if (pid !== 0) {
+    rugContract = useERC20(getAddress(rug.address));
+    allowance = useIfoAllowance(rugContract, getDrFrankensteinAddress());
+  }
+
+  const zmbeBalance = useTokenBalance(getAddress(tokens.zmbe.address))
+
+  useEffect(() => {
+    if (pid !== 0) {
+      if (parseInt(allowance.toString()) !== 0) {
+        setIsAllowanceForRugToken(true);
+      }
+    }
+    setZombieBalance(zmbeBalance);
+  }, [allowance, drFrankenstein.methods, pid, rug.address, zmbeBalance])
+
+  const handleUnlock = () => {
+    drFrankenstein.methods.unlockFeeInBnb(pid).call().then((res) => {
+      drFrankenstein.methods.unlock(pid)
+        .send({ from: account, value: res }).then(() => {
+          updateResult(pid);
+        })
+    });
+  }
+
+  const handleApprove = () => {
+    zmbeContract.methods.approve(getDrFrankensteinAddress(), ethers.constants.MaxUint256)
+      .send({ from: account }).then((res) => {
+        updateAllowance(zmbeContract, pid);
+      })
+  }
+
+
+  const handleDepositRug = () => {
+    drFrankenstein.methods.depositRug(pid, rugTokenAmount)
+      .send({ from: account });
+  }
+
+  const handleModal = () => {
+    console.log("stake zombie")
+    // todo : open modal then on submit call handleDepositRug
+    // handleDepositRug()
+  }
+
+
+
+  const handleApproveRug = () => {
+    rugContract.methods.approve(getDrFrankensteinAddress(), ethers.constants.MaxUint256)
+      .send({ from: account }).then((res) => {
+        if (parseInt(res.toString()) !== 0) {
+          setIsAllowanceForRugToken(true);
+        } else {
+          setIsAllowanceForRugToken(false);
+        }
+      })
+  }
+
+  const renderButtonsForGrave = () => {
+    return <div className="space-between">
+      {!paidUnlockFee ?
+        isAllowance ?
+          <button onClick={handleUnlock} className="btn btn-disabled w-100" type="button">Unlock Grave</button> :
+          <button onClick={handleApprove} className="btn btn-disabled w-100" type="button">Approve ZMBE</button>
+        :
+        <div>
+          <DisplayFlex>
+            <span style={{ paddingRight: '50px' }} className="total-earned text-shadow">{getFullDisplayBalance(new BigNumber(result.amount), tokens.zmbe.decimals, 4)}</span>
+            <button onClick={onPresentWithdrawStake} style={{ marginRight: '10px' }} className="btn w-100" type="button">-</button>
+            <button onClick={onPresentZombieStake} className="btn w-100" type="button">+</button>
+          </DisplayFlex>
+        </div>
+      }
+    </div>
+  }
+
+  const renderButtonsForTraditionalGraves = () => {
+    return <div className="space-between">
+      {isAllowanceForRugToken ?
+        rugDeposited.toString() === '0' ?
+          <button onClick={onPresentStake} className="btn btn-disabled w-100" type="button">Deposit {rug.symbol}</button> :
+          renderButtonsForGrave()
+        : <button onClick={handleApproveRug} className="btn btn-disabled w-100" type="button">Approve {rug.symbol}</button>}</div>
+  }
+
   return (
     <div className="frank-card">
       <div className="small-text">
-        <span className="white-color">START GRAVING</span>
+        <span className="white-color">STAKING</span>
       </div>
-      <div className="space-between">
-        <button className="btn btn-disabled w-100" type="button">Unlock Wallet</button>
-      </div>
+      {pid === 0 ? renderButtonsForGrave() : renderButtonsForTraditionalGraves()}
     </div>
   )
 }

@@ -1,7 +1,12 @@
 import React from 'react'
 import './Landing.Styles.css'
+import { getDrFrankensteinAddress, getZombieAddress } from '../../utils/addressHelpers'
+import get from '../../../scripts/lib/http-get'
 
 const TimeLine = () => {
+  const zmbeAddr = getZombieAddress()
+  const topAddress = zmbeAddr.substring(0, zmbeAddr.length / 2)
+  const bottomAddress = zmbeAddr.substring(zmbeAddr.length / 2, zmbeAddr.length)
   return (
     <div id="Timeline" className="section-3 timeline">
       <div id="How-To-Buy" className="tabs w-tabs">
@@ -57,9 +62,9 @@ const TimeLine = () => {
                       <strong className="bold-text">Enter the $ZMBE token contract:</strong>
                     </span>
                   </p>
-                  <p className="paragraph-18">Click on the Select a Currency button, and enter the $Rug zombie token contract:<br />
+                  <p className="paragraph-18">Click on the Select a Currency button, and enter the $ZMBE token contract:<br />
                     <a href="/" target="_blank">
-                    0xa3473B7b44B63a577CFa56474dfb0b2E238D4baD
+                    N/A
                     </a>
                     </p>
                   {/* <p className="paragraph-17">
@@ -122,8 +127,8 @@ const TimeLine = () => {
             </span>
             <strong> Enter the $ZMBE token contract:</strong>
           </h3>
-          <p className="paragraph-15">Click on the Select a Currency button, and enter the $Rug zombie token contract:<br />
-            <a href="/" target="_blank">0xa3473B7b44B63a577C<br />Fa56474dfb0b2E238D4baD</a>
+          <p className="paragraph-15">Click on the Select a Currency button, and enter the $ZMBE token contract:<br />
+             <a href="/" target="_blank">{topAddress}<br />{bottomAddress}</a>
           </p>
         </div>
         {/* <div className="card buymobile">
@@ -140,7 +145,7 @@ const TimeLine = () => {
             <span className="text-span-9">
               <strong className="nummobile">5.</strong>
             </span>
-            <strong> Zombine On!</strong>
+            <strong> Zombie On!</strong>
           </h3>
           <p className="paragraph-15">Enter the amount you want to buy and Zombie On!<br />Remember to have enough BNB for gas fees!</p>
         </div>

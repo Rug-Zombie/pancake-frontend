@@ -68,11 +68,11 @@
     -webkit-align-items: center;
     -ms-flex-align: center;
     align-items: center;
-    background-color: #101820;
+    background-color: #000;
 }
 .section-3.timeline {
     margin-top: 0px;
-    margin-bottom: 59px;
+    margin-bottom: 200px;
     padding-top: 45px;
     padding-bottom: 32px;
     border-radius: 0px;

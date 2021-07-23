@@ -20,7 +20,7 @@ import {
   getTradingCompetitionAddress,
   getEasterNftAddress,
   getCakeVaultAddress,
-  getPredictionsAddress, getZombieAddress,
+  getPredictionsAddress, getZombieAddress, getDrFrankensteinAddress,
 } from 'utils/addressHelpers'
 
 // ABI
@@ -45,7 +45,8 @@ import tradingCompetitionAbi from 'config/abi/tradingCompetition.json'
 import easterNftAbi from 'config/abi/easterNft.json'
 import cakeVaultAbi from 'config/abi/cakeVault.json'
 import predictionsAbi from 'config/abi/predictions.json'
-import restorationChefAbi from 'config/abi/restorationChef.json'
+import pancakePairAbi from 'config/abi/pancakePairAbi.json'
+import drFrankensteinAbi from 'config/abi/drFrankenstein.json'
 
 export const getContract = (abi: any, address: string, web3?: Web3) => {
   const _web3 = web3 ?? web3NoAccount
@@ -56,8 +57,8 @@ export const getBep20Contract = (address: string, web3?: Web3) => {
   return getContract(bep20Abi, address, web3)
 }
 
-export const getRestorationChefContract = (address: string, web3?: Web3) => {
-  return getContract(restorationChefAbi, address, web3)
+export const getPancakePair = (address: string, web3?: Web3) => {
+  return getContract(pancakePairAbi, address, web3)
 }
 
 export const getErc721Contract = (address: string, web3?: Web3) => {
@@ -106,6 +107,9 @@ export const getLotteryTicketContract = (web3?: Web3) => {
 }
 export const getMasterchefContract = (web3?: Web3) => {
   return getContract(masterChef, getMasterChefAddress(), web3)
+}
+export const getDrFrankensteinContract = (web3?: Web3) => {
+  return getContract(drFrankensteinAbi, getDrFrankensteinAddress(), web3)
 }
 export const getClaimRefundContract = (web3?: Web3) => {
   return getContract(claimRefundAbi, getClaimRefundAddress(), web3)

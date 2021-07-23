@@ -11,13 +11,17 @@ import { getAddress } from 'utils/addressHelpers'
 import { getBalanceNumber } from 'utils/formatBalance'
 import { BIG_ZERO } from 'utils/bigNumber'
 import useRefresh from 'hooks/useRefresh'
+import axios from 'axios'
 import { fetchFarmsPublicDataAsync, fetchPoolsPublicDataAsync, fetchPoolsUserDataAsync, setBlock } from './actions'
 import { State, Farm, Pool, ProfileState, TeamsState, AchievementState, PriceState, FarmsState } from './types'
 import { fetchProfile } from './profile'
 import { fetchTeam, fetchTeams } from './teams'
 import { fetchAchievements } from './achievements'
 import { fetchPrices } from './prices'
-import { fetchWalletNfts } from './collectibles'
+import tombs from '../views/Tombs/data'
+import { useDrFrankenstein } from '../hooks/useContract'
+import { getPancakePair } from '../utils/contractHelpers'
+// import { fetchWalletNfts } from './collectibles'
 
 export const useFetchPublicData = () => {
   const dispatch = useAppDispatch()
@@ -42,13 +46,20 @@ export const useFetchPublicData = () => {
 
 export const useFarms = (): FarmsState => {
   const farms = useSelector((state: State) => state.farms)
-  console.log((farms))
   return farms
 }
 
 export const useFarmFromPid = (pid): Farm => {
-  const farm = useSelector((state: State) => state.farms.data.find((f) => f.pid === pid))
+  const farm = useSelector((state: State) => state.farms.data.find((f) => {
+    console.log(state);
+    return f.pid === pid;
+  }))
   return farm
+}
+
+export const useTombFromPid = (pid): any => {
+  const tomb = useSelector(() => tombs.find((t) => t.pid === pid))
+  return tomb
 }
 
 export const useFarmFromSymbol = (lpSymbol: string): Farm => {
@@ -180,8 +191,13 @@ export const useGetApiPrice = (address: string) => {
 }
 
 export const usePriceBnbBusd = (): BigNumber => {
-  // const bnbBusdFarm = useFarmFromPid(2)
   return BIG_ZERO // bnbBusdFarm.tokenPriceVsQuote ? new BigNumber(1).div(bnbBusdFarm.tokenPriceVsQuote) : BIG_ZERO
+}
+
+
+
+export const getBnbPriceinBusd = () => {
+  return axios.get('https://api.binance.com/api/v3/avgPrice?symbol=BNBBUSD')
 }
 
 export const usePriceCakeBusd = (): BigNumber => {
@@ -193,14 +209,21 @@ export const usePriceCakeBusd = (): BigNumber => {
   return cakeBusdPrice
 }
 
+export const fetchZmbeBnbReserves = (): Promise<void> => {
+  const bnbTomb = tombs[0]
+  const address = getAddress(bnbTomb.lpAddresses)
+  return getPancakePair(address).methods.getReserves().call()
+}
+
 export const usePriceZombieBusd = (): BigNumber => {
-  const zombieBnbFarm = useFarmFromPid(252)
+  const zombieBnbFarm = useTombFromPid(9)
   const bnbBusdPrice = usePriceBnbBusd()
 
-  const zombieBusdPrice = zombieBnbFarm.tokenPriceVsQuote ? bnbBusdPrice.times(zombieBnbFarm.tokenPriceVsQuote) : BIG_ZERO
+  const zombieBusdPrice = zombieBnbFarm.tokenPriceVsQuote
+    ? bnbBusdPrice.times(zombieBnbFarm.tokenPriceVsQuote)
+    : BIG_ZERO
 
-  // return zombieBusdPrice
-  return new BigNumber(5) // todo replace once we have zombie pool
+  return zombieBusdPrice
 }
 
 // Block
@@ -301,26 +324,4 @@ export const useGetBetByRoundId = (account: string, roundId: string) => {
   }
 
   return bets[account][roundId]
-}
-
-// Collectibles
-export const useGetCollectibles = () => {
-  const { account } = useWeb3React()
-  const dispatch = useAppDispatch()
-  const { isInitialized, isLoading, data } = useSelector((state: State) => state.collectibles)
-  const identifiers = Object.keys(data)
-
-  useEffect(() => {
-    // Fetch nfts only if we have not done so already
-    if (!isInitialized) {
-      dispatch(fetchWalletNfts(account))
-    }
-  }, [isInitialized, account, dispatch])
-
-  return {
-    isInitialized,
-    isLoading,
-    tokenIds: data,
-    nftsInWallet: Nfts.filter((nft) => identifiers.includes(nft.identifier)),
-  }
 }
