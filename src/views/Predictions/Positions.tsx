@@ -33,14 +33,13 @@ interface PositionsProps {
   userInfo: any,
   aid: number,
   setRefresh: any,
-  refresh: boolean
+  refresh: boolean,
+  isDesktop:boolean
 }
 
-const Positions: React.FC<PositionsProps> = ({ bids, setRefresh,refresh, lastBidId, userInfo, aid }) => {
+const Positions: React.FC<PositionsProps> = ({ bids, setRefresh,refresh, lastBidId, userInfo, aid, isDesktop }) => {
   const { setSwiper } = useSwiper()
   const initialIndex = Math.floor(1)
-
-  // useOnNextRound()
 
   const formattedBids = bids.map((bid, i) => {
     return {
@@ -56,6 +55,7 @@ const Positions: React.FC<PositionsProps> = ({ bids, setRefresh,refresh, lastBid
       <StyledSwiper style={{ width: '100%' }}>
         <Swiper
           initialSlide={initialIndex}
+          direction= 'vertical'
           onSwiper={setSwiper}
           spaceBetween={16}
           slidesPerView='auto'
