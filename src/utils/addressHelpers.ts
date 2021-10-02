@@ -96,3 +96,7 @@ export const getPredictionsAddress = () => {
 export const getSpawningPoolAddress = (id: number) => {
   return getAddress(spawningPoolById(id).address)
 }
+
+export const getTombOverlayAddress = () => {
+  return getAddress(addresses.tomboverlay);
+}

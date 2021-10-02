@@ -8,6 +8,7 @@ import {
   TombPoolInfo,
   TombUserInfo,
   UserInfo,
+  TombOverlayPoolInfo, TombOverlayUserInfo
 } from './types'
 
 export const updateAccount = (account: string) => ({
@@ -80,6 +81,22 @@ export const updateTombUserInfo = (pid: number, userInfo: TombUserInfo) => ({ //
     pid,
     userInfo,
   },
+})
+
+export const updateTombOverlayPoolInfo = (pid: number, poolInfo: TombOverlayPoolInfo) => ({
+  type: actions.UPDATE_TOMB_OVERLAY_POOL_INFO,
+  payload: {
+    pid,
+    poolInfo
+  }
+})
+
+export const updateTombOverlayUserInfo = (pid: number, userInfo: TombOverlayUserInfo) => ({
+  type: actions.UPDATE_TOMB_OVERLAY_USER_INFO,
+  payload: {
+    pid,
+    userInfo
+  }
 })
 
 export const updateGravePoolInfo = (pid: number, poolInfo: PoolInfo) => {

@@ -5,6 +5,7 @@ import {
   getDrFrankensteinContract, getErc721Contract,
   getPancakePair,
   getZombieContract,
+  getTombOverlayContract,
 } from '../utils/contractHelpers'
 
 import store from './store'
@@ -27,12 +28,14 @@ import {
   updateAuctionUserInfo,
   updateNftUserInfo,
   updateDrFrankensteinTotalAllocPoint, updateBnbBalance,
+  updateTombOverlayPoolInfo, updateTombOverlayUserInfo,
 } from './actions'
 import {
   getAddress,
   getDrFrankensteinAddress,
   getMausoleumAddress,
   getSpawningPoolAddress,
+  getTombOverlayAddress,
 } from '../utils/addressHelpers'
 import tombs from './tombs'
 import * as get from './get'
@@ -41,6 +44,7 @@ import drFrankensteinAbi from '../config/abi/drFrankenstein.json'
 import pancakePairAbi from '../config/abi/pancakePairAbi.json'
 import mausoleumAbi from '../config/abi/mausoleum.json'
 import mausoleumV3Abi from '../config/abi/mausoleumV3.json'
+import tombOverlayAbi from '../config/abi/tombOverlay.json';
 
 import { BIG_ZERO } from '../utils/bigNumber'
 import { account, auctionById, zmbeBnbTomb } from './get'
@@ -90,6 +94,23 @@ export const initialData = (accountAddress: string, multi: any, setZombiePrice?:
   }
 
   initialGraveData()
+}
+
+export const tomboverlay = (pid: number, multi: any) => {
+  const contractAddress = getTombOverlayAddress();
+  if (account()) {
+    let inputs = [
+      { target: contractAddress, function: 'poolInfo', args: [pid] },
+      { target: contractAddress, function: 'userInfo', args: [pid, get.account()] }
+    ]
+    multi.makeCall(tombOverlayAbi, inputs)
+      .then(overRes => {
+        const overlayRes = overRes[1];
+        
+      });
+  } else {
+
+  }
 }
 
 export const tomb = (pid: number, multi: any, updatePoolObj?: { update: number, setUpdate: any }, updateUserObj?: { update: number, setUpdate: any }, everyUpdateObj?: { update: boolean, setUpdate: any }) => {

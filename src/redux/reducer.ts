@@ -5,10 +5,12 @@ import graves from './graves'
 import nfts from './nfts'
 import spawningPools from './spawningPools'
 import auctions from './auctions'
+import tomboverlays from './tomboverlays';
 
 const defaultState = {
   account: '',
   tombs,
+  tomboverlays,
   graves,
   nfts,
   spawningPools,
@@ -68,6 +70,16 @@ export default function reducer(state = defaultState, action) {
       return {
         ...state,
         graves: state.graves.map(grave => grave.pid === action.payload.pid ? { ...grave, userInfo: { ...grave.userInfo, ...action.payload.userInfo } } : grave),
+      }
+    case types.UPDATE_TOMB_OVERLAY_POOL_INFO:
+      return {
+        ...state,
+        tomboverlays: state.tomboverlays.map(tomboverlay => tomboverlay.pid === action.payload.pid ? { ...tomboverlay, poolInfo: { ...tomboverlay.poolInfo, ...action.payload.poolInfo }} : tomboverlay),
+      }
+    case types.UPDATE_TOMB_OVERLAY_USER_INFO:
+      return {
+        ...state,
+        tomboverlays: state.tomboverlays.map(tomboverlay => tomboverlay.pid === action.payload.pid ? { ...tomboverlay, userInfo: { ...tomboverlay.userInfo, ...action.payload.userInfo }} : tomboverlay),
       }
     case types.UPDATE_TOMB_USER_INFO:
       return {

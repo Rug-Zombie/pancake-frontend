@@ -38,6 +38,18 @@ export interface TombUserInfo {
   pendingZombie: BigNumber
 }
 
+export interface TombOverlayPoolInfo {
+  poolId: number,
+  isEnabled: boolean,
+  mintingTime: BigNumber
+}
+
+export interface TombOverlayUserInfo {
+  nextNftMintDate: BigNumber,
+  isMinting: boolean,
+  randomNumber: number
+}
+
 export interface SpawningPoolInfo {
   rewardPerBlock: BigNumber,
   unlockFee: BigNumber,
@@ -130,6 +142,31 @@ export interface Tomb {
   isNew?: boolean,
   userInfo: TombUserInfo,
   poolInfo: TombPoolInfo,
+}
+
+export interface TombOverlay {
+  pid: number,
+  poolId: number,
+  name: string,
+  mintingTime: string,
+  subtitle_common: string,
+  subtitle_uncommon: string,
+  subtitle_rare: string,
+  subtitle_legendary: string,
+  path_common: string,
+  path_uncommon: string,
+  path_rare: string,
+  path_legendary: string,
+  type_common: string,
+  type_uncommon: string,
+  type_rare: string,
+  type_legendary: string,
+  artist_common: Artist,
+  artist_uncommon: Artist,
+  artist_rare: Artist,
+  artist_legendary: Artist,
+  userInfo: TombOverlayUserInfo,
+  poolInfo: TombOverlayPoolInfo
 }
 
 export interface SpawningPool {
