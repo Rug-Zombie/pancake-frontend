@@ -102,7 +102,7 @@ const Tombs: React.FC = () => {
           {tombs().sort((a, b) => a.id - b.id).map((t) => {
             return <Table pid={t.pid} updateResult={updateResult} updateAllowance={updateAllowance}
                           bnbInBusd={bnbInBusd}
-                          isAllowance={isAllowance} key={t.id} />
+                          isAllowance={isAllowance} key={t.id} overlayid={t.overlayId} />
           })}
         </div>
       </Page>

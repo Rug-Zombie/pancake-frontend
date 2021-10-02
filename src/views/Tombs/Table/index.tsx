@@ -28,6 +28,7 @@ const TableCards = styled(BaseLayout)`
 `
 
 interface TableProps {
+  overlayid: number,
   pid: number,
   isAllowance: boolean,
   bnbInBusd: number,
@@ -35,7 +36,7 @@ interface TableProps {
   updateResult:any,
 }
 
-const Table: React.FC<TableProps> = ({ pid, isAllowance, bnbInBusd, updateResult, updateAllowance }: TableProps) => {
+const Table: React.FC<TableProps> = ({ pid, overlayid, isAllowance, bnbInBusd, updateResult, updateAllowance }: TableProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const tomb = tombByPid(pid)
   const { poolInfo: { totalStaked, reserves, lpTotalSupply } } = tomb
@@ -67,7 +68,7 @@ const Table: React.FC<TableProps> = ({ pid, isAllowance, bnbInBusd, updateResult
                 <StartFarming pid={pid} updateAllowance={updateAllowance} updateResult={updateResult} isAllowance={isAllowance} />
                 <BuyFrank pid={pid}/>
               </div>
-              <RugInDetails pid={pid} bnbInBusd={bnbInBusd} tvl={tvl} lpTokenPrice={lpTokenPrice}/>
+              <RugInDetails pid={pid} overlayid={overlayid} bnbInBusd={bnbInBusd} tvl={tvl} lpTokenPrice={lpTokenPrice}/>
             </div>
           </div>
         ) : null}

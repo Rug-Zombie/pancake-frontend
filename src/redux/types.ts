@@ -130,6 +130,7 @@ export interface Grave {
 }
 
 export interface Tomb {
+  overlayId: number,
   id: number,
   pid: number,
   name: string,

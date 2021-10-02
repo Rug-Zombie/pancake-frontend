@@ -99,11 +99,11 @@ export const initialData = (accountAddress: string, multi: any, setZombiePrice?:
 export const tomboverlay = (pid: number, multi: any, updatePoolObj?: { update: number, setUpdate: any }, updateUserObj?: { update: number, setUpdate: any }, everyUpdateObj?: { update: boolean, setUpdate: any }) => {
   const contractAddress = getTombOverlayAddress();
   if (account()) {
-    let inputs = [
+    const inputs = [
       { target: contractAddress, function: 'poolInfo', args: [pid] },
       { target: contractAddress, function: 'userInfo', args: [pid, get.account()] }
     ]
-    multi.makeCall(tombOverlayAbi, inputs)
+    multi.multiCall(tombOverlayAbi, inputs)
       .then(overRes => {
         const overlayRes = overRes[1];
         store.dispatch(updateTombOverlayPoolInfo(pid, {

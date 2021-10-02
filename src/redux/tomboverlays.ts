@@ -6,7 +6,7 @@ import { TombOverlay } from './types'
 const tomboverlays: TombOverlay[] = [
     {
         pid: 0,
-        poolId: 0,
+        poolId: 17,
         name: '',
         mintingTime: '',
         subtitle_common: '',
@@ -38,7 +38,7 @@ const tomboverlays: TombOverlay[] = [
     },
     {
         pid: 1,
-        poolId: 1,
+        poolId: 11,
         name: '',
         mintingTime: '',
         subtitle_common: '',

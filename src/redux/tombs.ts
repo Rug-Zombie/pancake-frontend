@@ -5,6 +5,7 @@ import { Tomb } from './types'
 const tombs: Tomb[] = [
   {
     id: 2,
+    overlayId: 1,
     pid: 11,
     name: 'ZMBE-BNB',
     lpAddress: {
@@ -31,6 +32,7 @@ const tombs: Tomb[] = [
   },
   {
     id: 1,
+    overlayId: 1,
     pid: 17,
     name: 'ZMBE-BNB',
     lpAddress: {
