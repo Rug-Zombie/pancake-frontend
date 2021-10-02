@@ -25,6 +25,7 @@ import {
   getMausoleumContract,
   getSpawningPoolContract,
   getNftConverterContract, getMausoleumV2Contract, getNftOwnership, getZombieBalanceCheckerContract,
+  getTombOverlayContract,
 } from 'utils/contractHelpers'
 import { MultiCall } from '@indexed-finance/multicall'
 
@@ -92,6 +93,11 @@ export const useMasterchef = () => {
 export const useDrFrankenstein = () => {
   const web3 = useWeb3()
   return useMemo(() => getDrFrankensteinContract(web3), [web3])
+}
+
+export const useTombOverlay = () => {
+  const web3 = useWeb3();
+  return useMemo(() => getTombOverlayContract(web3), [web3]);
 }
 
 export const useSpawningPool = (id: number) => {

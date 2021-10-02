@@ -4,13 +4,13 @@ import PageHeader from 'components/PageHeader'
 import { getBnbPriceinBusd } from 'state/hooks'
 import { Flex, Heading, LinkExternal } from '@rug-zombie-libs/uikit'
 import { useWeb3React } from '@web3-react/core'
-import { useDrFrankenstein, useMultiCall } from 'hooks/useContract'
-import { getDrFrankensteinAddress } from 'utils/addressHelpers'
+import { useDrFrankenstein, useMultiCall, useTombOverlay } from 'hooks/useContract'
+import { getDrFrankensteinAddress, getTombOverlayAddress } from 'utils/addressHelpers'
 import Page from '../../components/layout/Page'
 import Table from './Table'
 import '../Graves/Graves.Styles.css'
-import { tombs } from '../../redux/get'
-import { initialTombData, tomb } from '../../redux/fetch'
+import { tombs, tomboverlays } from '../../redux/get'
+import { initialTombData, tomb, initialTombOverlayData, tomboverlay } from '../../redux/fetch'
 
 let accountAddress
 
@@ -20,6 +20,7 @@ const Tombs: React.FC = () => {
   const multi = useMultiCall()
   accountAddress = account
   const drFrankenstein = useDrFrankenstein()
+  const tombOverlay = useTombOverlay()
   const [bnbInBusd, setBnbInBusd] = useState(0)
   const [updatePoolInfo, setUpdatePoolInfo] = useState(0)
   const [updateUserInfo, setUpdateUserInfo] = useState(0)
@@ -34,6 +35,16 @@ const Tombs: React.FC = () => {
     }
   }, [drFrankenstein.methods, multi, updatePoolInfo, updateUserInfo])
 
+  useEffect(() => {
+    if(updatePoolInfo === 0) {
+      initialTombOverlayData(
+        multi,
+        { update: updatePoolInfo, setUpdate: setUpdatePoolInfo },
+        { update: updateUserInfo, setUpdate: setUpdateUserInfo },
+      );
+    }
+  }, [tombOverlay.methods, multi, updatePoolInfo, updateUserInfo])
+
   const [isAllowance, setIsAllowance] = useState(false)
 
   const updateResult = (pid) => {
@@ -44,6 +55,16 @@ const Tombs: React.FC = () => {
       null,
       { update, setUpdate },
     )
+  }
+
+  const updateOverlayResult = (pid) => {
+    tomboverlay(
+      pid,
+      multi,
+      null,
+      null,
+      { update, setUpdate }
+    );
   }
 
   const updateAllowance = (tokenContact, pid) => {

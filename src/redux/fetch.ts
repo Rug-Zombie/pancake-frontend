@@ -96,7 +96,7 @@ export const initialData = (accountAddress: string, multi: any, setZombiePrice?:
   initialGraveData()
 }
 
-export const tomboverlay = (pid: number, multi: any) => {
+export const tomboverlay = (pid: number, multi: any, updatePoolObj?: { update: number, setUpdate: any }, updateUserObj?: { update: number, setUpdate: any }, everyUpdateObj?: { update: boolean, setUpdate: any }) => {
   const contractAddress = getTombOverlayAddress();
   if (account()) {
     let inputs = [
@@ -106,10 +106,23 @@ export const tomboverlay = (pid: number, multi: any) => {
     multi.makeCall(tombOverlayAbi, inputs)
       .then(overRes => {
         const overlayRes = overRes[1];
-        
+        store.dispatch(updateTombOverlayPoolInfo(pid, {
+          isEnabled: overlayRes[0].isEnabled,
+          poolId: overlayRes[0].poolId,
+          mintingTime: new BigNumber(overlayRes[0].mintingTime.toString())
+        }));
+        store.dispatch(updateTombOverlayUserInfo(pid, {
+          nextNftMintDate: new BigNumber(overlayRes[1].nextNftMintDate.toString()),
+          isMinting: overlayRes[1].isMinting,
+          randomNumber: overlayRes[1].randomNumber
+        }));
+        if (everyUpdateObj) {
+          everyUpdateObj.setUpdate(!everyUpdateObj.update)
+        }
+        if (updateUserObj) {
+          updateUserObj.setUpdate(updateUserObj.update + 1)
+        }
       });
-  } else {
-
   }
 }
 
@@ -198,6 +211,19 @@ export const initialTombData = (multi: any, updatePoolObj?: { update: number, se
     )
     index++
   })
+}
+
+export const initialTombOverlayData = (multi: any, updatePoolObj?: { update: number, setUpdate: any }, updateUserObj?: { update: number, setUpdate: any }) => {
+  let index = 0;
+  get.tomboverlays().forEach(t => {
+    tomboverlay(
+      t.pid,
+      multi,
+      updatePoolObj ? { update: updatePoolObj.update + index, setUpdate: updatePoolObj.setUpdate } : undefined,
+      updateUserObj ? { update: updateUserObj.update + index, setUpdate: updateUserObj.setUpdate } : undefined,
+    );
+    index++;
+  });
 }
 
 export const grave = (pid: number, setUserInfoState?: { update: boolean, setUpdate: any }, setPoolInfoState?: { update: boolean, setUpdate: any }) => {
