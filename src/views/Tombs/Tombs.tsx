@@ -9,7 +9,7 @@ import { getDrFrankensteinAddress, getTombOverlayAddress } from 'utils/addressHe
 import Page from '../../components/layout/Page'
 import Table from './Table'
 import '../Graves/Graves.Styles.css'
-import { tombs, tomboverlays } from '../../redux/get'
+import { tombs, tomboverlays, nfts } from '../../redux/get'
 import { initialTombData, tomb, initialTombOverlayData, tomboverlay } from '../../redux/fetch'
 
 let accountAddress
@@ -85,14 +85,14 @@ const Tombs: React.FC = () => {
         <Flex justifyContent='space-between' flexDirection={['column', null, 'row']}>
           <Flex flexDirection='column' mr={['8px', 0]}>
             <Heading as='h1' size='xxl' color='secondary' mb='24px'>
-              Tombs
+              NFTombs
             </Heading>
             <Heading size='md' color='text'>
-              Stake LP tokens to earn
+              Stake LP tokens to earn ZMBE and NFTs
             </Heading>
             <br/>
-            <LinkExternal href="https://rugzombie.medium.com/migration-plan-to-apeswap-9ce001c85ab0">
-              Learn more about the Apeswap Migration
+            <LinkExternal href="https://rugzombie.medium.com/introducing-non-fungible-tombs-ce3ce445d4b">
+              Learn more about the new NFTomb enhancement
             </LinkExternal>
           </Flex>
         </Flex>
