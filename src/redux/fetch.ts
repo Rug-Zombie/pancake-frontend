@@ -5,6 +5,7 @@ import {
   getDrFrankensteinContract, getErc721Contract,
   getPancakePair,
   getZombieContract,
+  getTombOverlayContract
 } from '../utils/contractHelpers'
 
 import store from './store'
@@ -27,12 +28,14 @@ import {
   updateAuctionUserInfo,
   updateNftUserInfo,
   updateDrFrankensteinTotalAllocPoint, updateBnbBalance,
+  updateTombOverlayPoolInfo, updateTombOverlayUserInfo
 } from './actions'
 import {
   getAddress,
   getDrFrankensteinAddress,
   getMausoleumAddress,
   getSpawningPoolAddress,
+  getTombOverlayAddress
 } from '../utils/addressHelpers'
 import tombs from './tombs'
 import * as get from './get'
@@ -41,6 +44,7 @@ import drFrankensteinAbi from '../config/abi/drFrankenstein.json'
 import pancakePairAbi from '../config/abi/pancakePairAbi.json'
 import mausoleumAbi from '../config/abi/mausoleum.json'
 import mausoleumV3Abi from '../config/abi/mausoleumV3.json'
+import tombOverlayAbi from '../config/abi/tombOverlay.json'
 import { BIG_ZERO } from '../utils/bigNumber'
 import { account, auctionById, zmbeBnbTomb } from './get'
 import web3 from '../utils/web3'
@@ -512,4 +516,47 @@ const nfts = () => {
         store.dispatch(updateNftTotalSupply(nft.id, new BigNumber(res)))
       })
   })
+}
+
+export const tomboverlay = (pid: number, multi: any, updatePoolObj?: { update: number, setUpdate: any }, updateUserObj?: { update: number, setUpdate: any }, everyUpdateObj?: { update: boolean, setUpdate: any }) => {
+  const address = getTombOverlayAddress()
+  if (account()) {
+    const calls = [
+      { address, name: 'poolInfo', params: [pid] },
+      { address, name: 'userInfo', params: [pid, get.account()] }
+    ]
+    multicallv2(tombOverlayAbi, calls)
+      .then(overRes => {
+        const overlayRes = overRes[1]
+        store.dispatch(updateTombOverlayPoolInfo(pid, {
+          isEnabled: overlayRes[0].isEnabled,
+          poolId: overlayRes[0].poolId,
+          mintingTime: new BigNumber(overlayRes[0].mintingTime.toString())
+        }))
+        store.dispatch(updateTombOverlayUserInfo(pid, {
+          nextNftMintDate: new BigNumber(overlayRes[1].nextNftMintDate.toString()),
+          isMinting: overlayRes[1].isMinting,
+          randomNumber: overlayRes[1].randomNumber
+        }))
+        if (everyUpdateObj) {
+          everyUpdateObj.setUpdate(!everyUpdateObj.update)
+        }
+        if (updateUserObj) {
+          updateUserObj.setUpdate(updateUserObj.update + 1)
+        }
+      })
+  }
+}
+
+export const initialTombOverlayData = (multi: any, updatePoolObj?: { update: number, setUpdate: any }, updateUserObj?: { update: number, setUpdate: any }) => {
+  let index = 0;
+  get.tomboverlays().forEach(t => {
+    tomboverlay(
+      getId(t.pid),
+      multi,
+      updatePoolObj ? { update: updatePoolObj.update + index, setUpdate: updatePoolObj.setUpdate } : undefined,
+      updateUserObj ? { update: updateUserObj.update + index, setUpdate: updateUserObj.setUpdate } : undefined,
+    );
+    index++;
+  });
 }

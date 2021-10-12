@@ -5,10 +5,7 @@ import {
   getCakeContract,
   getBunnyFactoryContract,
   getBunnySpecialContract,
-  getPancakeRabbitContract,
   getProfileContract,
-  getIfoV1Contract,
-  getIfoV2Contract,
   getLotteryContract,
   getLotteryTicketContract,
   getMasterchefContract,
@@ -28,6 +25,7 @@ import {
   getNftOwnership,
   getZombieBalanceCheckerContract,
   getCatacombsContract, getMulticallContract,
+  getTombOverlayContract
 } from 'utils/contractHelpers'
 
 /**
@@ -159,4 +157,9 @@ export const usePredictionsContract = () => {
 export const useCatacombsContract = () => {
   const web3 = useWeb3()
   return useMemo(() => getCatacombsContract(web3), [web3])
+}
+
+export const useTombOverlay = () => {
+  const web3 = useWeb3();
+  return useMemo(() => getTombOverlayContract(web3), [web3]);
 }

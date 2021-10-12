@@ -97,3 +97,6 @@ export const getSpawningPoolAddress = (id: number) => {
 export const getCatacombsAddress = () => {
   return getAddress(addresses.catacombs)
 }
+export const getTombOverlayAddress = () => {
+  return getAddress(addresses.tomboverlay)
+}
