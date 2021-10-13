@@ -117,6 +117,7 @@ export interface Grave {
 export interface Tomb {
   id: number,
   pid: Id,
+  overlayId: Id,
   name: string,
   withdrawalCooldown: string,
   token: Token,
@@ -207,6 +208,10 @@ export interface TombOverlay {
   pid: Id,
   poolId: Id,
   mintingTime: string,
+  name_common: string,
+  name_uncommon: string,
+  name_rare: string,
+  name_legendary: string,
   subtitle_common: string,
   subtitle_uncommon: string,
   subtitle_rare: string,

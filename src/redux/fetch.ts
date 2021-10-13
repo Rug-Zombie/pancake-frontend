@@ -534,7 +534,7 @@ export const tomboverlay = (pid: number, multi: any, updatePoolObj?: { update: n
           mintingTime: new BigNumber(overlayRes[0].mintingTime.toString())
         }))
         store.dispatch(updateTombOverlayUserInfo(pid, {
-          nextNftMintDate: new BigNumber(overlayRes[1].nextNftMintDate.toString()),
+          nextNftMintDate: new BigNumber(overlayRes[1].nextNftMintDate),
           isMinting: overlayRes[1].isMinting,
           randomNumber: overlayRes[1].randomNumber
         }))

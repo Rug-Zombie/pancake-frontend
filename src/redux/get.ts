@@ -143,3 +143,11 @@ export const tomboverlays = (): TombOverlay[] => {
 export const tomboverlayUserInfo = (pid: number): TombOverlayUserInfo => {
   return store.getState().tomboverlays[pid].userInfo;
 }
+
+export const tomboverlay = (pid: number): TombOverlay => {
+  return store.getState().tomboverlays.find(t => getId(t.pid) === pid)
+}
+
+export const tombOverlayByPid = (pid: number): TombOverlay => {
+  return store.getState().tomboverlays.find(t => getId(t.pid) === pid)
+}

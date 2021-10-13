@@ -97,6 +97,6 @@ export default {
   },
   tomboverlay: {
     56: '',
-    97: '0x0b50B6e3851113Ecc70feacBD531a50D036E05a2',
+    97: '0xf682cb2617Ef4b0184cF380db9991B11159011B9',
   }
 }
