@@ -56,7 +56,7 @@ const BuyFrank: React.FC<BuyFrankProps> = ({ pid }) => {
 
   let mintTimer;
   if (nextMintRaw === (2**256 - 1)) {
-    mintTimer = (<div className="small-text"><span className="white-color">Not Minting: {nextMintRaw}</span></div>)
+    mintTimer = (<div className="small-text"><span className="white-color">Not Minting</span></div>)
   } else if (nextMintRaw === 0) {
     mintTimer = (<span className="total-earned text-shadow" data-tip data-for="nft-minting" data-text-color="black">NFT is Ready
       <ReactTooltip id="nft-minting" place="top" type="light" effect="solid" className="nftTimerPopup">
