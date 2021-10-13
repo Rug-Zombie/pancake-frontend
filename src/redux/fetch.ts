@@ -38,11 +38,12 @@ import tombs from './tombs'
 import * as get from './get'
 import spawningPoolAbi from '../config/abi/spawningPool.json'
 import drFrankensteinAbi from '../config/abi/drFrankenstein.json'
+import multiDrFrankensteinAbi from '../config/abi/multiDrFrankenstein.json'
 import pancakePairAbi from '../config/abi/pancakePairAbi.json'
 import mausoleumAbi from '../config/abi/mausoleum.json'
 import mausoleumV3Abi from '../config/abi/mausoleumV3.json'
 import { BIG_ZERO } from '../utils/bigNumber'
-import { account, auctionById, zmbeBnbTomb } from './get'
+import { account, auctionById, graves, zmbeBnbTomb } from './get'
 import web3 from '../utils/web3'
 import { multicallv2 } from '../utils/multicall'
 import { getId } from '../utils'
@@ -88,7 +89,7 @@ export const initialData = (accountAddress: string, setZombiePrice?: any) => {
       })
   }
 
-  // initialGraveData()
+  initialGraveData()
 }
 
 export const tomb = (pid: number, updatePoolObj?: { update: number, setUpdate: any }, updateUserObj?: { update: number, setUpdate: any }, everyUpdateObj?: { update: boolean, setUpdate: any }) => {
@@ -174,13 +175,10 @@ export const initialTombData = (updatePoolObj?: { update: number, setUpdate: any
 export const grave = (pid: number, setUserInfoState?: { update: boolean, setUpdate: any }, setPoolInfoState?: { update: boolean, setUpdate: any }) => {
   getDrFrankensteinContract().methods.poolInfo(pid).call()
     .then(poolInfoRes => {
-      console.log(poolInfoRes)
-
       if (pid !== 0) {
         const graveStakingTokenContract = getBep20Contract(get.graveByPid(pid).stakingToken)
         graveStakingTokenContract.methods.totalSupply().call()
           .then(stakingTokenSupplyRes => {
-
             if (poolInfoRes.allocPoint !== 0) {
               store.dispatch(updateGravePoolInfo(
                 pid,
@@ -251,10 +249,22 @@ export const grave = (pid: number, setUserInfoState?: { update: boolean, setUpda
 }
 
 export const initialGraveData = (setUserState?, setPoolState?) => {
-  console.log('ayo')
-  get.graves().forEach(g => {
-    grave(getId(g.pid), setUserState, setPoolState)
-  })
+  const calls = []
+  if(account()) {
+    graves().forEach((g) => {
+      calls.push({ address: getDrFrankensteinAddress(), name: 'poolInfo', params: [getId(g.pid)] })
+      calls.push({ address: getDrFrankensteinAddress(), name: 'userInfo', params: [getId(g.pid), account()] })
+      if(getId(g.pid) !== 0) {
+        calls.push({ address: g.stakingToken, name: 'totalSupply', params: [] })
+      }
+
+    })
+    multicallv2(multiDrFrankensteinAbi, calls)
+      .then(res => {
+        console.log(res)
+      })
+  }
+
 }
 
 export const spawningPool = (id: number, zombie: any, poolUpdateObj?: { update: number, setUpdate: any }, userUpdateObj?: { update: number, setUpdate: any }) => {
@@ -363,7 +373,6 @@ export const auction = (
                 bidder: bid.bidder,
               }
             })
-            console.log(bids)
 
             const userInfoRes = res[0]
             const auctionInfoRes = v3 ? res[1] : res[2]
