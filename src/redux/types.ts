@@ -1,5 +1,5 @@
-import { Address, Id, Token } from '../config/constants/types'
 import { BigNumber } from 'bignumber.js'
+import { Address, Id, Token } from '../config/constants/types'
 import tokens from '../config/constants/tokens'
 import { BIG_ZERO } from '../utils/bigNumber'
 import artists from '../config/constants/artists'
