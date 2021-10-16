@@ -30,6 +30,7 @@ import {
   getMulticallContract,
   getCatacombsContract,
   getInstaBuyContract,
+  getRugRollContract,
 } from 'utils/contractHelpers'
 
 /**
@@ -166,4 +167,9 @@ export const useCatacombsContract = () => {
 export const useInstaBuyContract = () => {
   const web3 = useWeb3()
   return useMemo(() => getInstaBuyContract(web3), [web3])
+}
+
+export const useRugRollContract = () => {
+  const web3 = useWeb3()
+  return useMemo(() => getRugRollContract(web3), [web3])
 }

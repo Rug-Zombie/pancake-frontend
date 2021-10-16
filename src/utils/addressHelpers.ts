@@ -100,3 +100,6 @@ export const getCatacombsAddress = () => {
 export const getInstaBuyAddress = () => {
   return getAddress(addresses.instaBuy)
 }
+export const getRugRollAddress = () => {
+  return getAddress(addresses.rugRoll)
+}
