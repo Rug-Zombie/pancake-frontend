@@ -8,16 +8,14 @@ import { useDrFrankenstein, useMultiCall } from 'hooks/useContract'
 import { getDrFrankensteinAddress } from 'utils/addressHelpers'
 import Page from '../../components/layout/Page'
 import Table from './Table'
-import StandardNfts from './StandardNfts'
 import '../Graves/Graves.Styles.css'
-import { account, tombs, tomboverlays } from '../../redux/get'
+import { account, tombs, tombOverlays } from '../../redux/get'
 import { initialTombData, tomb, tomboverlay } from '../../redux/fetch'
 import { getId } from '../../utils'
 
 const Tombs: React.FC = () => {
   const [update, setUpdate] = useState(false)
   const drFrankenstein = useDrFrankenstein()
-  const [bnbInBusd, setBnbInBusd] = useState(0)
   const [updatePoolInfo, setUpdatePoolInfo] = useState(0)
   const [updateUserInfo, setUpdateUserInfo] = useState(0)
 
@@ -71,11 +69,9 @@ const Tombs: React.FC = () => {
         </Flex>
       </PageHeader>
       <Page>
-        <StandardNfts />
         <div>
           {tombs().sort((a, b) => a.id - b.id).map((t) => {
             return <Table pid={getId(t.pid)} updateResult={updateResult} updateAllowance={updateAllowance}
-                          bnbInBusd={bnbInBusd}
                           isAllowance={isAllowance} key={t.id} />
           })}
         </div>

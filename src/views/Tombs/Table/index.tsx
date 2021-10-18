@@ -22,15 +22,13 @@ const TableCards = styled(BaseLayout)`
 interface TableProps {
   pid: number,
   isAllowance: boolean,
-  bnbInBusd: number,
   updateAllowance:any,
   updateResult:any,
 }
 
-const Table: React.FC<TableProps> = ({ pid, isAllowance, bnbInBusd, updateResult, updateAllowance }: TableProps) => {
+const Table: React.FC<TableProps> = ({ pid, isAllowance, updateResult, updateAllowance }: TableProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const tomb = tombByPid(pid)
-  const chainId = process.env.REACT_APP_CHAIN_ID
   const { poolInfo: { totalStaked, reserves, lpTotalSupply } } = tomb
   const openInDetails = (data) => {
     setIsOpen(data);
@@ -60,7 +58,7 @@ const Table: React.FC<TableProps> = ({ pid, isAllowance, bnbInBusd, updateResult
                 <StartFarming pid={pid} updateAllowance={updateAllowance} updateResult={updateResult} isAllowance={isAllowance} />
                 <BuyFrank pid={pid}/>
               </div>
-              <RugInDetails pid={pid} bnbInBusd={bnbInBusd} tvl={tvl} lpTokenPrice={lpTokenPrice} overlayId={tomb.overlayId[chainId]} />
+              <RugInDetails pid={pid} tvl={tvl} lpTokenPrice={lpTokenPrice} />
             </div>
           </div>
         ) : null}

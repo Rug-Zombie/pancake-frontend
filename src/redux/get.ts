@@ -136,18 +136,10 @@ export const zmbePerZmbeBnbLp = () => {
   return reserves[0].div(lpTotalSupply)
 }
 
-export const tomboverlays = (): TombOverlay[] => {
-  return store.getState().tomboverlays;
-}
-
-export const tomboverlayUserInfo = (pid: number): TombOverlayUserInfo => {
-  return store.getState().tomboverlays[pid].userInfo;
-}
-
-export const tomboverlay = (pid: number): TombOverlay => {
-  return store.getState().tomboverlays.find(t => getId(t.pid) === pid)
+export const tombOverlays = (): TombOverlay[] => {
+  return store.getState().tombOverlays;
 }
 
 export const tombOverlayByPid = (pid: number): TombOverlay => {
-  return store.getState().tomboverlays.find(t => getId(t.pid) === pid)
+  return store.getState().tombOverlays.find(t => getId(t.pid) === pid)
 }

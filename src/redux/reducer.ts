@@ -6,12 +6,12 @@ import nfts from './nfts'
 import spawningPools from './spawningPools'
 import auctions from './auctions'
 import { getId } from '../utils'
-import tomboverlays from './tomboverlays'
+import tombOverlays from './tombOverlays'
 
 const defaultState = {
   account: '',
   tombs,
-  tomboverlays,
+  tombOverlays,
   graves,
   nfts,
   spawningPools,
@@ -130,12 +130,12 @@ export default function reducer(state = defaultState, action) {
     case types.UPDATE_TOMB_OVERLAY_POOL_INFO:
       return {
         ...state,
-        tomboverlays: state.tomboverlays.map(tomboverlay => getId(tomboverlay.pid) === action.payload.pid ? { ...tomboverlay, poolInfo: { ...tomboverlay.poolInfo, ...action.payload.poolInfo } } : tomboverlay),
+        tombOverlays: state.tombOverlays.map(tombOverlay => getId(tombOverlay.pid) === action.payload.pid ? { ...tombOverlay, poolInfo: { ...tombOverlay.poolInfo, ...action.payload.poolInfo } } : tombOverlay),
       }  
     case types.UPDATE_TOMB_OVERLAY_USER_INFO:
       return {
         ...state,
-        tomboverlays: state.tomboverlays.map(tomboverlay => getId(tomboverlay.pid) === action.payload.pid ? { ...tomboverlay, userInfo: { ...tomboverlay.userInfo, ...action.payload.userInfo } } : tomboverlay),
+        tombOverlays: state.tombOverlays.map(tombOverlay => getId(tombOverlay.pid) === action.payload.pid ? { ...tombOverlay, userInfo: { ...tombOverlay.userInfo, ...action.payload.userInfo } } : tombOverlay),
       }  
     default:
       return state

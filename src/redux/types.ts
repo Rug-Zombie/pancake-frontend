@@ -188,13 +188,15 @@ export interface Nft {
   path: string,
   type: string,
   rarity: string,
-  userInfo: NftUserInfo
+  artist?: string,
+  userInfo: NftUserInfo,
 }
 
 export interface TombOverlayPoolInfo {
   poolId: number,
   isEnabled: boolean,
   mintingTime: BigNumber
+  mintingFee: BigNumber
 }
 
 export interface TombOverlayUserInfo {
@@ -208,26 +210,10 @@ export interface TombOverlay {
   pid: Id,
   poolId: Id,
   mintingTime: string,
-  name_common: string,
-  name_uncommon: string,
-  name_rare: string,
-  name_legendary: string,
-  subtitle_common: string,
-  subtitle_uncommon: string,
-  subtitle_rare: string,
-  subtitle_legendary: string,
-  path_common: string,
-  path_uncommon: string,
-  path_rare: string,
-  path_legendary: string,
-  type_common: string,
-  type_uncommon: string,
-  type_rare: string,
-  type_legendary: string,
-  artist_common: Artist,
-  artist_uncommon: Artist,
-  artist_rare: Artist,
-  artist_legendary: Artist,
+  commonId: number,
+  uncommonId: number,
+  rareId: number,
+  legendaryId: number,
   userInfo: TombOverlayUserInfo,
   poolInfo: TombOverlayPoolInfo
 }

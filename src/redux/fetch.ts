@@ -329,6 +329,8 @@ export const spawningPool = (id: number, zombie: any, poolUpdateObj?: { update: 
   }
 }
 
+
+
 export const auction = (
   id: number,
   mausoleum: any,
@@ -550,7 +552,7 @@ export const tomboverlay = (pid: number, multi: any, updatePoolObj?: { update: n
 
 export const initialTombOverlayData = (multi: any, updatePoolObj?: { update: number, setUpdate: any }, updateUserObj?: { update: number, setUpdate: any }) => {
   let index = 0;
-  get.tomboverlays().forEach(t => {
+  get.tombOverlays().forEach(t => {
     tomboverlay(
       getId(t.pid),
       multi,
