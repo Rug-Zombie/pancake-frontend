@@ -1,45 +1,56 @@
-import { useTranslation } from 'contexts/Localization'
+// import { useTranslation } from 'contexts/Localization'
 import React from 'react'
 import styled from 'styled-components'
+import {useMatchBreakpoints} from "@rug-zombie-libs/uikit";
+import {Flex} from "@catacombs-libs/uikit";
 import Menu from '../../../../components/Catacombs/Menu'
 import Page from '../../../../components/layout/Page'
+import RugRollCard from "./components/RugRollCard";
+import CatacombsBackgroundDesktopSVG from '../../../../images/CatacombsMain-1920x1080px.svg'
+import CatacombsBackgroundMobileSVG from '../../../../images/CatacombsMain-414x720px.svg'
 
-
-const StyledButton = styled.button`
-  title: 'BARRACKS';
-  border: white;
-  border: 10px solid white;
-  height: 50%;
-  width: 38%;
-  background-color: transparent;
+const StyledDiv = styled.div`
+  text-align: center;
+  position: relative;
   color: white;
-  font-size: 25px;
-  box-shadow: inset 0 0 25px, 0 0 25px;
-  border-radius: 5px;
-  letter-spacing: 0.2em;
+  height: 100%;
+  width: 100%;
+`
 
-  :hover {
-    box-shadow: inset 0 0 30px, 0 0 30px;
-  }
-
+const Container = styled.div`
+  text-align: center;
+  position: absolute;
+  top: 15%;
+  width: 25%;
+  min-width: 300px;
+  height: 50%;
   @media (max-width: 479px) {
-    font-size: 15px;
-    width: 55%;
-    height: 25%;
+    height: 40%;
+    top: 2%;
+    width: 90%;
+    left: 5%;
   }
 `
 
 const RugRoll: React.FC = () => {
-    const { t } = useTranslation()
-    console.log("yeEAH")
+    const { isLg, isXl } = useMatchBreakpoints()
+    const isDesktop = isLg || isXl
+
     return (
-      <Menu>
-          <Page>
-              <div className='parent-div'>
-                  Rug Roll is coming very soon!
-              </div>
-          </Page>
-      </Menu>
+        <Menu>
+            <StyledDiv>
+                {isDesktop ? <img src={CatacombsBackgroundDesktopSVG} alt='catacombs-rug-zombie' /> :
+                    <img src={CatacombsBackgroundMobileSVG} alt='catacombs-rug-zombie' />
+                }
+                <Flex justifyContent='center'>
+                    <Container>
+                        <Page >
+                            <RugRollCard />
+                        </Page>
+                    </Container>
+                </Flex>
+            </StyledDiv>
+        </Menu>
     )
 }
 

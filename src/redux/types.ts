@@ -1,8 +1,6 @@
 import { Address, Id, Token } from '../config/constants/types'
 import { BigNumber } from 'bignumber.js'
-import tokens from '../config/constants/tokens'
-import { BIG_ZERO } from '../utils/bigNumber'
-import artists from '../config/constants/artists'
+
 
 export interface UserInfo {
   paidUnlockFee: boolean,
@@ -191,4 +189,10 @@ export interface Nft {
   type: string,
   rarity: string,
   userInfo: NftUserInfo,
+}
+
+export interface RuggedToken {
+  id: number,
+  symbol: string,
+  address: { 56: string, 97: string },
 }

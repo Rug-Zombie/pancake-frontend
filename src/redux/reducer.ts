@@ -3,6 +3,7 @@ import * as types from './actionTypes'
 import tombs from './tombs'
 import graves from './graves'
 import nfts from './nfts'
+import ruggedTokens from './RuggedTokenlist'
 import spawningPools from './spawningPools'
 import auctions from './auctions'
 import { getId } from '../utils'
@@ -12,6 +13,7 @@ const defaultState = {
   tombs,
   graves,
   nfts,
+  ruggedTokens,
   spawningPools,
   bnbPriceUsd: 0,
   auctions,
