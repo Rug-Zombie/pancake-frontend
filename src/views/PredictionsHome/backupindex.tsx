@@ -1,47 +1,47 @@
-import React, { useMemo, useState } from 'react'
-import { Route, useRouteMatch } from 'react-router-dom'
-import BigNumber from 'bignumber.js'
-import { useWeb3React } from '@web3-react/core'
-import { Heading, Flex, Image } from '@rug-zombie-libs/uikit'
-import { useTranslation } from 'contexts/Localization'
-import usePersistState from 'hooks/usePersistState'
-import { useBlock } from 'state/hooks'
-import FlexLayout from 'components/layout/Flex'
-import Page from 'components/layout/Page'
-import PageHeader from 'components/PageHeader'
-import AuctionCard from './components/GraveCard'
-import PoolTabButtons from './components/PoolTabButtons'
-import graves from '../../config/constants/graves'
-import useWeb3 from '../../hooks/useWeb3'
-import { BIG_TEN } from '../../utils/bigNumber'
-
-let restorationChef
-
-
-function getUserInfo(setState,gid, account) {
-  if (typeof account !== 'undefined') {
-    restorationChef.methods.userInfo(gid, account).call()
-      .then((data) => {
-        console.log('got user data')
-        setState(data)
-      })
-      .catch((res) => {
-        console.log(res)
-      })
-  }
-}
-
-function getgraveInfo() {
-  restorationChef.methods.graveInfo(0).call()
-    .then((data) => {
-      // setState(data)
-      console.log('itworked')
-      console.log(data)
-    })
-    .catch((res) => {
-      console.log(res)
-    })
-}
+import React from 'react'
+// import { Route, useRouteMatch } from 'react-router-dom'
+// import BigNumber from 'bignumber.js'
+// import { useWeb3React } from '@web3-react/core'
+// import { Heading, Flex, Image } from '@rug-zombie-libs/uikit'
+// import { useTranslation } from 'contexts/Localization'
+// import usePersistState from 'hooks/usePersistState'
+// import { useBlock } from 'state/hooks'
+// import FlexLayout from 'components/layout/Flex'
+// import Page from 'components/layout/Page'
+// import PageHeader from 'components/PageHeader'
+// import AuctionCard from './components/GraveCard'
+// import PoolTabButtons from './components/PoolTabButtons'
+// import graves from '../../config/constants/graves'
+// import useWeb3 from '../../hooks/useWeb3'
+// import { BIG_TEN } from '../../utils/bigNumber'
+//
+// let restorationChef
+//
+//
+// function getUserInfo(setState,gid, account) {
+//   if (typeof account !== 'undefined') {
+//     restorationChef.methods.userInfo(gid, account).call()
+//       .then((data) => {
+//         console.log('got user data')
+//         setState(data)
+//       })
+//       .catch((res) => {
+//         console.log(res)
+//       })
+//   }
+// }
+//
+// function getgraveInfo() {
+//   restorationChef.methods.graveInfo(0).call()
+//     .then((data) => {
+//       // setState(data)
+//       console.log('itworked')
+//       console.log(data)
+//     })
+//     .catch((res) => {
+//       console.log(res)
+//     })
+// }
 
 const Pools: React.FC = () => {
   // const { path } = useRouteMatch()

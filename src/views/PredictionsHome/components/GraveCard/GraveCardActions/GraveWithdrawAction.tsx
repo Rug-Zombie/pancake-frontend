@@ -1,7 +1,7 @@
 import React from 'react'
-import { Flex, Text, IconButton, AddIcon, MinusIcon, Heading, useModal, Skeleton, Button } from '@rug-zombie-libs/uikit'
+import { Flex, Text, Heading, useModal, Skeleton, Button } from '@rug-zombie-libs/uikit'
 import BigNumber from 'bignumber.js'
-import { getBalanceNumber, formatNumber, getFullDisplayBalance } from 'utils/formatBalance'
+import { getFullDisplayBalance } from 'utils/formatBalance'
 import Web3 from 'web3'
 import { GraveConfig } from '../../../../../config/constants/types'
 import tokens from '../../../../../config/constants/tokens'
@@ -20,9 +20,7 @@ interface HasStakeActionProps {
 
 const WithdrawAction: React.FC<HasStakeActionProps> = ({
   grave,
-  stakingTokenBalance,
   zombiePrice,
-  stakingMax,
   userData,
   account,
   web3

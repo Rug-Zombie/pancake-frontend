@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Button, useModal } from '@rug-zombie-libs/uikit';
 import ModalInput from 'components/ModalInput/ModalInput';
 import { formatDuration } from '../../../utils/timerHelpers'
@@ -16,11 +16,11 @@ const BuyFrank: React.FC<BuyFrankProps> = ({ pid }) => {
   const tomb = tombByPid(pid)
   const { userInfo: { amount, tokenWithdrawalDate } } = tomb
   const initialWithdrawCooldownTime = tokenWithdrawalDate - currentDate;
-  const [onPresent1] = useModal(<ModalInput inputTitle="Stake $ZMBE" />);
+  useModal(<ModalInput inputTitle="Stake $ZMBE" />);
   // eslint-disable-next-line no-nested-ternary
   const quoteTokenUrl = tomb.quoteToken === tokens.wbnb ? tomb.exchange === 'Apeswap' ? 'ETH' : 'BNB' : getAddress(tomb.quoteToken.address)
 
-  let addLiquidityUrl
+  let addLiquidityUrl: string
 
   if(tomb.exchange === 'Apeswap') {
     addLiquidityUrl = `${APESWAP_ADD_LIQUIDITY_URL}/${quoteTokenUrl}/${getAddress(tomb.token.address)}`

@@ -24,12 +24,6 @@ const StyleCursorPointer = styled.div`
   cursor: pointer;
   display: flex;
 `
-
-const Styleinfo = styled.div`
-  display: flex;
-  justify-content: center;
-  padding: 20px;
-`
 const StyleCardHeader = styled.div`
   width: 100%;
   height: 300px;
@@ -42,7 +36,7 @@ interface CollectiblesCardProps {
 }
 
 const CollectiblesCard: React.FC<CollectiblesCardProps> = ({ id, refresh }: CollectiblesCardProps) => {
-  const { name, description, address, path, type, rarity, userInfo: { ownedIds } } = nftById(id)
+  const { name, description, path, type, userInfo: { ownedIds } } = nftById(id)
   const [isOpen, setIsOpen] = useState(false)
   const isOwned = ownedIds.length > 0
   const { setSwiper } = useSwiper()
@@ -51,7 +45,7 @@ const CollectiblesCard: React.FC<CollectiblesCardProps> = ({ id, refresh }: Coll
     setIsOpen(!isOpen)
   }
 
-  const [onPresentViewModal, onDismiss] = useModal(
+  const [onPresentViewModal,] = useModal(
       <ViewModal
         id={id}
         setSwiper={setSwiper}

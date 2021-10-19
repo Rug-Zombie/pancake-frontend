@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { Flex, Text } from '@rug-zombie-libs/uikit'
 import useEagerConnect from '../../hooks/useEagerConnect'
-import { useCatacombsContract, useMultiCall } from '../../hooks/useContract'
-import * as fetch from '../../redux/fetch'
+import { useCatacombsContract } from '../../hooks/useContract'
 import Entry from './components/Entry'
 import { account } from '../../redux/get'
 import Home from './components/Home'
 
-const Catacombs: React.FC = (props) => {
+const Catacombs: React.FC = () => {
   useEagerConnect()
   const catacombs = useCatacombsContract()
 

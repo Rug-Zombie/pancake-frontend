@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import React, { useState } from 'react'
-import { BaseLayout, Box, Flex, Image, LinkExternal, Modal, Slider, Text } from '@rug-zombie-libs/uikit'
+import React from 'react'
+import { BaseLayout, LinkExternal, Modal } from '@rug-zombie-libs/uikit'
 import useTheme from 'hooks/useTheme'
 import styled from 'styled-components'
 import { Swiper, SwiperSlide } from 'swiper/react'

@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import React, { useEffect, useState } from 'react'
 import PageHeader from 'components/PageHeader'
-import { Flex, Heading, LinkExternal, useMatchBreakpoints } from '@rug-zombie-libs/uikit'
+import { Flex, Heading, LinkExternal } from '@rug-zombie-libs/uikit'
 import { useWeb3React } from '@web3-react/core'
 import { getDrFrankensteinAddress } from 'utils/addressHelpers'
 import Page from '../../components/layout/Page'
@@ -9,7 +9,6 @@ import Table from './components/Table'
 import './Graves.Styles.css'
 import { grave, initialData, initialGraveData } from '../../redux/fetch'
 import { graves, zombiePriceUsd } from '../../redux/get'
-import { useMultiCall } from '../../hooks/useContract'
 import GraveTabButtons from './components/GraveTabButtons'
 import { getId } from '../../utils'
 
@@ -19,28 +18,20 @@ const filterGraves = (i) => {
   switch(i) {
     case 0: // All
       return graves()
-      break
     case 1: // Featured
       return graves().filter(g => g.isFeatured)
-      break
     case 2: // Legendary
       return graves().filter(g => g.rarity === "Legendary")
-      break
     case 3: // Rare
       return graves().filter(g => g.rarity === "Rare")
-      break
     case 4: // Uncommon
       return graves().filter(g => g.rarity === "Uncommon")
-      break
     case 5: // Common
       return graves().filter(g => g.rarity === "Common")
-      break
     case 6: // Retired
       return graves().filter(g => g.isRetired)
-      break
     default:
       return graves()
-      break
   }
 }
 
@@ -63,7 +54,7 @@ const Graves: React.FC = () => {
   }, [account, updatePoolInfo, updateUserInfo])
 
   accountAddress = account
-  const [bnbInBusd, setBnbInBusd] = useState(0)
+  const [bnbInBusd,] = useState(0)
 
   const updateResult = (pid) => {
     grave(pid, { update: updateUserInfo, setUpdate: setUpdateUserInfo})
@@ -103,7 +94,7 @@ const Graves: React.FC = () => {
       <Page>
         <GraveTabButtons setFilter={setFilter} stakedOnly={stakedOnly} setStakedOnly={setStakedOnly} />
         <div>
-          {visibleGraves.map((g, index) => {
+          {visibleGraves.map((g) => {
             return <Table zombieUsdPrice={zombiePriceUsd()}
                           updateResult={updateResult} updateAllowance={updateAllowance} bnbInBusd={bnbInBusd}
                           isAllowance={isAllowance} pid={getId(g.pid)} key={getId(g.pid)} />

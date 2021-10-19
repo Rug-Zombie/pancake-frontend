@@ -1,5 +1,5 @@
 import { BaseLayout, Flex, useMatchBreakpoints } from '@rug-zombie-libs/uikit'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { useDrFrankenstein } from 'hooks/useContract'
 import { getFullDisplayBalance } from 'utils/formatBalance'
@@ -8,7 +8,6 @@ import { useTranslation } from 'contexts/Localization'
 import useToast from 'hooks/useToast'
 import { BIG_ZERO } from '../../../../utils/bigNumber'
 import { getId } from '../../../../utils'
-import { initialGraveData } from '../../../../redux/fetch'
 
 const DisplayFlex = styled(BaseLayout)`
   display: flex;

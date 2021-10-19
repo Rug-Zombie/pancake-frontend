@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Box, CardBody, Flex, LinkExternal, PlayCircleOutlineIcon, Text, useTooltip } from '@rug-zombie-libs/uikit'
+import { CardBody, PlayCircleOutlineIcon } from '@rug-zombie-libs/uikit'
 import { useTranslation } from 'contexts/Localization'
 import { RoundResult } from '../RoundResult'
 import Card from './Card'

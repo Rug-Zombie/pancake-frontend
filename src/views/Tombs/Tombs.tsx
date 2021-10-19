@@ -1,10 +1,8 @@
 /* eslint-disable no-param-reassign */
 import React, { useEffect, useState } from 'react'
 import PageHeader from 'components/PageHeader'
-import { getBnbPriceinBusd } from 'state/hooks'
 import { Flex, Heading, LinkExternal } from '@rug-zombie-libs/uikit'
-import { useWeb3React } from '@web3-react/core'
-import { useDrFrankenstein, useMultiCall } from 'hooks/useContract'
+import { useDrFrankenstein } from 'hooks/useContract'
 import { getDrFrankensteinAddress } from 'utils/addressHelpers'
 import Page from '../../components/layout/Page'
 import Table from './Table'
@@ -16,7 +14,7 @@ import { getId } from '../../utils'
 const Tombs: React.FC = () => {
   const [update, setUpdate] = useState(false)
   const drFrankenstein = useDrFrankenstein()
-  const [bnbInBusd, setBnbInBusd] = useState(0)
+  const [bnbInBusd,] = useState(0)
   const [updatePoolInfo, setUpdatePoolInfo] = useState(0)
   const [updateUserInfo, setUpdateUserInfo] = useState(0)
 

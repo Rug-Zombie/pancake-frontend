@@ -1,27 +1,18 @@
 import React, { useState } from 'react'
 import { Button, AutoRenewIcon, Skeleton } from '@rug-zombie-libs/uikit'
-import { ethers } from 'ethers'
 import { useTranslation } from 'contexts/Localization'
-import { useCake, useCakeVaultContract } from 'hooks/useContract'
-import useToast from 'hooks/useToast'
-import { Pool } from 'state/types'
 import { GraveConfig } from '../../../../../config/constants/types'
-import tokens from '../../../../../config/constants/tokens'
-import { getAddress } from '../../../../../utils/addressHelpers'
 
 interface ApprovalActionProps {
   grave: GraveConfig
   account: string
   setLastUpdated: () => void
   isLoading?: boolean
-  web3
 }
 
-const UnlockingAction: React.FC<ApprovalActionProps> = ({ grave, account, isLoading = false, setLastUpdated, web3 }) => {
-  const cakeContract = useCake()
+const UnlockingAction: React.FC<ApprovalActionProps> = ({ isLoading = false }) => {
   const { t } = useTranslation()
-  const [graveUnlocked, setGraveUnlocked] = useState(false)
-  const { toastSuccess, toastError } = useToast()
+  const [graveUnlocked, ] = useState(false)
 
   const handleUnlock = () => {
     // restorationChef.methods

@@ -3,18 +3,17 @@ import { Box, Heading, Spinner, Text } from '@rug-zombie-libs/uikit'
 import { useWeb3React } from '@web3-react/core'
 import styled from 'styled-components'
 import { fetchHistory } from 'state/predictions'
-import { HistoryFilter } from 'state/types'
+// import { HistoryFilter } from 'state/types'
 import { useTranslation } from 'contexts/Localization'
-import { orderBy } from 'lodash'
 import { useAppDispatch } from 'state'
 import {
   useGetCurrentEpoch,
-  useGetHistoryByAccount,
-  useGetHistoryFilter,
+  // useGetHistoryByAccount,
+  // useGetHistoryFilter,
   useGetIsFetchingHistory,
   useIsHistoryPaneOpen,
 } from 'state/hooks'
-import { Header, HistoricalBet } from './components/History'
+import { Header } from './components/History'
 
 const StyledHistory = styled.div`
   background-color: ${({ theme }) => theme.card.background};
@@ -42,15 +41,15 @@ const SpinnerWrapper = styled.div`
   width: 100%;
 `
 
-const History = () => {
+const History: React.FC = () => {
   const { t } = useTranslation()
   const { account } = useWeb3React()
   const dispatch = useAppDispatch()
   const isHistoryPaneOpen = useIsHistoryPaneOpen()
   const isFetchingHistory = useGetIsFetchingHistory()
-  const historyFilter = useGetHistoryFilter()
+  // const historyFilter = useGetHistoryFilter()
   const currentEpoch = useGetCurrentEpoch()
-  const bets = useGetHistoryByAccount(account)
+  // const bets = useGetHistoryByAccount(account)
 
   useEffect(() => {
     if (account && isHistoryPaneOpen) {
@@ -61,12 +60,12 @@ const History = () => {
 
   // Currently the api cannot filter by unclaimed AND won so we do it here
   // when the user has selected Uncollected only include positions they won
-  const results =
-    historyFilter === HistoryFilter.UNCOLLECTED
-      ? bets.filter((bet) => {
-          return bet.position === bet.round.position || bet.round.failed === true
-        })
-      : bets
+  // const results =
+  //   historyFilter === HistoryFilter.UNCOLLECTED
+  //     ? bets.filter((bet) => {
+  //         return bet.position === bet.round.position || bet.round.failed === true
+  //       })
+  //     : bets
 
   return (
     <StyledHistory>

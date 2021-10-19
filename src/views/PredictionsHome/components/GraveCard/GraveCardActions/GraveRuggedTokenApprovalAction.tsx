@@ -1,15 +1,8 @@
 import React, { useState } from 'react'
 import { Button, AutoRenewIcon, Skeleton } from '@rug-zombie-libs/uikit'
-import { ethers } from 'ethers'
 import { useTranslation } from 'contexts/Localization'
-import { useCake, useCakeVaultContract } from 'hooks/useContract'
-import useToast from 'hooks/useToast'
-import { Pool } from 'state/types'
 import Web3 from 'web3'
 import { GraveConfig } from '../../../../../config/constants/types'
-import tokens from '../../../../../config/constants/tokens'
-import { getAddress } from '../../../../../utils/addressHelpers'
-import { getBep20Contract } from '../../../../../utils/contractHelpers'
 
 interface ApprovalActionProps {
   grave: GraveConfig
@@ -19,12 +12,9 @@ interface ApprovalActionProps {
   web3: Web3
 }
 
-const RuggedTokenApprovalAction: React.FC<ApprovalActionProps> = ({ grave, account, isLoading = false, setLastUpdated, web3 }) => {
-  const cakeVaultContract = useCakeVaultContract()
-  const ruggedTokenContract = getBep20Contract(getAddress(grave.ruggedToken.address), web3)
+const RuggedTokenApprovalAction: React.FC<ApprovalActionProps> = ({ grave, isLoading = false }) => {
   const { t } = useTranslation()
-  const [requestedApproval, setRequestedApproval] = useState(false)
-  const { toastSuccess, toastError } = useToast()
+  const [requestedApproval, ] = useState(false)
 
   const handleApprove = () => {
     // ruggedTokenContract.methods

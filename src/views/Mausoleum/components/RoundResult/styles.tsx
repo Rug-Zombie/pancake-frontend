@@ -1,7 +1,7 @@
 import React from 'react'
 import styled, { DefaultTheme } from 'styled-components'
 import { Box, Flex, FlexProps, Text } from '@rug-zombie-libs/uikit'
-import { formatBnb, formatUsd } from 'views/Mausoleum/helpers'
+import { formatBnb } from 'views/Mausoleum/helpers'
 import { useTranslation } from 'contexts/Localization'
 import { BetPosition, Round } from 'state/types'
 import { BigNumber } from 'bignumber.js'

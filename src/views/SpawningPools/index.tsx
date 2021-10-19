@@ -3,21 +3,18 @@ import React, { useEffect, useState } from 'react'
 import PageHeader from 'components/PageHeader'
 import { Flex, Heading, LinkExternal } from '@rug-zombie-libs/uikit'
 import { useWeb3React } from '@web3-react/core'
-import { getDrFrankensteinAddress, getSpawningPoolAddress } from 'utils/addressHelpers'
+import { getSpawningPoolAddress } from 'utils/addressHelpers'
 import Page from '../../components/layout/Page'
 import Table from './components/Table'
 import './SpawningPools.Styles.css'
-import { grave, initialData, initialGraveData, initialSpawningPoolData, spawningPool } from '../../redux/fetch'
-import { spawningPools } from '../../redux/get'
+import { initialSpawningPoolData, spawningPool } from '../../redux/fetch'
 import * as get from '../../redux/get'
-import useWeb3 from '../../hooks/useWeb3'
-import { useMultiCall, useZombie } from '../../hooks/useContract'
+import { useZombie } from '../../hooks/useContract'
 
 let accountAddress
 
 const SpawningPools: React.FC = () => {
   const { account } = useWeb3React()
-  const multi = useMultiCall()
   const zombie = useZombie()
   const [isAllowance, setIsAllowance] = useState(false)
   const id = 0
@@ -35,7 +32,7 @@ const SpawningPools: React.FC = () => {
   }, [account, updatePoolInfo, updateUserInfo, zombie])
 
   accountAddress = account
-  const [bnbInBusd, setBnbInBusd] = useState(0)
+  const [bnbInBusd, ] = useState(0)
 
   const updateResult = (pid) => {
     spawningPool(pid, zombie)

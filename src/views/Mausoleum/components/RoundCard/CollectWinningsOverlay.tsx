@@ -1,14 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useWeb3React } from '@web3-react/core'
 import styled from 'styled-components'
 import { Flex, TrophyGoldIcon } from '@rug-zombie-libs/uikit'
 import { useAppDispatch } from 'state'
-import { useGetCurrentEpoch } from 'state/hooks'
-import { getBetHistory, transformBetResponse } from 'state/predictions/helpers'
 import { markBetAsCollected } from 'state/predictions'
 import { useTranslation } from 'contexts/Localization'
 import CollectWinningsButton from '../CollectWinningsButton'
-import { getPayout } from '../../helpers'
 
 interface CollectWinningsOverlayProps {
   bidId: number
@@ -23,9 +20,7 @@ const Wrapper = styled(Flex)`
 }
 `
 
-const CollectWinningsOverlay: React.FC<CollectWinningsOverlayProps> = ({
-  bidId
-}) => {
+const CollectWinningsOverlay: React.FC<CollectWinningsOverlayProps> = () => {
   const [state, setState] = useState<{ betId: string; epoch: number; payout: number }>({
     betId: null,
     epoch: null,
@@ -34,7 +29,6 @@ const CollectWinningsOverlay: React.FC<CollectWinningsOverlayProps> = ({
   const { account } = useWeb3React()
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
-  const currentEpoch = useGetCurrentEpoch()
 
   // Check if the wallet can collect the bet
   // We do it here because it is not gaurenteed the bet info will be in the history

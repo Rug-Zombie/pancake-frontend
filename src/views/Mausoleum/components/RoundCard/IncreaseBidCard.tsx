@@ -17,7 +17,7 @@ import CardHeader from './CardHeader'
 import SetPositionCard from './SetPositionCard'
 import { BIG_TEN, BIG_ZERO } from '../../../../utils/bigNumber'
 import { getBalanceAmount } from '../../../../utils/formatBalance'
-import { account, auctionById, auctions } from '../../../../redux/get'
+import { account, auctionById } from '../../../../redux/get'
 import { getMausoleumAddress } from '../../../../utils/addressHelpers'
 import { useERC20, useMausoleum } from '../../../../hooks/useContract'
 import '../MobileCard/cardStyles.css';

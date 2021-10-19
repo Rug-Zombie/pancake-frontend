@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import BigNumber from 'bignumber.js'
 import { useWeb3React } from '@web3-react/core'
-import { getBep20Contract, getCakeContract, getZombieContract } from 'utils/contractHelpers'
+import { getBep20Contract, getZombieContract } from 'utils/contractHelpers'
 import { BIG_ZERO } from 'utils/bigNumber'
 import useWeb3 from './useWeb3'
 import useRefresh from './useRefresh'

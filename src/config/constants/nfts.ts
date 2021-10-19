@@ -1,4 +1,4 @@
-import { Nft, NftSource, NftType } from './types'
+import { NftSource, NftType } from './types'
 
 export const IPFS_GATEWAY = 'https://gateway.pinata.cloud'
 

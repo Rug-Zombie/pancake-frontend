@@ -30,7 +30,7 @@ const _PredictionsHome = () => {
   return(
     <Container>
       <Row>
-        {auctions.map((value,index) => <Auctions key={value.aid} auction={value}/>)
+        {auctions.map((value) => <Auctions key={value.aid} auction={value}/>)
         }
       </Row>
     </Container>

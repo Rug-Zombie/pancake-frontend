@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card,Text,Heading } from "@rug-zombie-libs/uikit"
+import { Card, Heading } from "@rug-zombie-libs/uikit"
 import styled from 'styled-components'
 import { useTranslation } from 'contexts/Localization'
 import { graves } from 'redux/get'

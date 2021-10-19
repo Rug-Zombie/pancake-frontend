@@ -8,7 +8,7 @@ import {
   ChevronDownIcon,
   ChevronUpIcon,
   Flex,
-  Button, useModal,
+  Button,
 } from '@catacombs-libs/uikit'
 import { BigNumber } from 'bignumber.js'
 import { Lightbox } from "react-modal-image";
@@ -19,7 +19,6 @@ import { BIG_ZERO } from '../../../../utils/bigNumber'
 import { getFullDisplayBalance } from '../../../../utils/formatBalance'
 import useToast from '../../../../hooks/useToast'
 import { getAddress } from '../../../../utils/addressHelpers'
-import { getErc721Contract } from '../../../../utils/contractHelpers'
 
 
 const StyleDetails = styled.div`
@@ -32,11 +31,6 @@ const StyleCursorPointer = styled.div`
   display: flex;
 `
 
-const Styleinfo = styled.div`
-  display: flex;
-  justify-content: center;
-  padding: 20px;
-`
 const StyledButton = styled(Button)`
   border: 2px solid white;
   color: white;
@@ -58,7 +52,7 @@ const initialNftInfo = {
   maxMints: BIG_ZERO
 }
 
-const InstabuyCard: React.FC<InstabuyCardProps> = ({ id, refresh, modalObj }: InstabuyCardProps) => {
+const InstabuyCard: React.FC<InstabuyCardProps> = ({ id, modalObj }) => {
   const { name, symbol, description, address, path, type, totalSupply } = nftById(id)
   const [isOpen, setIsOpen] = useState(false)
   const [nftInfo, setNftInfo] = useState(initialNftInfo)

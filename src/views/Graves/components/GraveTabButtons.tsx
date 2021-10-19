@@ -9,10 +9,9 @@ import {
   Text,
   Flex,
   NotificationDot,
-  Link as UiKitLink, Dropdown, useMatchBreakpoints,
+  Link as UiKitLink, useMatchBreakpoints,
 } from '@rug-zombie-libs/uikit'
 import { useTranslation } from 'contexts/Localization'
-import { graves } from '../../../redux/get'
 
 const ButtonText = styled(Text)`
   display: none;
@@ -110,7 +109,7 @@ const GraveTabButtons = ({ setFilter, stakedOnly, setStakedOnly }) => {
           </StyledButton>}
       </Wrapper>
          <Flex mt={['4px', null, 0, null]} ml={[0, null, '24px', null]} justifyContent='center' alignItems='center'>
-          <Toggle scale='sm' checked={stakedOnly} onChange={(value) => {
+          <Toggle scale='sm' checked={stakedOnly} onChange={() => {
             setStakedOnly(!stakedOnly)
           }} />
           <Text ml='8px'>{t('Staked only')}</Text>

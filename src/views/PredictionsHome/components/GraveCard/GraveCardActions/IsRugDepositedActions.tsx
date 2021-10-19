@@ -1,7 +1,7 @@
 import React from 'react'
 import { Flex, Text, IconButton, AddIcon, MinusIcon, Heading, useModal, Skeleton } from '@rug-zombie-libs/uikit'
 import BigNumber from 'bignumber.js'
-import { getBalanceNumber, formatNumber, getFullDisplayBalance } from 'utils/formatBalance'
+import { getFullDisplayBalance } from 'utils/formatBalance'
 import Web3 from 'web3'
 import GraveStakeModal from '../GraveStakeModal'
 import { GraveConfig } from '../../../../../config/constants/types'
@@ -21,7 +21,6 @@ interface HasStakeActionProps {
 
 const IsRugDepositedActions: React.FC<HasStakeActionProps> = ({
   grave,
-  stakingTokenBalance,
   zombiePrice,
   stakingMax,
   userData,

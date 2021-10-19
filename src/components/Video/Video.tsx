@@ -1,8 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from 'react'
-import CountUp from 'react-countup'
+import React from 'react'
 
-import styled from 'styled-components'
 import { useMatchBreakpoints } from '@rug-zombie-libs/uikit'
 
 interface VideoProps {

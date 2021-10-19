@@ -1,11 +1,9 @@
 import React, { useState } from 'react'
-import styled from 'styled-components'
-import { Modal, Text, Flex, Image, Button, Slider, BalanceInput, AutoRenewIcon } from '@rug-zombie-libs/uikit'
+import { Modal, Text, Flex, Image, Button, AutoRenewIcon } from '@rug-zombie-libs/uikit'
 import { useTranslation } from 'contexts/Localization'
 import useTheme from 'hooks/useTheme'
 import BigNumber from 'bignumber.js'
-import { getFullDisplayBalance, formatNumber, getDecimalAmount } from 'utils/formatBalance'
-import useToast from 'hooks/useToast'
+import { getFullDisplayBalance } from 'utils/formatBalance'
 import Web3 from 'web3'
 import { GraveConfig } from '../../../../config/constants/types'
 import tokens from '../../../../config/constants/tokens'
@@ -23,42 +21,19 @@ interface VaultStakeModalProps {
   web3: Web3
 }
 
-const StyledButton = styled(Button)`
-  flex-grow: 1;
-`
 const GraveWithdrawModal: React.FC<VaultStakeModalProps> = ({
                                                               grave,
                                                               stakingMax,
                                                               stakingTokenPrice,
-                                                              account,
                                                               userData,
-                                                              isRemovingStake = false,
                                                               onDismiss,
-                                                              web3,
                                                             }) => {
   const { t } = useTranslation()
   const { theme } = useTheme()
-  const { toastSuccess, toastError } = useToast()
   const [pendingTx, setPendingTx] = useState(false)
-  const [stakeAmount, setStakeAmount] = useState('')
-  const [percent, setPercent] = useState(0)
-  const handleStakeInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const inputValue = event.target.value || '0'
-    const convertedInput = new BigNumber(inputValue).multipliedBy(new BigNumber(10).pow(tokens.zmbe.decimals))
-    const percentage = Math.floor(convertedInput.dividedBy(stakingMax).multipliedBy(100).toNumber())
-    setStakeAmount(inputValue)
-    setPercent(percentage > 100 ? 100 : percentage)
-  }
 
-  const handleChangePercent = (sliderPercent: number) => {
-    const percentageOfStakingMax = stakingMax.dividedBy(100).multipliedBy(sliderPercent)
-    const amountToStake = getFullDisplayBalance(percentageOfStakingMax, tokens.zmbe.decimals, tokens.zmbe.decimals)
-    setStakeAmount(amountToStake)
-    setPercent(sliderPercent)
-  }
-
-  const handleWithdrawalEarly = async (convertedStakeAmount: BigNumber) => {
-    setPendingTx(true)
+  // const handleWithdrawalEarly = async (_) => {
+    // setPendingTx(true)
     // restorationChefContract.methods
     //   .withdrawZombieEarly(grave.gid)
     //   .send({ from: account })
@@ -76,10 +51,10 @@ const GraveWithdrawModal: React.FC<VaultStakeModalProps> = ({
     //     toastError(t('Error'), t(`${error.message} - Please try again.`))
     //     setPendingTx(false)
     //   })
-  }
+  // }
 
-  const handleWithdrawal = async (convertedStakeAmount: BigNumber) => {
-    setPendingTx(true)
+  // const handleWithdrawal = async () => {
+    // setPendingTx(true)
     // restorationChefContract.methods
     //   .withdrawZombie(grave.gid)
     //   .send({ from: account })
@@ -97,13 +72,13 @@ const GraveWithdrawModal: React.FC<VaultStakeModalProps> = ({
     //     toastError(t('Error'), t(`${error.message} - Please try again.`))
     //     setPendingTx(false)
     //   })
-  }
+  // }
 
 
   const handleConfirmClick = async () => {
-    const convertedStakeAmount = getDecimalAmount(new BigNumber(stakeAmount), tokens.zmbe.decimals)
+    // const convertedStakeAmount = getDecimalAmount(new BigNumber(stakeAmount), tokens.zmbe.decimals)
     setPendingTx(true)
-    handleWithdrawalEarly(convertedStakeAmount)
+    // handleWithdrawalEarly(convertedStakeAmount)
   }
 
   const doneStaking = (Date.now() / 1000) >= userData.withdrawalDate

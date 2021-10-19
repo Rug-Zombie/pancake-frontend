@@ -7,7 +7,6 @@ import {
   Heading,
   IconButton,
   Button,
-  BinanceIcon,
   Text,
   BalanceInput,
   Slider,
@@ -15,25 +14,20 @@ import {
   AutoRenewIcon,
 } from '@rug-zombie-libs/uikit'
 import BigNumber from 'bignumber.js'
-import { DEFAULT_TOKEN_DECIMAL } from 'config'
 import { useWeb3React } from '@web3-react/core'
 import { useGetMinBetAmount } from 'state/hooks'
 import { useTranslation } from 'contexts/Localization'
-import { useMausoleum, usePredictionsContract } from 'hooks/useContract'
-import { useGetBnbBalance } from 'hooks/useTokenBalance'
+import { useMausoleum } from 'hooks/useContract'
 import useToast from 'hooks/useToast'
 import { BetPosition } from 'state/types'
-import { getBalanceAmount, getDecimalAmount, getFullDisplayBalance } from 'utils/formatBalance'
+import { getBalanceAmount, getDecimalAmount } from 'utils/formatBalance'
 import UnlockButton from 'components/UnlockButton'
-import PositionTag from '../PositionTag'
 import { getBnbAmount } from '../../helpers'
 import useSwiper from '../../hooks/useSwiper'
 import FlexRow from '../FlexRow'
 import Card from './Card'
-import { getBep20Contract, getErc721Contract, getMausoleumContract } from '../../../../utils/contractHelpers'
+import { getBep20Contract } from '../../../../utils/contractHelpers'
 import { BIG_ZERO } from '../../../../utils/bigNumber'
-import auctions from '../../../../redux/auctions'
-import useWeb3 from '../../../../hooks/useWeb3'
 import { auctionById, bnbBalance } from '../../../../redux/get'
 
 interface SetPositionCardProps {
@@ -44,7 +38,6 @@ interface SetPositionCardProps {
   onSuccess: (decimalValue: BigNumber, hash: string) => Promise<void>
 }
 
-const dust = new BigNumber(0.01).times(DEFAULT_TOKEN_DECIMAL)
 const percentShortcuts = [10, 25, 50, 75]
 
 const getPercentDisplay = (percentage: number) => {

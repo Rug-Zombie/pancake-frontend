@@ -2,13 +2,9 @@ import React from 'react'
 import styled from 'styled-components'
 import { BlockIcon, CardBody } from '@rug-zombie-libs/uikit'
 import { useTranslation } from 'contexts/Localization'
-import { Round, BetPosition } from 'state/types'
 import { RoundResult } from '../RoundResult'
-import MultiplierArrow from './MultiplierArrow'
 import Card from './Card'
 import CardHeader from './CardHeader'
-import CollectWinningsOverlay from './CollectWinningsOverlay'
-import CanceledRoundCard from './CanceledRoundCard'
 
 interface ExpiredRoundCardProps {
   bid: any;

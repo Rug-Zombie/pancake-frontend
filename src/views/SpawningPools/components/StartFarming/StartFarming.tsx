@@ -5,21 +5,18 @@ import styled from 'styled-components'
 import tokens from 'config/constants/tokens';
 import { ethers } from 'ethers';
 import { useTranslation } from 'contexts/Localization'
-import { useIfoAllowance } from 'hooks/useAllowance';
 import useTokenBalance from 'hooks/useTokenBalance';
 import useToast from 'hooks/useToast'
 import { getFullDisplayBalance } from 'utils/formatBalance'
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import BigNumber from 'bignumber.js'
-import { getAddress, getDrFrankensteinAddress, getSpawningPoolAddress } from 'utils/addressHelpers'
-import { Token } from 'config/constants/types';
-import { useDrFrankenstein, useERC20, useMultiCall, useSpawningPool, useZombie } from '../../../../hooks/useContract'
+import { getAddress, getSpawningPoolAddress } from 'utils/addressHelpers'
+import { useERC20, useSpawningPool, useZombie } from '../../../../hooks/useContract'
 import StakeModal from '../StakeModal';
 import StakeZombieModal from '../StakeZombieModal';
 import WithdrawZombieModal from '../WithdrawZombieModal';
 import * as get from '../../../../redux/get'
 import * as fetch from '../../../../redux/fetch'
-import useWeb3 from '../../../../hooks/useWeb3'
 import { spawningPoolById } from '../../../../redux/get'
 
 
@@ -41,9 +38,8 @@ interface StartFarmingProps {
   zombieUsdPrice: number,
 }
 
-const StartFarming: React.FC<StartFarmingProps> = ({ id, zombieUsdPrice, updateAllowance, updateResult }) => {
+const StartFarming: React.FC<StartFarmingProps> = ({ id, zombieUsdPrice, updateAllowance }) => {
   const zombie = useZombie()
-  const multi = useMultiCall()
   const { toastSuccess } = useToast()
   const { t } = useTranslation()
   const pool = spawningPoolById(id)
@@ -61,7 +57,7 @@ const StartFarming: React.FC<StartFarmingProps> = ({ id, zombieUsdPrice, updateA
     )
   }
 
-  const [onPresentStake] = useModal(
+  useModal(
     <StakeModal
       pid={id}
       updateResult={onUpdate}

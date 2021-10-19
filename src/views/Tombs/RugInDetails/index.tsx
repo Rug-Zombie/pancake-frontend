@@ -5,7 +5,6 @@ import React, { useEffect, useState } from 'react'
 import { getFullDisplayBalance } from 'utils/formatBalance';
 import BigNumber from 'bignumber.js';
 import numeral from 'numeral'
-import { BIG_ZERO } from '../../../utils/bigNumber'
 import { tombByPid } from '../../../redux/get'
 import { getAddress } from '../../../utils/addressHelpers'
 import { APESWAP_ADD_LIQUIDITY_URL, AUTOSHARK_ADD_LIQUIDITY_URL, BASE_ADD_LIQUIDITY_URL } from '../../../config'
@@ -17,11 +16,9 @@ interface RugInDetailsProps {
   tvl: BigNumber
 }
 
-const RugInDetails: React.FC<RugInDetailsProps> = ({
-  pid, tvl, lpTokenPrice,
-}) => {
+const RugInDetails: React.FC<RugInDetailsProps> = ({ pid, tvl }) => {
   const drFrankenstein = useDrFrankenstein();
-  const [unlockFee, setUnlockFee] = useState(0);
+  const [, setUnlockFee] = useState(0);
   const tomb = tombByPid(pid)
   const { id, name, withdrawalCooldown, exchange, poolInfo: { allocPoint } } = tomb
   // eslint-disable-next-line no-nested-ternary

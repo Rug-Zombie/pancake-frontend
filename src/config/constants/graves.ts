@@ -1,5 +1,4 @@
-import tokens from './tokens'
-import { PoolConfig, PoolCategory, GraveConfig } from './types'
+import { GraveConfig } from './types'
 
 const graves: GraveConfig[] = [
 

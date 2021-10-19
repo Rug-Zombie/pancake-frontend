@@ -4,9 +4,9 @@ import styled from 'styled-components'
 import { getBalanceNumber } from 'utils/formatBalance'
 import { useTotalSupply, useBurnedBalance } from 'hooks/useTokenBalance'
 import { useTranslation } from 'contexts/Localization'
-import { getCakeAddress, getZombieAddress } from 'utils/addressHelpers'
+import { getZombieAddress } from 'utils/addressHelpers'
 import CardValue from './CardValue'
-import { nfts, nftTotalSupply } from '../../../redux/get'
+import { nftTotalSupply } from '../../../redux/get'
 
 const StyledCakeStats = styled(Card)`
   margin-left: auto;
@@ -22,7 +22,7 @@ const Row = styled.div`
   margin-bottom: 8px;
 `
 
-const ZmbeStats = () => {
+const ZmbeStats: React.FC = () => {
   const { t } = useTranslation()
   const totalSupply = useTotalSupply()
   const burnedBalance = getBalanceNumber(useBurnedBalance(getZombieAddress()))

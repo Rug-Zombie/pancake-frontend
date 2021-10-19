@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import styled from 'styled-components'
 import { BaseLayout, useMatchBreakpoints } from '@rug-zombie-libs/uikit'
-import { BIG_TEN, BIG_ZERO } from 'utils/bigNumber'
 import BigNumber from 'bignumber.js';
-import { getBalanceAmount, getDecimalAmount, getFullDisplayBalance } from 'utils/formatBalance'
+import { getDecimalAmount, getFullDisplayBalance } from 'utils/formatBalance'
 import tokens from 'config/constants/tokens';
 import numeral from 'numeral'
 import { getGraveTombApr } from '../../../utils/apr'
-import { Token } from '../../../config/constants/types'
 import { tombByPid, totalAllocPoint, zombiePriceUsd } from '../../../redux/get'
 
 
