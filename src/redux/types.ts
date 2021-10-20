@@ -194,5 +194,5 @@ export interface Nft {
 export interface RuggedToken {
   id: number,
   symbol: string,
-  address: { 56: string, 97: string },
+  address: string,
 }
