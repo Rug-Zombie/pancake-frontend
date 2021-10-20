@@ -11,6 +11,7 @@ export const routes = {
     MAUSOLEUM:'/mausoleum/',
     AUCTION:'/mausoleum/:id',
     GRAVEYARD:'/graveyard',
+    DAYOFDEADSWAP:'/dayofdead',
 
     // Catacombs
     CATACOMBS:'/catacombs/',
