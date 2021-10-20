@@ -22,23 +22,25 @@ const TableCards = styled(BaseLayout)`
 interface TableProps {
   pid: number,
   isAllowance: boolean,
-  updateAllowance:any,
-  updateResult:any,
+  updateAllowance: any,
+  updateResult: any,
+  bracketBStart: number,
+  bracketCStart: number
 }
 
-const Table: React.FC<TableProps> = ({ pid, isAllowance, updateResult, updateAllowance }: TableProps) => {
-  const [isOpen, setIsOpen] = useState(false);
+const Table: React.FC<TableProps> = ({ pid, isAllowance, updateResult, updateAllowance, bracketBStart, bracketCStart, }: TableProps) => {
+  const [isOpen, setIsOpen] = useState(false)
   const tomb = tombByPid(pid)
   const { poolInfo: { totalStaked, reserves, lpTotalSupply } } = tomb
   const openInDetails = (data) => {
-    setIsOpen(data);
+    setIsOpen(data)
   }
   const reservesUsd = [getBalanceAmount(reserves[0]).times(zombiePriceUsd()), getBalanceAmount(reserves[1]).times(bnbPriceUsd())]
   const lpTokenPrice = reservesUsd[0].plus(reservesUsd[1]).div(lpTotalSupply)
   const tvl = totalStaked.times(lpTokenPrice)
 
   const TableListProps = {
-    "handler": openInDetails,
+    'handler': openInDetails,
     lpTokenPrice,
     tvl,
     pid,
@@ -46,19 +48,25 @@ const Table: React.FC<TableProps> = ({ pid, isAllowance, updateResult, updateAll
 
   return (
     <TableCards>
-      <div className="test-card active-1">
-        <div className="table-top">
+      <div className='test-card active-1'>
+        <div className='table-top'>
           <TableList {...TableListProps} />
         </div>
         {isOpen ? (
-          <div className="table-bottom">
-            <div className="w-95 mx-auto mt-3">
-              <div className="flex-grow">
-                <FrankEarned pid={pid} lpTokenPrice={lpTokenPrice}/>
+          <div className='table-bottom'>
+            <div className='w-95 mx-auto mt-3'>
+              <div className='flex-grow'>
+                <FrankEarned pid={pid} lpTokenPrice={lpTokenPrice} />
                 <StartFarming pid={pid} updateAllowance={updateAllowance} updateResult={updateResult} isAllowance={isAllowance} />
-                <BuyFrank pid={pid}/>
+                <BuyFrank pid={pid} />
               </div>
-              <RugInDetails pid={pid} tvl={tvl} lpTokenPrice={lpTokenPrice} />
+              <RugInDetails
+                pid={pid}
+                tvl={tvl}
+                lpTokenPrice={lpTokenPrice}
+                bracketBStart={bracketBStart}
+                bracketCStart={bracketCStart}
+              />
             </div>
           </div>
         ) : null}

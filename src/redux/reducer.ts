@@ -133,6 +133,8 @@ export default function reducer(state = defaultState, action) {
         tombOverlays: state.tombOverlays.map(tombOverlay => getId(tombOverlay.pid) === action.payload.pid ? { ...tombOverlay, poolInfo: { ...tombOverlay.poolInfo, ...action.payload.poolInfo } } : tombOverlay),
       }  
     case types.UPDATE_TOMB_OVERLAY_USER_INFO:
+      console.log(action.payload.userInfo.nftMintTime.toString())
+
       return {
         ...state,
         tombOverlays: state.tombOverlays.map(tombOverlay => getId(tombOverlay.pid) === action.payload.pid ? { ...tombOverlay, userInfo: { ...tombOverlay.userInfo, ...action.payload.userInfo } } : tombOverlay),

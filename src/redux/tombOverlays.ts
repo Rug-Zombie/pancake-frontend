@@ -1,3 +1,4 @@
+import { BigNumber } from 'bignumber.js'
 import { BIG_ZERO } from '../utils/bigNumber'
 import { TombOverlay } from './types'
 
@@ -5,7 +6,7 @@ export const DEFAULT_USER_INFO = {
     nextNftMintDate: 0,
     isMinting: false,
     randomNumber: 0,
-    nftMintTime: 2**256 - 1
+    nftMintTime: new BigNumber(2**256 - 1)
 }
 
 const DEFAULT_POOL_INFO = {

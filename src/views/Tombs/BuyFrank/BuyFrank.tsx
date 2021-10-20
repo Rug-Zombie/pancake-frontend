@@ -20,12 +20,6 @@ interface BuyFrankProps {
   pid: number
 }
 
-const NULL_OVERLAY = {
-  userInfo: {
-    nftMintTime: 2
-  }
-}
-
 const BuyFrank: React.FC<BuyFrankProps> = ({ pid }) => {
   const tombOverlay = useTombOverlay()
   const currentDate = Math.floor(Date.now() / 1000)
@@ -35,6 +29,7 @@ const BuyFrank: React.FC<BuyFrankProps> = ({ pid }) => {
   const { userInfo: { amount, tokenWithdrawalDate } } = tomb
   const mintingReady = randomNumber > 0
   const initialWithdrawCooldownTime = tokenWithdrawalDate - currentDate
+
   // eslint-disable-next-line no-nested-ternary
   const quoteTokenUrl = tomb.quoteToken === tokens.wbnb ? tomb.exchange === 'Apeswap' ? 'ETH' : 'BNB' : getAddress(tomb.quoteToken.address)
 
@@ -66,6 +61,7 @@ const BuyFrank: React.FC<BuyFrankProps> = ({ pid }) => {
   </div>
 
   let mintButton
+  console.log(mintingReady)
   if (isMinting && !mintingReady) {
     mintButton = (<Button className='btn w-100'>Minting In Progress</Button>)
   } else if (mintingReady) {
@@ -75,31 +71,27 @@ const BuyFrank: React.FC<BuyFrankProps> = ({ pid }) => {
   }
 
   let mintTimer
-  if (nftMintTime === (2 ** 256 - 1)) {
+  console.log(nftMintTime.toString())
+  if (nftMintTime.eq(2 ** 256 - 1)) {
     mintTimer = (<div className='small-text'><span className='white-color'>Not Minting</span></div>)
-  } else if (nftMintTime === 0) {
-    mintTimer = (
-      <span className='total-earned text-shadow' data-tip data-for='nft-minting' data-text-color='black'>NFT is Ready
-      <ReactTooltip id='nft-minting' place='top' type='light' effect='solid' className='nftTimerPopup'>
-      Mint your NFT by harvesting or unstaking</ReactTooltip></span>)
+  } else if (nftMintTime.isZero()) {
+    mintTimer = mintButton
   } else {
     mintTimer = (<div>
       <div className='small-text'><span className='white-color'>NFT Timer</span></div>
-      <span className='total-earned text-shadow' style={{ fontSize: '20px' }}>{formatDuration(nftMintTime)}</span></div>)
+      <span className='total-earned text-shadow' style={{ fontSize: '20px' }}>{formatDuration(nftMintTime.toNumber() - currentDate)}</span></div>)
   }
 
   let data
 
-  if (!overlay) {
+  if ((!overlay || nftMintTime.eq(2**256-1)) && amount.isZero()) {
     data = pairLpDiv
-  } else if (nftMintTime === 0) {
-    data = (<div className='frank-card'>{mintButton}</div>)
   } else {
     data = (!amount.isZero() ?
       <div className='frank-card'>
         <div className='space-between'>
-          {mintTimer}
-          {currentDate >= tokenWithdrawalDate ?
+          {/* eslint-disable-next-line no-nested-ternary */}
+          {overlay ? mintTimer : currentDate >= tokenWithdrawalDate ?
             <span className='total-earned text-shadow'>No Withdraw Fees</span> :
             <div>
               <div className='small-text'>

@@ -5,7 +5,6 @@ import {
   getDrFrankensteinContract, getErc721Contract,
   getPancakePair,
   getZombieContract,
-  getTombOverlayContract
 } from '../utils/contractHelpers'
 
 import store from './store'
@@ -97,7 +96,6 @@ export const initialData = (accountAddress: string, setZombiePrice?: any) => {
 
 export const tomb = (pid: number, updatePoolObj?: { update: number, setUpdate: any }, updateUserObj?: { update: number, setUpdate: any }, everyUpdateObj?: { update: boolean, setUpdate: any }) => {
   const address = getDrFrankensteinAddress()
-
   if (account()) {
     let calls = [
       { address, name: 'poolInfo', params: [pid] },
@@ -130,9 +128,11 @@ export const tomb = (pid: number, updatePoolObj?: { update: number, setUpdate: a
             if (everyUpdateObj) {
               everyUpdateObj.setUpdate(!everyUpdateObj.update)
             }
+
             if (updateUserObj) {
               updateUserObj.setUpdate(updateUserObj.update + 1)
             }
+
           })
       })
   } else {
@@ -530,18 +530,22 @@ export const initialTombOverlayData = (updatePoolObj?: { update: boolean, setUpd
 
     multicallv2(tombOverlayAbi, calls)
       .then(overlayRes => {
-        for(let i = 1; i < get.tombOverlays().length; i++) {
-          const tombOverlay = get.tombOverlays()[i - 1]
-          const index = i * 3
+        for(let i = 0; i < get.tombOverlays().length; i++) {
+          const tombOverlay = get.tombOverlays()[i]
+          const index = (i + 1) * 3
           const poolInfo = overlayRes[index - 2]
           const userInfo = overlayRes[index - 1]
-          const nftMintTime = overlayRes[index]
+          const nftMintTime = new BigNumber(overlayRes[index].toString())
+          console.log(nftMintTime.toString())
+          console.log('before')
           store.dispatch(updateTombOverlayPoolInfo(getId(tombOverlay.pid), {
             isEnabled: poolInfo.isEnabled,
             poolId: poolInfo.poolId,
             mintingTime: poolInfo.mintingTime,
             mintingFee: new BigNumber(overlayRes[0].toString()),
           }))
+          console.log('after')
+
           store.dispatch(updateTombOverlayUserInfo(getId(tombOverlay.pid), {
             nextNftMintDate: userInfo.nextNftMintDate,
             isMinting: userInfo.isMinting,
@@ -556,6 +560,9 @@ export const initialTombOverlayData = (updatePoolObj?: { update: boolean, setUpd
           updateUserObj.setUpdate(!updateUserObj.update)
         }
       })
+      .catch((res) => {
+        console.log(res)
+      })
   } else {
     const calls = [{ address, name: 'mintingFee', params: [] }]
 
@@ -565,15 +572,22 @@ export const initialTombOverlayData = (updatePoolObj?: { update: boolean, setUpd
 
     multicallv2(tombOverlayAbi, calls)
       .then(overlayRes => {
-        for (let index = 1; index < get.tombOverlays().length; index++) {
-          const tombOverlay = get.tombOverlays()[index]
+        console.log(overlayRes[0].toString())
+
+        for (let i = 0; i < get.tombOverlays().length; i++) {
+          const tombOverlay = get.tombOverlays()[i]
+          const index = i + 1
           const poolInfo = overlayRes[index]
+          console.log('before')
+
           store.dispatch(updateTombOverlayPoolInfo(getId(tombOverlay.pid), {
             isEnabled: poolInfo.isEnabled,
             poolId: poolInfo.poolId,
             mintingTime: poolInfo.mintingTime,
             mintingFee: new BigNumber(overlayRes[0].toString())
           }))
+          console.log('after')
+
           if (everyUpdateObj) {
             everyUpdateObj.setUpdate(!everyUpdateObj.update)
           }
@@ -581,6 +595,9 @@ export const initialTombOverlayData = (updatePoolObj?: { update: boolean, setUpd
             updateUserObj.setUpdate(!updateUserObj.update)
           }
         }
+      })
+      .catch((res) => {
+        console.log(res)
       })
   }
 }

@@ -16,11 +16,13 @@ interface RugInDetailsProps {
   pid: number,
   lpTokenPrice: BigNumber,
   tvl: BigNumber,
+  bracketBStart: number,
+  bracketCStart: number
 }
 
-const RugInDetails: React.FC<RugInDetailsProps> = ({ pid, tvl }) => {
+const RugInDetails: React.FC<RugInDetailsProps> = ({ pid, tvl, bracketBStart, bracketCStart }) => {
   const tomb = tombByPid(pid)
-  const { id, name, withdrawalCooldown, exchange, overlayId, poolInfo: { allocPoint } } = tomb
+  const { id, name, withdrawalCooldown, exchange, overlayId, userInfo: { amount }, poolInfo: { allocPoint, totalStaked } } = tomb
   const overlay = tombOverlayByPid(getId(overlayId))
   const { isLg, isXl } = useMatchBreakpoints()
   const isDesktop = isLg || isXl
@@ -36,30 +38,43 @@ const RugInDetails: React.FC<RugInDetailsProps> = ({ pid, tvl }) => {
     const nfts = [legendaryNft, rareNft, uncommonNft, commonNft]
 
     const brackets = {
-      low: {
-        'Ccommon': 70,
-        'Uncommon': 20,
-        'Rare': 5,
+      'A': {
+        'Common': 70,
+        'Uncommon': 15,
+        'Rare': 10,
         'Legendary': 5,
       },
-      middle: {
+      'B': {
         'Common': 50,
         'Uncommon': 25,
         'Rare': 15,
         'Legendary': 10,
       },
-      top: {
+      'C': {
         'Common': 20,
         'Uncommon': 30,
         'Rare': 30,
         'Legendary': 20
       },
     }
+
+    let bracket
+    if(amount.isZero() || totalStaked.isZero()) {
+      bracket = 'Not Staked'
+    } else if(amount.div(totalStaked).times(100).lt(bracketBStart)) {
+      bracket = 'A'
+    } else if(amount.div(totalStaked).times(100).lt(bracketCStart)) {
+      bracket = 'B'
+    } else {
+      bracket = 'C'
+    }
+
     nftombInfoDiv = <div style={{ width: '60%' }}>
       <Carousel
         showThumbs={false}
         showStatus={false}
         infiniteLoop
+        autoPlay
         className={isDesktop ? '' : 'direction-column imageColumn'}
       >
         {nfts.map(nft => <div key={nft.id}>
@@ -74,8 +89,9 @@ const RugInDetails: React.FC<RugInDetailsProps> = ({ pid, tvl }) => {
             <Flex paddingLeft='10px' flexDirection='column' alignItems='flex-start' justifyContent='flex-start'
                   justifyItems='flex-start'>
               <Text className='indetails-type' color='white' bold>{nft.name}</Text>
-              <Text color='rgb(92, 109, 120)'>Chance: 0%</Text>
-              <Text color='rgb(92, 109, 120)'>Increase chance by staking LP</Text>
+              <Text color='rgb(92, 109, 120)'>Your Bracket: {bracket}</Text>
+              <Text color='rgb(92, 109, 120)'>Chance: {brackets[bracket === 'Not Staked' ? 'A' : bracket][nft.rarity]}%</Text>
+              <Text color='rgb(92, 109, 120)'>Stake more to increase your odds.</Text>
               <LinkExternal bold={false} small href={nft.artist ? nft.artist.twitter : ''}>
                 View NFT Artist
               </LinkExternal>

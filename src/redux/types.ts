@@ -203,7 +203,7 @@ export interface TombOverlayUserInfo {
   nextNftMintDate: number,
   isMinting: boolean,
   randomNumber: number,
-  nftMintTime: number
+  nftMintTime: BigNumber
 }
 
 export interface TombOverlay {

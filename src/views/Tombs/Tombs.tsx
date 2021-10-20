@@ -2,22 +2,25 @@
 import React, { useEffect, useState } from 'react'
 import PageHeader from 'components/PageHeader'
 import { Flex, Heading, LinkExternal } from '@rug-zombie-libs/uikit'
-import { useDrFrankenstein, useMultiCall } from 'hooks/useContract'
-import { getDrFrankensteinAddress } from 'utils/addressHelpers'
+import { useDrFrankenstein } from 'hooks/useContract'
+import { getDrFrankensteinAddress, getTombOverlayAddress } from 'utils/addressHelpers'
 import Page from '../../components/layout/Page'
 import Table from './Table'
 import '../Graves/Graves.Styles.css'
 import { account, tombs } from '../../redux/get'
 import { initialTombData, tomb, initialTombOverlayData } from '../../redux/fetch'
 import { getId } from '../../utils'
+import { multicallv2 } from '../../utils/multicall'
+import tombOverlayAbi from '../../config/abi/tombOverlay.json'
 
 const Tombs: React.FC = () => {
   const [update, setUpdate] = useState(false)
-  const drFrankenstein = useDrFrankenstein()
   const [updatePoolInfo, setUpdatePoolInfo] = useState(0)
   const [updateUserInfo, setUpdateUserInfo] = useState(0)
   const [updateOverlayPoolInfo, setUpdateOverlayPoolInfo] = useState(false)
   const [updateOverlayUserInfo, setUpdateOverlayUserInfo] = useState(false)
+  const [bracketBStart, setBracketBStart] = useState(0)
+  const [bracketCStart, setBracketCStart] = useState(0)
 
   useEffect(() => {
     if(updatePoolInfo === 0 && updateUserInfo === 0) {
@@ -34,6 +37,18 @@ const Tombs: React.FC = () => {
       { update: updateOverlayUserInfo, setUpdate: setUpdateOverlayUserInfo },
     )
   }, [updateOverlayPoolInfo, updateOverlayUserInfo])
+
+  useEffect(() => {
+    const calls = [
+      { address: getTombOverlayAddress(), name: 'bracketBStart', params: [] },
+      { address: getTombOverlayAddress(), name: 'bracketCStart', params: [] },
+    ]
+    multicallv2(tombOverlayAbi, calls)
+      .then(res => {
+        setBracketBStart(res[0])
+        setBracketCStart(res[1])
+      })
+  }, [])
 
   const [isAllowance, setIsAllowance] = useState(false)
   const updateResult = (pid) => {
@@ -79,7 +94,7 @@ const Tombs: React.FC = () => {
         <div>
           {tombs().sort((a, b) => a.id - b.id).map((t) => {
             return <Table pid={getId(t.pid)} updateResult={updateResult} updateAllowance={updateAllowance}
-                          isAllowance={isAllowance} key={t.id} />
+                          isAllowance={isAllowance} bracketBStart={bracketBStart} bracketCStart={bracketCStart} key={t.id} />
           })}
         </div>
       </Page>
