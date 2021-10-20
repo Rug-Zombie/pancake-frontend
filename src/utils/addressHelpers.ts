@@ -98,5 +98,5 @@ export const getCatacombsAddress = () => {
   return getAddress(addresses.catacombs)
 }
 export const getTombOverlayAddress = () => {
-  return getAddress(addresses.tomboverlay)
+  return getAddress(addresses.tombOverlay)
 }

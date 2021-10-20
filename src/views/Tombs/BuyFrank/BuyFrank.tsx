@@ -14,29 +14,32 @@ import { account, tombByPid, tombOverlayByPid } from '../../../redux/get'
 import { APESWAP_ADD_LIQUIDITY_URL, AUTOSHARK_ADD_LIQUIDITY_URL, BASE_ADD_LIQUIDITY_URL } from '../../../config'
 import tokens from '../../../config/constants/tokens'
 import { getId } from '../../../utils'
+import { DEFAULT_USER_INFO } from '../../../redux/tombOverlays'
 
 interface BuyFrankProps {
   pid: number
 }
 
+const NULL_OVERLAY = {
+  userInfo: {
+    nftMintTime: 2
+  }
+}
+
 const BuyFrank: React.FC<BuyFrankProps> = ({ pid }) => {
   const tombOverlay = useTombOverlay()
-  const tombOverlayMethods = tombOverlay ? tombOverlay.methods : null
   const currentDate = Math.floor(Date.now() / 1000)
   const tomb = tombByPid(pid)
   const overlay = tombOverlayByPid(getId(tomb.overlayId))
+  const { userInfo: { nftMintTime, isMinting, randomNumber }} = overlay || { userInfo: DEFAULT_USER_INFO }
   const { userInfo: { amount, tokenWithdrawalDate } } = tomb
+  const mintingReady = randomNumber > 0
   const initialWithdrawCooldownTime = tokenWithdrawalDate - currentDate
-  const [nextMint, setNextMint] = useState('')
-  const [nextMintRaw, setNextMintRaw] = useState(0)
-  const [startedMinting, setStartedMinting] = useState(false)
-  const [mintingReady, setMintingReady] = useState(false)
   // eslint-disable-next-line no-nested-ternary
   const quoteTokenUrl = tomb.quoteToken === tokens.wbnb ? tomb.exchange === 'Apeswap' ? 'ETH' : 'BNB' : getAddress(tomb.quoteToken.address)
 
   const modal = overlay ? <StartMintingModal
     pid={getId(overlay.pid)}
-    fee={mintingFee}
   /> : null
 
   const [onStartMinting] = useModal(modal)
@@ -55,38 +58,6 @@ const BuyFrank: React.FC<BuyFrankProps> = ({ pid }) => {
     addLiquidityUrl = `${BASE_ADD_LIQUIDITY_URL}/${quoteTokenUrl}/${getAddress(tomb.token.address)}`
   }
 
-  useEffect(() => {
-    console.log('yuh')
-    if (overlay) {
-      if (account()) {
-        tombOverlayMethods.nftMintTime(getId(overlay.pid)).call({ from: account() })
-          .then((res) => {
-            setNextMint(formatDuration(new BigNumber(res.toString()).toNumber()))
-            setNextMintRaw(new BigNumber(res.toString()).toNumber())
-          })
-        const calls = [
-          { address: getTombOverlayAddress(), name: 'userInfo', params: [getId(overlay.pid), account()] },
-          { address: getTombOverlayAddress(), name: 'mintingFee', params: [] },
-        ]
-        multicallv2(tombOverlayAbi, calls)
-          .then((res) => {
-            setStartedMinting(res[0].isMinting)
-            setMintingReady(res[0].randomNumber > 0)
-            setMintingFee(new BigNumber(res[1].toString()))
-          })
-        tombOverlayMethods.priceInBnb(mintingFee.toString()).call()
-          .then((res2) => {
-            setMintingFee(new BigNumber(res2))
-          })
-      } else {
-        setNextMint(formatDuration(2 ** 256 - 1))
-        setNextMintRaw(2 ** 256 - 1)
-        setStartedMinting(false)
-        setMintingReady(false)
-        setMintingFee(new BigNumber(0))
-      }
-    }
-  }, [mintingFee, overlay, tombOverlayMethods])
 
   const pairLpDiv = <div className='frank-card'>
     <a href={addLiquidityUrl} target='_blank' rel='noreferrer'>
@@ -95,7 +66,7 @@ const BuyFrank: React.FC<BuyFrankProps> = ({ pid }) => {
   </div>
 
   let mintButton
-  if (startedMinting && !mintingReady) {
+  if (isMinting && !mintingReady) {
     mintButton = (<Button className='btn w-100'>Minting In Progress</Button>)
   } else if (mintingReady) {
     mintButton = (<Button className='btn w-100' onClick={handleFinishMinting}>Finish Minting</Button>)
@@ -104,9 +75,9 @@ const BuyFrank: React.FC<BuyFrankProps> = ({ pid }) => {
   }
 
   let mintTimer
-  if (nextMintRaw === (2 ** 256 - 1)) {
+  if (nftMintTime === (2 ** 256 - 1)) {
     mintTimer = (<div className='small-text'><span className='white-color'>Not Minting</span></div>)
-  } else if (nextMintRaw === 0) {
+  } else if (nftMintTime === 0) {
     mintTimer = (
       <span className='total-earned text-shadow' data-tip data-for='nft-minting' data-text-color='black'>NFT is Ready
       <ReactTooltip id='nft-minting' place='top' type='light' effect='solid' className='nftTimerPopup'>
@@ -114,14 +85,14 @@ const BuyFrank: React.FC<BuyFrankProps> = ({ pid }) => {
   } else {
     mintTimer = (<div>
       <div className='small-text'><span className='white-color'>NFT Timer</span></div>
-      <span className='total-earned text-shadow' style={{ fontSize: '20px' }}>{nextMint}</span></div>)
+      <span className='total-earned text-shadow' style={{ fontSize: '20px' }}>{formatDuration(nftMintTime)}</span></div>)
   }
 
   let data
 
   if (!overlay) {
     data = pairLpDiv
-  } else if (nextMintRaw === 0) {
+  } else if (nftMintTime === 0) {
     data = (<div className='frank-card'>{mintButton}</div>)
   } else {
     data = (!amount.isZero() ?

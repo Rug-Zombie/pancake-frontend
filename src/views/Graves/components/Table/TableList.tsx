@@ -50,7 +50,7 @@ interface TableListProps {
 
 const TableList: React.FC<TableListProps> = (props: TableListProps) => {
   const { pid, zombieUsdPrice, handler } = props
-  const { name, rug, poolInfo, isNew, requiresNft, requiredNftPath, userInfo: { pendingZombie } } = grave(pid);
+  const { name, rug, poolInfo, isNew, userInfo: { pendingZombie } } = grave(pid);
   const { isLg, isXl } = useMatchBreakpoints()
   const isDesktop = isLg || isXl
 

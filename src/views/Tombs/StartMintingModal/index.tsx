@@ -7,22 +7,23 @@ import useToast from 'hooks/useToast'
 import { useTranslation } from 'contexts/Localization'
 import BigNumber from 'bignumber.js';
 import { getFullDisplayBalance } from 'utils/formatBalance'
+import { tombOverlayByPid } from '../../../redux/get'
 
 interface StartMintingModalProps {
     pid: number,
-    fee: BigNumber,
     onDismiss?: () => void,
 }
 
-const StartMintingModal: React.FC<StartMintingModalProps> = ({ pid, fee, onDismiss }) => {
+const StartMintingModal: React.FC<StartMintingModalProps> = ({ pid, onDismiss }) => {
     const { toastSuccess } = useToast()
     const { t } = useTranslation()
+    const {poolInfo: { mintingFee }} = tombOverlayByPid(pid)
 
     const tombOverlay = useTombOverlay();
     const { account } = useWeb3React();
 
     const handleStartMinting = () => {
-        tombOverlay.methods.startMinting(pid).send({ value: fee, from: account })
+        tombOverlay.methods.startMinting(pid).send({ value: mintingFee, from: account })
             .then(() => {
                 toastSuccess(t("Minting has started"))
                 onDismiss()
@@ -38,7 +39,7 @@ const StartMintingModal: React.FC<StartMintingModalProps> = ({ pid, fee, onDismi
                 </Flex>
             </Flex>
             <Text mt="8px" ml="auto" bold color="tertiary" fontSize="14px" mb="8px">
-                NFTombs minting requires a small fee of {getFullDisplayBalance(new BigNumber(fee.toString()), 18, 4)} BNB. This fee covers the cost of the <br/>
+                NFTombs minting requires a small fee of {getFullDisplayBalance(new BigNumber(mintingFee.toString()), 18, 4)} BNB. This fee covers the cost of the <br/>
                 Verifiable Random Function that is used. This is also a two step process, as the VRF<br/>
                 has a delay while it generates the random number off-chain. Once this has completed<br/>
                 you can finish the minting process to claim your NFT!

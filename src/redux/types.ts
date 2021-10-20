@@ -188,21 +188,22 @@ export interface Nft {
   path: string,
   type: string,
   rarity: string,
-  artist?: string,
+  artist?: Artist,
   userInfo: NftUserInfo,
 }
 
 export interface TombOverlayPoolInfo {
   poolId: number,
   isEnabled: boolean,
-  mintingTime: BigNumber
+  mintingTime: number
   mintingFee: BigNumber
 }
 
 export interface TombOverlayUserInfo {
-  nextNftMintDate: BigNumber,
+  nextNftMintDate: number,
   isMinting: boolean,
-  randomNumber: number
+  randomNumber: number,
+  nftMintTime: number
 }
 
 export interface TombOverlay {

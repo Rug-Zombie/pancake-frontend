@@ -1,8 +1,7 @@
-import { LinkExternal } from '@rug-zombie-libs/uikit'
+import { Text, Flex, LinkExternal, useMatchBreakpoints } from '@rug-zombie-libs/uikit'
 import tokens from 'config/constants/tokens'
-import { useDrFrankenstein, useTombOverlay } from 'hooks/useContract'
-import React, { useEffect, useState } from 'react'
-import { getFullDisplayBalance } from 'utils/formatBalance'
+import React from 'react'
+
 import BigNumber from 'bignumber.js'
 import numeral from 'numeral'
 import Video from 'components/Video'
@@ -11,7 +10,7 @@ import { nftById, tombByPid, tombOverlayByPid } from '../../../redux/get'
 import { getAddress } from '../../../utils/addressHelpers'
 import { APESWAP_ADD_LIQUIDITY_URL, AUTOSHARK_ADD_LIQUIDITY_URL, BASE_ADD_LIQUIDITY_URL } from '../../../config'
 import { getId } from '../../../utils'
-import 'react-responsive-carousel/lib/styles/carousel.min.css' // requires a loader
+import 'react-responsive-carousel/lib/styles/carousel.min.css'
 
 interface RugInDetailsProps {
   pid: number,
@@ -19,11 +18,12 @@ interface RugInDetailsProps {
   tvl: BigNumber,
 }
 
-const RugInDetails: React.FC<RugInDetailsProps> = ({ pid, tvl, }) => {
+const RugInDetails: React.FC<RugInDetailsProps> = ({ pid, tvl }) => {
   const tomb = tombByPid(pid)
-
   const { id, name, withdrawalCooldown, exchange, overlayId, poolInfo: { allocPoint } } = tomb
   const overlay = tombOverlayByPid(getId(overlayId))
+  const { isLg, isXl } = useMatchBreakpoints()
+  const isDesktop = isLg || isXl
   let nftombInfoDiv = null
   let nftombMintingTimeDiv = null
   if (overlay) {
@@ -34,27 +34,72 @@ const RugInDetails: React.FC<RugInDetailsProps> = ({ pid, tvl, }) => {
     const rareNft = nftById(rareId)
     const legendaryNft = nftById(legendaryId)
     const nfts = [legendaryNft, rareNft, uncommonNft, commonNft]
-    console.log('refresh')
-    nftombInfoDiv = <Carousel showThumbs={false} showStatus={false} autoPlay infiniteLoop className='direction-column imageColumn'>
-      {nfts.map(nft => <div key={nft.id}>
-        <div>
-          <span className='indetails-type'>{nft.name}</span>
 
-          <div className='sc-iwajpm dcRUtg'>
-            {nft.type === 'image' ? (
-              <img src={nft.path} alt='NFT' className='sc-cxNHIi bjMxQn' />
-            ) : (
-              <Video path={nft.path} />
-            )}
-          </div>
-        </div>
-        <div className='direction-column'>
+    const brackets = {
+      low: {
+        'Ccommon': 70,
+        'Uncommon': 20,
+        'Rare': 5,
+        'Legendary': 5,
+      },
+      middle: {
+        'Common': 50,
+        'Uncommon': 25,
+        'Rare': 15,
+        'Legendary': 10,
+      },
+      top: {
+        'Common': 20,
+        'Uncommon': 30,
+        'Rare': 30,
+        'Legendary': 20
+      },
+    }
+    nftombInfoDiv = <div style={{ width: '60%' }}>
+      <Carousel
+        showThumbs={false}
+        showStatus={false}
+        infiniteLoop
+        className={isDesktop ? '' : 'direction-column imageColumn'}
+      >
+        {nfts.map(nft => <div key={nft.id}>
+          {isDesktop ? <Flex>
+            <div style={{ width: '50%' }}>
+              {nft.type === 'image' ? (
+                <img src={nft.path} alt='NFT' />
+              ) : (
+                <Video path={nft.path} />
+              )}
+            </div>
+            <Flex paddingLeft='10px' flexDirection='column' alignItems='flex-start' justifyContent='flex-start'
+                  justifyItems='flex-start'>
+              <Text className='indetails-type' color='white' bold>{nft.name}</Text>
+              <Text color='rgb(92, 109, 120)'>Chance: 0%</Text>
+              <Text color='rgb(92, 109, 120)'>Increase chance by staking LP</Text>
+              <LinkExternal bold={false} small href={nft.artist ? nft.artist.twitter : ''}>
+                View NFT Artist
+              </LinkExternal>
+            </Flex>
+          </Flex> : <>
+            <div>
+              <span className='indetails-type'>{nft.name}</span>
+              <div className='sc-iwajpm dcRUtg'>
+                {nft.type === 'image' ? (
+                  <img src={nft.path} alt='NFT' className='sc-cxNHIi bjMxQn' />
+                ) : (
+                  <Video path={nft.path} />
+                )}
+              </div>
+            </div>
+            <div className='direction-column'>
           <span className='indetails-title'>
-          <LinkExternal bold={false} small href={nft.artist}>View NFT Artist</LinkExternal>
+          <LinkExternal bold={false} small href={nft.artist ? nft.artist.twitter : ''}>View NFT Artist</LinkExternal>
         </span>
-        </div>
-      </div>)}
-    </Carousel>
+            </div>
+          </>}
+        </div>)}
+      </Carousel>
+    </div>
 
     nftombMintingTimeDiv = <span className='indetails-title'>
           NFT Minting Time:

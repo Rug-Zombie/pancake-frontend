@@ -1,6 +1,20 @@
 import { BIG_ZERO } from '../utils/bigNumber'
 import { TombOverlay } from './types'
 
+export const DEFAULT_USER_INFO = {
+    nextNftMintDate: 0,
+    isMinting: false,
+    randomNumber: 0,
+    nftMintTime: 2**256 - 1
+}
+
+const DEFAULT_POOL_INFO = {
+    poolId: 0,
+    isEnabled: false,
+    mintingTime: 0,
+    mintingFee: BIG_ZERO
+}
+
 const tombOverlays: TombOverlay[] = [
     {
         id: 0,
@@ -17,17 +31,8 @@ const tombOverlays: TombOverlay[] = [
         uncommonId: 44,
         rareId: 45,
         legendaryId: 46,
-        userInfo: {
-            nextNftMintDate: BIG_ZERO,
-            isMinting: false,
-            randomNumber: 0
-        },
-        poolInfo: {
-            poolId: 0,
-            isEnabled: false,
-            mintingTime: BIG_ZERO,
-            mintingFee: BIG_ZERO
-        }
+        userInfo: { ...DEFAULT_USER_INFO },
+        poolInfo: { ...DEFAULT_POOL_INFO }
     },
 ]
 
