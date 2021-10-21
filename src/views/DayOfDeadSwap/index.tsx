@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { Flex, Heading, BaseLayout } from '@rug-zombie-libs/uikit'
 import PageHeader from 'components/PageHeader'
 import artists from 'config/constants/artists'
+import Page from 'components/layout/Page'
 import NftCard from './NftCard'
 
 const TableCards = styled(BaseLayout)`
@@ -46,15 +47,11 @@ const DayOfDeadSwap: React.FC = () => {
                     </Flex>
                 </Flex>
             </PageHeader>
-            <Row>
-                <NftCard name='Common' artist={artists.RugZombie} rznftid={0} dodnftid={0} />
-            </Row>
-            <Row>
-                <NftCard name='Unommon' artist={artists.RugZombie} rznftid={0} dodnftid={1} />
-            </Row>
-            <Row>
-                <NftCard name='Rare' artist={artists.RugZombie} rznftid={0} dodnftid={2} />
-            </Row>
+            <Page>
+                <NftCard name='Common' artist={artists.RugZombie} rznftid={6} dodnftid={0} />
+                <NftCard name='Unommon' artist={artists.RugZombie} rznftid={19} dodnftid={1} />
+                <NftCard name='Rare' artist={artists.RugZombie} rznftid={29} dodnftid={2} />
+            </Page>
         </>
     )
 }
