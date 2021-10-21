@@ -31,7 +31,7 @@ interface ViewCardProps {
 
 const RugRollCard: React.FC<ViewCardProps> = () => {
     const [burnAmount, setBurnAmount] = useState(BIG_ZERO)
-    const [burned, setBurned] = useState(false)
+    const [approved, setApproved] = useState(false)
     const [receivedToken, setReceivedToken] = useState(false)
     const [ruggedToken, setRuggedToken] = useState(false)
     const [allowance, setAllowance] = useState(BIG_ZERO)
@@ -39,10 +39,15 @@ const RugRollCard: React.FC<ViewCardProps> = () => {
     const zombie = useZombie()
     const RuggedTokens = ruggedTokens()
 
-    const handleApproveZombie = () => {
+    const [approveZombieText, setApproveZombieText] = useState("Approve ZMBE")
+    const [approveRuggedTokenText, setApproveRuggedTokenText] = useState("Approve rugged token")
+
+    const handleApproveZombie = (event) => {
+        setApproveZombieText("Approving transaction....")
         if (account()) {
-            zombie.methods.approve(getAddress(addresses.rugRoll), burnAmount).send({from: account()}).then(() => {
-                console.log('approved')
+            zombie.methods.approve(getAddress(addresses.rugRoll), burnAmount).send({from: account()}).then((r) => {
+                console.log(r)
+                setApproveZombieText('ZMBE approved')
             })
         }
     }
@@ -59,10 +64,13 @@ const RugRollCard: React.FC<ViewCardProps> = () => {
         setRuggedToken(event.target.value);
     }
 
-    const approveRuggedToken = (event) => {
+    const ApproveRuggedToken = (event) => {
+        setApproveRuggedTokenText("Confirming transaction....")
         console.log(ruggedToken)
-        useERC20(String(ruggedToken)).methods.approve(getRugRollAddress(), BIG_TEN.pow(18)).send({from: account()}).then(res => {
+        const erc20 = useERC20(String(ruggedToken))
+        erc20.methods.approve(getRugRollAddress(), BIG_TEN.pow(18)).send({from: account()}).then(res => {
             console.log(res)
+            setApproveRuggedTokenText("RuggedTokenApproved")
         })
     }
 
@@ -102,8 +110,8 @@ const RugRollCard: React.FC<ViewCardProps> = () => {
                             })
                         }
                     </select>
-                    <StyledButton variant="secondary" onClick={approveRuggedToken}>
-                        Approve rugged token
+                    <StyledButton variant="secondary" onClick={ApproveRuggedToken}>
+                        {approveRuggedTokenText}
                     </StyledButton>
                     {
                         // eslint-disable-next-line no-nested-ternary
@@ -117,7 +125,7 @@ const RugRollCard: React.FC<ViewCardProps> = () => {
                                     onClick={allowance.gte(burnAmount) ? null : handleApproveZombie}
                                     as='a' variant='secondary'
                                     style={{border: '2px solid white', width: '100%'}}>
-                                <Text color='white'>Burn {getFullDisplayBalance(burnAmount).toString()} ZMBE</Text>
+                                <Text color='white'>{approveZombieText}</Text>
                             </Button> :
                             <UnlockButton/>
                     }
