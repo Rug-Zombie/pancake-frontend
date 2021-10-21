@@ -1,8 +1,5 @@
 import { Address, Id, Token } from '../config/constants/types'
 import { BigNumber } from 'bignumber.js'
-import tokens from '../config/constants/tokens'
-import { BIG_ZERO } from '../utils/bigNumber'
-import artists from '../config/constants/artists'
 
 export interface UserInfo {
   paidUnlockFee: boolean,
@@ -120,6 +117,7 @@ export interface Grave {
 export interface Tomb {
   id: number,
   pid: Id,
+  overlayId?: Id,
   name: string,
   withdrawalCooldown: string,
   token: Token,
@@ -190,5 +188,33 @@ export interface Nft {
   path: string,
   type: string,
   rarity: string,
+  artist?: Artist,
   userInfo: NftUserInfo,
+}
+
+export interface TombOverlayPoolInfo {
+  poolId: number,
+  isEnabled: boolean,
+  mintingTime: number
+  mintingFee: BigNumber
+}
+
+export interface TombOverlayUserInfo {
+  nextNftMintDate: number,
+  isMinting: boolean,
+  randomNumber: number,
+  nftMintTime: BigNumber
+}
+
+export interface TombOverlay {
+  id: number,
+  pid: Id,
+  poolId: Id,
+  mintingTime: string,
+  commonId: number,
+  uncommonId: number,
+  rareId: number,
+  legendaryId: number,
+  userInfo: TombOverlayUserInfo,
+  poolInfo: TombOverlayPoolInfo
 }

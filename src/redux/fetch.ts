@@ -27,12 +27,14 @@ import {
   updateAuctionUserInfo,
   updateNftUserInfo,
   updateDrFrankensteinTotalAllocPoint, updateBnbBalance,
+  updateTombOverlayPoolInfo, updateTombOverlayUserInfo,
 } from './actions'
 import {
   getAddress,
   getDrFrankensteinAddress,
   getMausoleumAddress,
   getSpawningPoolAddress,
+  getTombOverlayAddress,
 } from '../utils/addressHelpers'
 import tombs from './tombs'
 import * as get from './get'
@@ -41,6 +43,7 @@ import drFrankensteinAbi from '../config/abi/drFrankenstein.json'
 import pancakePairAbi from '../config/abi/pancakePairAbi.json'
 import mausoleumAbi from '../config/abi/mausoleum.json'
 import mausoleumV3Abi from '../config/abi/mausoleumV3.json'
+import tombOverlayAbi from '../config/abi/tombOverlay.json'
 import { BIG_ZERO } from '../utils/bigNumber'
 import { account, auctionById, zmbeBnbTomb } from './get'
 import web3 from '../utils/web3'
@@ -93,7 +96,6 @@ export const initialData = (accountAddress: string, setZombiePrice?: any) => {
 
 export const tomb = (pid: number, updatePoolObj?: { update: number, setUpdate: any }, updateUserObj?: { update: number, setUpdate: any }, everyUpdateObj?: { update: boolean, setUpdate: any }) => {
   const address = getDrFrankensteinAddress()
-
   if (account()) {
     let calls = [
       { address, name: 'poolInfo', params: [pid] },
@@ -126,9 +128,11 @@ export const tomb = (pid: number, updatePoolObj?: { update: number, setUpdate: a
             if (everyUpdateObj) {
               everyUpdateObj.setUpdate(!everyUpdateObj.update)
             }
+
             if (updateUserObj) {
               updateUserObj.setUpdate(updateUserObj.update + 1)
             }
+
           })
       })
   } else {
@@ -171,6 +175,79 @@ export const initialTombData = (updatePoolObj?: { update: number, setUpdate: any
   })
 }
 
+export const multicallTombData = (updatePoolObj?: { update: boolean, setUpdate: any }, updateUserObj?: { update: boolean, setUpdate: any }) => {
+  const totalSupplyCalls = []
+  get.tombs().forEach(t => {
+    totalSupplyCalls.push({ address: getAddress(t.lpAddress), name: 'totalSupply', params: [] })
+    totalSupplyCalls.push({ address: getAddress(t.lpAddress), name: 'balanceOf', params: [getDrFrankensteinAddress()] })
+    totalSupplyCalls.push({ address: getAddress(t.lpAddress), name: 'getReserves', params: [] })
+  })
+
+  multicallv2(pancakePairAbi, totalSupplyCalls)
+    .then(totalSupplyRes => {
+      if (account()) {
+        const drFCalls = []
+        get.tombs().forEach(t => {
+          drFCalls.push({ address: getDrFrankensteinAddress(), name: 'poolInfo', params: [getId(t.pid)] })
+          drFCalls.push({ address: getDrFrankensteinAddress(), name: 'userInfo', params: [getId(t.pid), account()] })
+          drFCalls.push({
+            address: getDrFrankensteinAddress(),
+            name: 'pendingZombie',
+            params: [getId(t.pid), account()],
+          })
+        })
+
+        multicallv2(drFrankensteinAbi, drFCalls)
+          .then(drFRes => {
+            get.tombs().forEach((t, index) => {
+              const poolInfoRes = drFRes[index * 3]
+              const userInfoRes = drFRes[(index * 3) + 1]
+
+              store.dispatch(updateTombPoolInfo(getId(t.pid), {
+                allocPoint: new BigNumber(poolInfoRes.allocPoint.toString()),
+                minimumStake: new BigNumber(poolInfoRes.minimumStake.toString()),
+                lpTotalSupply: new BigNumber(totalSupplyRes[index * 3].toString()),
+                totalStaked: new BigNumber(totalSupplyRes[(index * 3) + 1].toString()),
+                reserves: [new BigNumber(totalSupplyRes[(index * 3) + 2]._reserve0.toString()), new BigNumber(totalSupplyRes[(index * 3) + 2]._reserve1.toString())],
+              }))
+              store.dispatch(updateTombUserInfo(getId(t.pid), {
+                amount: new BigNumber(userInfoRes.amount.toString()),
+                tokenWithdrawalDate: userInfoRes.tokenWithdrawalDate,
+                lpAllowance: new BigNumber(userInfoRes.toString()),
+                pendingZombie: new BigNumber(drFRes[(index * 3) + 2].toString()),
+              }))
+            })
+            if (!updateUserObj.update) {
+              updateUserObj.setUpdate(!updateUserObj.update)
+            }
+          })
+      } else {
+        const drFCalls = []
+        get.tombs().forEach(t => {
+          drFCalls.push({ address: getDrFrankensteinAddress(), name: 'poolInfo', params: [getId(t.pid)] })
+        })
+        multicallv2(drFrankensteinAbi, drFCalls)
+          .then(drFRes => {
+            get.tombs().forEach((t, index) => {
+              const poolInfoRes = drFRes[index]
+
+              store.dispatch(updateTombPoolInfo(getId(t.pid), {
+                allocPoint: new BigNumber(poolInfoRes.allocPoint.toString()),
+                minimumStake: new BigNumber(poolInfoRes.minimumStake.toString()),
+                lpTotalSupply: new BigNumber(totalSupplyRes[index * 3].toString()),
+                totalStaked: new BigNumber(totalSupplyRes[(index * 3) + 1].toString()),
+                reserves: [new BigNumber(totalSupplyRes[(index * 3) + 2]._reserve0.toString()), new BigNumber(totalSupplyRes[(index * 3) + 2]._reserve1.toString())],
+              }))
+            })
+            if (!updatePoolObj.update) {
+              updatePoolObj.setUpdate(!updatePoolObj.update)
+            }
+          })
+
+      }
+    })
+}
+
 export const grave = (pid: number, setUserInfoState?: { update: boolean, setUpdate: any }, setPoolInfoState?: { update: boolean, setUpdate: any }) => {
   getDrFrankensteinContract().methods.poolInfo(pid).call()
     .then(poolInfoRes => {
@@ -178,7 +255,6 @@ export const grave = (pid: number, setUserInfoState?: { update: boolean, setUpda
         const graveStakingTokenContract = getBep20Contract(get.graveByPid(pid).stakingToken)
         graveStakingTokenContract.methods.totalSupply().call()
           .then(stakingTokenSupplyRes => {
-
             if (poolInfoRes.allocPoint !== 0) {
               store.dispatch(updateGravePoolInfo(
                 pid,
@@ -321,6 +397,7 @@ export const spawningPool = (id: number, zombie: any, poolUpdateObj?: { update: 
       })
   }
 }
+
 
 export const auction = (
   id: number,
@@ -496,7 +573,7 @@ const bnbPriceUsd = (setZombiePrice?: any) => {
   axios.get('https://api.binance.com/api/v3/avgPrice?symbol=BNBBUSD')
     .then(res => {
       store.dispatch(updateBnbPriceUsd(res.data.price))
-      if(setZombiePrice) {
+      if (setZombiePrice) {
         zombiePriceBnb(setZombiePrice)
       }
     })
@@ -510,3 +587,88 @@ const nfts = () => {
       })
   })
 }
+
+export const initialTombOverlayData = (updatePoolObj?: { update: boolean, setUpdate: any }, updateUserObj?: { update: boolean, setUpdate: any }, everyUpdateObj?: { update: boolean, setUpdate: any }) => {
+  const address = getTombOverlayAddress()
+  if (account()) {
+    const calls = [{ address, name: 'mintingFee', params: [] }]
+
+    get.tombOverlays().forEach(o => {
+      calls.push({ address, name: 'poolInfo', params: [getId(o.pid)] })
+      calls.push({ address, name: 'userInfo', params: [getId(o.pid), get.account()] })
+      calls.push({ address, name: 'nftMintTime', params: [getId(o.pid), get.account()] })
+    })
+
+    multicallv2(tombOverlayAbi, calls)
+      .then(overlayRes => {
+        for (let i = 0; i < get.tombOverlays().length; i++) {
+          const tombOverlay = get.tombOverlays()[i]
+          const index = (i + 1) * 3
+          const poolInfo = overlayRes[index - 2]
+          const userInfo = overlayRes[index - 1]
+          const nftMintTime = new BigNumber(overlayRes[index].toString())
+          console.log('before')
+          console.log(nftMintTime.toString())
+          store.dispatch(updateTombOverlayPoolInfo(getId(tombOverlay.pid), {
+            isEnabled: poolInfo.isEnabled,
+            poolId: poolInfo.poolId,
+            mintingTime: poolInfo.mintingTime,
+            mintingFee: new BigNumber(overlayRes[0].toString()),
+          }))
+          console.log('after')
+
+          store.dispatch(updateTombOverlayUserInfo(getId(tombOverlay.pid), {
+            nextNftMintDate: userInfo.nextNftMintDate,
+            isMinting: userInfo.isMinting,
+            randomNumber: userInfo.randomNumber,
+            nftMintTime,
+          }))
+        }
+        if (everyUpdateObj) {
+          everyUpdateObj.setUpdate(!everyUpdateObj.update)
+        }
+        if (updateUserObj && updateUserObj.update) {
+          console.log('updating')
+          updateUserObj.setUpdate(!updateUserObj.update)
+        }
+      })
+      .catch((res) => {
+        console.log(res)
+      })
+  } else {
+    const calls = [{ address, name: 'mintingFee', params: [] }]
+
+    get.tombOverlays().forEach(o => {
+      calls.push({ address, name: 'poolInfo', params: [getId(o.pid)] })
+    })
+
+    multicallv2(tombOverlayAbi, calls)
+      .then(overlayRes => {
+        for (let i = 0; i < get.tombOverlays().length; i++) {
+          const tombOverlay = get.tombOverlays()[i]
+          const index = i + 1
+          const poolInfo = overlayRes[index]
+          console.log('before')
+          store.dispatch(updateTombOverlayPoolInfo(getId(tombOverlay.pid), {
+            isEnabled: poolInfo.isEnabled,
+            poolId: poolInfo.poolId,
+            mintingTime: poolInfo.mintingTime,
+            mintingFee: new BigNumber(overlayRes[0].toString()),
+          }))
+          console.log('after')
+
+          if (everyUpdateObj) {
+            everyUpdateObj.setUpdate(!everyUpdateObj.update)
+          }
+          if (updatePoolObj && updatePoolObj.update) {
+            console.log('updating')
+            updatePoolObj.setUpdate(!updatePoolObj.update)
+          }
+        }
+      })
+      .catch((res) => {
+        console.log(res)
+      })
+  }
+}
+
