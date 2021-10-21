@@ -408,7 +408,7 @@ const nfts: Nft[] = [
   {
     id: 25,
     name: 'Leonhard Euler\'s Day Off',
-    symbol: 'INEVITABLE',
+    symbol: 'EULER',
     description: 'Now I will have less distraction.',
     address: {
       56: '0x58D739aF3aBBb8d34A2D9068dCC60a95D172f80c',
@@ -751,6 +751,21 @@ const nfts: Nft[] = [
     },
     totalSupply: BIG_ZERO,
     path: 'https://storage.googleapis.com/rug-zombie/Ocean-Compresed.webm',
+    type: 'video',
+    rarity: 'Legendary',
+    userInfo: { ...DEFAULT_USER_INFO },
+  },
+  {
+    id: 47,
+    name: 'Shiny Inevitable Ape',
+    symbol: 'INEVITABLE',
+    description: 'Welcome to the Jungle.',
+    address: {
+      56: '0xE501dB597207F41599b05e8fD45e229686683D5a',
+      97: '0x2d8b022125f4afbf9594a4dff269eb44e15ae295',
+    },
+    totalSupply: BIG_ZERO,
+    path: 'https://ipfs.io/ipfs/QmTUNZZSZZSbVtfvDkHFXPr9fuHdXYLnQeTJMTiRMJ7epq',
     type: 'video',
     rarity: 'Legendary',
     userInfo: { ...DEFAULT_USER_INFO },

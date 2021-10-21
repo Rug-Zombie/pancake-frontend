@@ -21,6 +21,24 @@ const tombOverlays: TombOverlay[] = [
         id: 0,
         pid: {
             56: 1,
+            97: 2,
+        },
+        poolId: {
+            56: 17,
+            97: 2,
+        },
+        mintingTime: '14 days',
+        commonId: 43,
+        uncommonId: 44,
+        rareId: 45,
+        legendaryId: 47,
+        userInfo: { ...DEFAULT_USER_INFO },
+        poolInfo: { ...DEFAULT_POOL_INFO }
+    },
+    {
+        id: 1,
+        pid: {
+            56: 0,
             97: 1,
         },
         poolId: {

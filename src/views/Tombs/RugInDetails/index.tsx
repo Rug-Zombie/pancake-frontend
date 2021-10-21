@@ -6,7 +6,7 @@ import BigNumber from 'bignumber.js'
 import numeral from 'numeral'
 import Video from 'components/Video'
 import { Carousel } from 'react-responsive-carousel'
-import { nftById, tombByPid, tombOverlayByPid } from '../../../redux/get'
+import { nftById, tombByPid, tombOverlayByPoolId } from '../../../redux/get'
 import { getAddress } from '../../../utils/addressHelpers'
 import { APESWAP_ADD_LIQUIDITY_URL, AUTOSHARK_ADD_LIQUIDITY_URL, BASE_ADD_LIQUIDITY_URL } from '../../../config'
 import { getId } from '../../../utils'
@@ -23,7 +23,7 @@ interface RugInDetailsProps {
 const RugInDetails: React.FC<RugInDetailsProps> = ({ pid, tvl, bracketBStart, bracketCStart }) => {
   const tomb = tombByPid(pid)
   const { id, name, withdrawalCooldown, exchange, overlayId, userInfo: { amount }, poolInfo: { allocPoint, totalStaked } } = tomb
-  const overlay = tombOverlayByPid(getId(overlayId))
+  const overlay = overlayId ? tombOverlayByPoolId(getId(overlayId)) : undefined
   const { isLg, isXl } = useMatchBreakpoints()
   const isDesktop = isLg || isXl
   let nftombInfoDiv = null

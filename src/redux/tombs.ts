@@ -10,10 +10,6 @@ const tombs: Tomb[] = [
       56: 11,
       97: 2,
     },
-    overlayId: {
-      56: 0,
-      97: 0,
-    },
     name: 'ZMBE-BNB',
     lpAddress: {
       97: '0x72427E9ee25CC6e9e4Cee3C52a77EEA7eE33A83B',
@@ -44,7 +40,7 @@ const tombs: Tomb[] = [
       97: 4,
     },
     overlayId: {
-      56: 1,
+      56: 0,
       97: 1,
     },
     name: 'ZMBE-BNB',
@@ -77,7 +73,7 @@ const tombs: Tomb[] = [
       97: 3,
     },
     overlayId: {
-      56: 2,
+      56: 1,
       97: 2,
     },
     name: 'ZMBE-BNB',

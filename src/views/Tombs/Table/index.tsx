@@ -7,7 +7,7 @@ import BuyFrank from '../BuyFrank/BuyFrank'
 import RugInDetails from '../RugInDetails'
 import TableList from './TableList'
 import { getBalanceAmount } from '../../../utils/formatBalance'
-import { bnbPriceUsd, tombByPid, zombiePriceUsd, tombOverlayByPid } from '../../../redux/get'
+import { bnbPriceUsd, tombByPid, zombiePriceUsd, tombOverlayByPoolId } from '../../../redux/get'
 
 const TableCards = styled(BaseLayout)`
   align-items: stretch;
@@ -24,11 +24,12 @@ interface TableProps {
   isAllowance: boolean,
   updateAllowance: any,
   updateResult: any,
+  updateOverlay: any,
   bracketBStart: number,
   bracketCStart: number
 }
 
-const Table: React.FC<TableProps> = ({ pid, isAllowance, updateResult, updateAllowance, bracketBStart, bracketCStart, }: TableProps) => {
+const Table: React.FC<TableProps> = ({ pid, isAllowance, updateResult, updateOverlay, updateAllowance, bracketBStart, bracketCStart, }: TableProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const tomb = tombByPid(pid)
   const { poolInfo: { totalStaked, reserves, lpTotalSupply } } = tomb
@@ -58,7 +59,7 @@ const Table: React.FC<TableProps> = ({ pid, isAllowance, updateResult, updateAll
               <div className='flex-grow'>
                 <FrankEarned pid={pid} lpTokenPrice={lpTokenPrice} />
                 <StartFarming pid={pid} updateAllowance={updateAllowance} updateResult={updateResult} isAllowance={isAllowance} />
-                <BuyFrank pid={pid} />
+                <BuyFrank pid={pid} updateOverlay={updateOverlay}/>
               </div>
               <RugInDetails
                 pid={pid}

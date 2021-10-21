@@ -7,15 +7,16 @@ import useToast from 'hooks/useToast'
 import { useTranslation } from 'contexts/Localization'
 import BigNumber from 'bignumber.js'
 import { getFullDisplayBalance } from 'utils/formatBalance'
-import { tombOverlayByPid } from '../../../redux/get'
+import { tombOverlayByPoolId } from '../../../redux/get'
 import { BIG_ZERO } from '../../../utils/bigNumber'
 
 interface StartMintingModalProps {
   pid: number,
+  updateOverlay: any,
   onDismiss?: () => void,
 }
 
-const StartMintingModal: React.FC<StartMintingModalProps> = ({ pid, onDismiss }) => {
+const StartMintingModal: React.FC<StartMintingModalProps> = ({ pid, onDismiss, updateOverlay }) => {
   const { toastSuccess } = useToast()
   const { t } = useTranslation()
   const tombOverlay = useTombOverlay()
@@ -35,6 +36,7 @@ const StartMintingModal: React.FC<StartMintingModalProps> = ({ pid, onDismiss })
         tombOverlay.methods.startMinting(pid).send({ value: fee, from: account })
           .then(() => {
             toastSuccess(t('Minting has started'))
+            updateOverlay()
             onDismiss()
           })
       })

@@ -10,38 +10,54 @@ import { multicallv2 } from 'utils/multicall'
 import StartMintingModal from '../StartMintingModal'
 import { getAddress, getTombOverlayAddress } from '../../../utils/addressHelpers'
 import { formatDuration } from '../../../utils/timerHelpers'
-import { account, tombByPid, tombOverlayByPid } from '../../../redux/get'
+import { account, tombByPid, tombOverlayByPoolId } from '../../../redux/get'
 import { APESWAP_ADD_LIQUIDITY_URL, AUTOSHARK_ADD_LIQUIDITY_URL, BASE_ADD_LIQUIDITY_URL } from '../../../config'
 import tokens from '../../../config/constants/tokens'
 import { getId } from '../../../utils'
 import { DEFAULT_USER_INFO } from '../../../redux/tombOverlays'
+import { BIG_ZERO } from '../../../utils/bigNumber'
 
 interface BuyFrankProps {
-  pid: number
+  pid: number,
+  updateOverlay: any,
 }
 
-const BuyFrank: React.FC<BuyFrankProps> = ({ pid }) => {
+const BuyFrank: React.FC<BuyFrankProps> = ({ pid,  updateOverlay }) => {
   const tombOverlay = useTombOverlay()
   const currentDate = Math.floor(Date.now() / 1000)
   const tomb = tombByPid(pid)
-  const overlay = tombOverlayByPid(getId(tomb.overlayId))
-  const { userInfo: { nftMintTime, isMinting, randomNumber }} = overlay || { userInfo: DEFAULT_USER_INFO }
+  const overlay = tomb.overlayId ? tombOverlayByPoolId(getId(tomb.overlayId)) : undefined
+  const { userInfo: { isMinting, randomNumber }} = overlay || { userInfo: DEFAULT_USER_INFO }
   const { userInfo: { amount, tokenWithdrawalDate } } = tomb
   const mintingReady = randomNumber > 0
   const initialWithdrawCooldownTime = tokenWithdrawalDate - currentDate
-
+  const [nftMintTime, setNftMintTime] = useState(BIG_ZERO)
   // eslint-disable-next-line no-nested-ternary
   const quoteTokenUrl = tomb.quoteToken === tokens.wbnb ? tomb.exchange === 'Apeswap' ? 'ETH' : 'BNB' : getAddress(tomb.quoteToken.address)
 
   const modal = overlay ? <StartMintingModal
     pid={getId(overlay.pid)}
+    updateOverlay={updateOverlay}
   /> : null
 
   const [onStartMinting] = useModal(modal)
 
   const handleFinishMinting = () => {
     tombOverlay.methods.finishMinting(getId(overlay.pid)).send({ from: account() })
+      .then(() => {
+        updateOverlay()
+      })
   }
+
+  useEffect(() => {
+    if(account() && tomb.overlayId) {
+      tombOverlay.methods.nftMintTime(getId(tomb.overlayId), account()).call()
+        .then(res => {
+          setNftMintTime(new BigNumber(res.toString()))
+        })
+
+    }
+  }, [tomb.overlayId, tombOverlay.methods])
 
   let addLiquidityUrl
 
@@ -61,7 +77,6 @@ const BuyFrank: React.FC<BuyFrankProps> = ({ pid }) => {
   </div>
 
   let mintButton
-  console.log(mintingReady)
   if (isMinting && !mintingReady) {
     mintButton = (<Button className='btn w-100'>Minting In Progress</Button>)
   } else if (mintingReady) {
@@ -79,7 +94,7 @@ const BuyFrank: React.FC<BuyFrankProps> = ({ pid }) => {
   } else {
     mintTimer = (<div>
       <div className='small-text'><span className='white-color'>NFT Timer</span></div>
-      <span className='total-earned text-shadow' style={{ fontSize: '20px' }}>{formatDuration(nftMintTime.toNumber() - currentDate)}</span></div>)
+      <span className='total-earned text-shadow' style={{ fontSize: '20px' }}>{formatDuration(nftMintTime.toNumber() )}</span></div>)
   }
 
   let data

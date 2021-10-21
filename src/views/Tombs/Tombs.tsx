@@ -8,7 +8,7 @@ import Page from '../../components/layout/Page'
 import Table from './Table'
 import '../Graves/Graves.Styles.css'
 import { account, tombs } from '../../redux/get'
-import { initialTombData, tomb, initialTombOverlayData } from '../../redux/fetch'
+import { initialTombData, tomb, initialTombOverlayData, multicallTombData } from '../../redux/fetch'
 import { getId } from '../../utils'
 import { multicallv2 } from '../../utils/multicall'
 import tombOverlayAbi from '../../config/abi/tombOverlay.json'
@@ -19,6 +19,7 @@ const Tombs: React.FC = () => {
   const [updateUserInfo, setUpdateUserInfo] = useState(0)
   const [updateOverlayPoolInfo, setUpdateOverlayPoolInfo] = useState(false)
   const [updateOverlayUserInfo, setUpdateOverlayUserInfo] = useState(false)
+  const [updateEvery, setUpdateEvery] = useState(false)
   const [bracketBStart, setBracketBStart] = useState(0)
   const [bracketCStart, setBracketCStart] = useState(0)
 
@@ -32,7 +33,7 @@ const Tombs: React.FC = () => {
   }, [updatePoolInfo, updateUserInfo])
 
   useEffect(() => {
-    initialTombOverlayData(
+    multicallTombData(
       { update: updateOverlayPoolInfo, setUpdate: setUpdateOverlayPoolInfo },
       { update: updateOverlayUserInfo, setUpdate: setUpdateOverlayUserInfo },
     )
@@ -49,6 +50,14 @@ const Tombs: React.FC = () => {
         setBracketCStart(res[1])
       })
   }, [])
+
+  const updateOverlay = () => {
+    initialTombOverlayData(
+      undefined,
+      undefined,
+      { update: updateOverlayUserInfo, setUpdate: setUpdateOverlayUserInfo }
+    )
+  }
 
   const [isAllowance, setIsAllowance] = useState(false)
   const updateResult = (pid) => {
@@ -93,7 +102,7 @@ const Tombs: React.FC = () => {
       <Page>
         <div>
           {tombs().sort((a, b) => a.id - b.id).map((t) => {
-            return <Table pid={getId(t.pid)} updateResult={updateResult} updateAllowance={updateAllowance}
+            return <Table pid={getId(t.pid)} updateResult={updateResult} updateOverlay={updateOverlay} updateAllowance={updateAllowance}
                           isAllowance={isAllowance} bracketBStart={bracketBStart} bracketCStart={bracketCStart} key={t.id} />
           })}
         </div>

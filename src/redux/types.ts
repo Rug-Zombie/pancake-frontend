@@ -117,7 +117,7 @@ export interface Grave {
 export interface Tomb {
   id: number,
   pid: Id,
-  overlayId: Id,
+  overlayId?: Id,
   name: string,
   withdrawalCooldown: string,
   token: Token,
