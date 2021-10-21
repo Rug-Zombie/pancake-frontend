@@ -16,48 +16,71 @@ import tokens from '../../../config/constants/tokens'
 import { getId } from '../../../utils'
 import { DEFAULT_USER_INFO } from '../../../redux/tombOverlays'
 import { BIG_ZERO } from '../../../utils/bigNumber'
+import { ToastDescriptionWithTx } from '../../../components/Toast'
+import useToast from '../../../hooks/useToast'
 
 interface BuyFrankProps {
   pid: number,
   updateOverlay: any,
 }
 
-const BuyFrank: React.FC<BuyFrankProps> = ({ pid,  updateOverlay }) => {
+const BuyFrank: React.FC<BuyFrankProps> = ({ pid, updateOverlay }) => {
   const tombOverlay = useTombOverlay()
   const currentDate = Math.floor(Date.now() / 1000)
   const tomb = tombByPid(pid)
   const overlay = tomb.overlayId ? tombOverlayByPoolId(getId(tomb.overlayId)) : undefined
-  const { userInfo: { isMinting, randomNumber }} = overlay || { userInfo: DEFAULT_USER_INFO }
+  const [userInfo, setUserInfo] = useState(DEFAULT_USER_INFO)
   const { userInfo: { amount, tokenWithdrawalDate } } = tomb
-  const mintingReady = randomNumber > 0
+  const mintingReady = userInfo.randomNumber > 0
   const initialWithdrawCooldownTime = tokenWithdrawalDate - currentDate
   const [nftMintTime, setNftMintTime] = useState(BIG_ZERO)
+  const [update, setUpdate] = useState(false)
   // eslint-disable-next-line no-nested-ternary
   const quoteTokenUrl = tomb.quoteToken === tokens.wbnb ? tomb.exchange === 'Apeswap' ? 'ETH' : 'BNB' : getAddress(tomb.quoteToken.address)
+  const { toastSuccess } = useToast()
 
   const modal = overlay ? <StartMintingModal
     pid={getId(overlay.pid)}
-    updateOverlay={updateOverlay}
+    updateOverlay={() => {
+      updateOverlay()
+      setUpdate(!update)
+    }
+    }
   /> : null
 
   const [onStartMinting] = useModal(modal)
 
   const handleFinishMinting = () => {
     tombOverlay.methods.finishMinting(getId(overlay.pid)).send({ from: account() })
-      .then(() => {
+      .then(res => {
         updateOverlay()
+        setUpdate(!update)
+        toastSuccess('NFT has been minted!', <ToastDescriptionWithTx txHash={res.transactionHash} />)
       })
   }
 
   useEffect(() => {
-    if(account() && tomb.overlayId) {
+    if (account() && tomb.overlayId) {
       tombOverlay.methods.nftMintTime(getId(tomb.overlayId), account()).call()
         .then(res => {
           setNftMintTime(new BigNumber(res.toString()))
         })
-
     }
-  }, [tomb.overlayId, tombOverlay.methods])
+  }, [update, tomb.overlayId, tombOverlay.methods])
+
+  useEffect(() => {
+    if (account() && tomb.overlayId) {
+      tombOverlay.methods.userInfo(getId(tomb.overlayId), account()).call()
+        .then(res => {
+          setUserInfo({
+            nextNftMintDate: res.nextNftMintDate,
+            isMinting: res.isMinting,
+            randomNumber: res.randomNumber,
+            nftMintTime: res.nftMintTime,
+          })
+        })
+    }
+  }, [update, tomb.overlayId, tombOverlay.methods])
 
   let addLiquidityUrl
 
@@ -77,7 +100,7 @@ const BuyFrank: React.FC<BuyFrankProps> = ({ pid,  updateOverlay }) => {
   </div>
 
   let mintButton
-  if (isMinting && !mintingReady) {
+  if (userInfo.isMinting && !mintingReady) {
     mintButton = (<Button className='btn w-100'>Minting In Progress</Button>)
   } else if (mintingReady) {
     mintButton = (<Button className='btn w-100' onClick={handleFinishMinting}>Finish Minting</Button>)
@@ -86,7 +109,6 @@ const BuyFrank: React.FC<BuyFrankProps> = ({ pid,  updateOverlay }) => {
   }
 
   let mintTimer
-  console.log(nftMintTime.toString())
   if (nftMintTime.eq(2 ** 256 - 1)) {
     mintTimer = (<div className='small-text'><span className='white-color'>Not Minting</span></div>)
   } else if (nftMintTime.isZero()) {
@@ -94,12 +116,13 @@ const BuyFrank: React.FC<BuyFrankProps> = ({ pid,  updateOverlay }) => {
   } else {
     mintTimer = (<div>
       <div className='small-text'><span className='white-color'>NFT Timer</span></div>
-      <span className='total-earned text-shadow' style={{ fontSize: '20px' }}>{formatDuration(nftMintTime.toNumber() )}</span></div>)
+      <span className='total-earned text-shadow'
+            style={{ fontSize: '20px' }}>{formatDuration(nftMintTime.toNumber())}</span></div>)
   }
 
   let data
 
-  if ((!overlay || nftMintTime.eq(2**256-1)) && amount.isZero()) {
+  if ((!overlay || nftMintTime.eq(2 ** 256 - 1)) && amount.isZero()) {
     data = pairLpDiv
   } else {
     data = (!amount.isZero() ?

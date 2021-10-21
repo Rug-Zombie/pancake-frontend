@@ -627,7 +627,7 @@ export const initialTombOverlayData = (updatePoolObj?: { update: boolean, setUpd
         if (everyUpdateObj) {
           everyUpdateObj.setUpdate(!everyUpdateObj.update)
         }
-        if (updateUserObj.update) {
+        if (updateUserObj && updateUserObj.update) {
           console.log('updating')
           updateUserObj.setUpdate(!updateUserObj.update)
         }
@@ -660,9 +660,9 @@ export const initialTombOverlayData = (updatePoolObj?: { update: boolean, setUpd
           if (everyUpdateObj) {
             everyUpdateObj.setUpdate(!everyUpdateObj.update)
           }
-          if (updateUserObj.update) {
+          if (updatePoolObj && updatePoolObj.update) {
             console.log('updating')
-            updateUserObj.setUpdate(!updateUserObj.update)
+            updatePoolObj.setUpdate(!updatePoolObj.update)
           }
         }
       })

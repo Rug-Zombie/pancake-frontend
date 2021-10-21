@@ -1,5 +1,6 @@
 import { BIG_ZERO } from '../utils/bigNumber'
 import { Nft, NftUserInfo } from './types'
+import artists from '../config/constants/artists'
 
 const DEFAULT_USER_INFO: NftUserInfo = {
   ownedIds: [],
@@ -707,6 +708,7 @@ const nfts: Nft[] = [
     path: 'https://ipfs.io/ipfs/QmTKuQUr7t4rTmFCSm2kFD8azSK24ysUDWDKBDtHXnkhmT',
     type: 'image',
     rarity: 'Common',
+    artist: artists.jussjoshinduh,
     userInfo: { ...DEFAULT_USER_INFO },
   },
   {
@@ -723,6 +725,7 @@ const nfts: Nft[] = [
     path: 'https://ipfs.io/ipfs/QmcDG9auXhMRJdF9eaSMhrmcWeJe6kHrDAbYvDrVTYPaub',
     type: 'image',
     rarity: 'Uncommon',
+    artist: artists.jussjoshinduh,
     userInfo: { ...DEFAULT_USER_INFO },
   },
   {
@@ -738,6 +741,7 @@ const nfts: Nft[] = [
     path: 'https://ipfs.io/ipfs/QmW5KmNsBPHWfc8UBEMWvtQvVwM33UsBuiqqynjKftWSnX',
     type: 'image',
     rarity: 'Rare',
+    artist: artists.jussjoshinduh,
     userInfo: { ...DEFAULT_USER_INFO },
   },
   {
@@ -753,6 +757,7 @@ const nfts: Nft[] = [
     path: 'https://storage.googleapis.com/rug-zombie/Ocean-Compresed.webm',
     type: 'video',
     rarity: 'Legendary',
+    artist: artists.ZomBaes,
     userInfo: { ...DEFAULT_USER_INFO },
   },
   {
@@ -768,6 +773,7 @@ const nfts: Nft[] = [
     path: 'https://ipfs.io/ipfs/QmTUNZZSZZSbVtfvDkHFXPr9fuHdXYLnQeTJMTiRMJ7epq',
     type: 'video',
     rarity: 'Legendary',
+    artist: artists.jussjoshinduh,
     userInfo: { ...DEFAULT_USER_INFO },
   },
 ]

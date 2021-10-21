@@ -22,7 +22,7 @@ const Tombs: React.FC = () => {
   const [updateEvery, setUpdateEvery] = useState(false)
   const [bracketBStart, setBracketBStart] = useState(0)
   const [bracketCStart, setBracketCStart] = useState(0)
-
+  const wallet = account()
   useEffect(() => {
     if(updatePoolInfo === 0 && updateUserInfo === 0) {
       initialTombData(
@@ -49,7 +49,9 @@ const Tombs: React.FC = () => {
         setBracketBStart(res[0])
         setBracketCStart(res[1])
       })
-  }, [])
+    console.log(wallet) // to refresh on account change
+
+  }, [wallet])
 
   const updateOverlay = () => {
     initialTombOverlayData(

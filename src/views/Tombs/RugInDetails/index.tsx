@@ -108,6 +108,9 @@ const RugInDetails: React.FC<RugInDetailsProps> = ({ pid, tvl, bracketBStart, br
               </div>
             </div>
             <div className='direction-column'>
+              <span className='indetails-title'>Your Bracket: {bracket}</span>
+              <span className='indetails-title'>Chance: {brackets[bracket === 'Not Staked' ? 'A' : bracket][nft.rarity]}%</span>
+              <span className='indetails-title'>Stake more to increase your odds.</span>
           <span className='indetails-title'>
           <LinkExternal bold={false} small href={nft.artist ? nft.artist.twitter : ''}>View NFT Artist</LinkExternal>
         </span>

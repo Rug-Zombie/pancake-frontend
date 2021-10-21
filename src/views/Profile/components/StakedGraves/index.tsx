@@ -57,7 +57,7 @@ const StakedGraves:React.FC<{zombieStaked}> = ({zombieStaked}) => {
             toastSuccess(t('Claimed ZMBE'))
           });
         } else {
-          drFrankenstein.methods.withdraw(stakedGrave.pid, 0)
+          drFrankenstein.methods.withdraw(getId(stakedGrave.pid), 0)
           .send({from: account()}).then(() => {
             toastSuccess(t('Claimed ZMBE'))
           });
