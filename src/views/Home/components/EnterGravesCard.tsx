@@ -1,6 +1,6 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import { Heading, Card, CardBody, Flex, ArrowForwardIcon, Skeleton } from '@rug-zombie-libs/uikit'
+import { Heading, Card, CardBody, Flex, ArrowForwardIcon } from '@rug-zombie-libs/uikit'
 import { NavLink } from 'react-router-dom'
 
 const StyledTotalValueLockedCard = styled(Card)`
@@ -10,7 +10,7 @@ const StyledTotalValueLockedCard = styled(Card)`
 const CardMidContent = styled(Heading).attrs({ scale: 'xl' })`
   line-height: 44px;
 `
-const EarnAPRCard = () => {
+const EarnAPRCard: React.FC = () => {
   return (
     <StyledTotalValueLockedCard>
       <NavLink exact activeClassName="active" to="/graves" id="farm-apr-cta">

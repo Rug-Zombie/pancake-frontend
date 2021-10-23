@@ -1,13 +1,11 @@
 import React from 'react'
 import './Landing.Styles.css'
-import { useTranslation } from 'contexts/Localization'
 import { useTotalSupply, useBurnedBalance } from 'hooks/useTokenBalance'
 import { getBalanceNumber } from 'utils/formatBalance'
 import { getZombieAddress } from 'utils/addressHelpers'
 import { nftTotalSupply } from '../../redux/get'
 
 const Tokenomics = () => {
-  const { t } = useTranslation()
   const totalSupply = useTotalSupply()
   const burnedBalance = getBalanceNumber(useBurnedBalance(getZombieAddress()))
   const zmbeSupply = totalSupply ? getBalanceNumber(totalSupply) - burnedBalance : 0

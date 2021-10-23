@@ -11,7 +11,6 @@ import tokens from 'config/constants/tokens'
 import { useTranslation } from 'contexts/Localization'
 import useToast from 'hooks/useToast'
 import { BIG_TEN, BIG_ZERO } from '../../../../utils/bigNumber'
-import { Grave } from '../../../../redux/types'
 import { grave } from '../../../../redux/get'
 
 interface WithdrawZombieModalProps {
@@ -29,10 +28,10 @@ const StyledButton = styled(Button)`
 const WithdrawZombieModal: React.FC<WithdrawZombieModalProps> = ({ pid, zombieUsdPrice, updateResult, onDismiss }) => {
     const {userInfo, poolInfo} = grave(pid)
     const currentDate = Math.floor(Date.now() / 1000);
-    
+
     const { toastSuccess } = useToast()
     const { t } = useTranslation()
-    
+
     const drFrankenstein = useDrFrankenstein();
     const { account } = useWeb3React();
 

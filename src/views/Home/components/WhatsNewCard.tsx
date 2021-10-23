@@ -1,13 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import { Card, CardBody, Heading, Skeleton, Text } from '@rug-zombie-libs/uikit'
-import { BigNumber } from 'bignumber.js'
-import numeral from 'numeral'
-import { getBalanceAmount } from '../../../utils/formatBalance'
-import { bnbPriceUsd, drFrankensteinZombieBalance, zmbeBnbTomb, zombiePriceUsd } from '../../../redux/get'
-import store from '../../../redux/store'
-import tombs from '../../../redux/tombs'
-import { tomb } from '../../../redux/fetch'
+import { Card, CardBody, Heading, Text } from '@rug-zombie-libs/uikit'
 
 const StyledTotalValueLockedCard = styled(Card)`
   align-items: center;
@@ -33,7 +26,7 @@ const TotalValueLockedCard: React.FC = () => {
         </Heading>
         <>
           <Row>
-            <Text fontSize='14px'>1. Bonfire grave is out!.</Text>
+            <Text fontSize='14px'>1. NFTombs are out! Stake LP to earn a variety of NFTs. Using Chainlink VRF you can stake more LP for higher odds at receiving a Rare or Legendary NFT</Text>
           </Row>
           <Row>
             <Text fontSize='14px'>2. We are listed on CoinMarketCap and CoinGecko! Make sure you add RugZombie to your watchlist to get us trending.</Text>

@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { BalanceInput, Button, Flex, Image, Modal, Slider, Text } from '@rug-zombie-libs/uikit'
 import useTheme from 'hooks/useTheme'
-import { useDrFrankenstein, useSpawningPool } from 'hooks/useContract'
+import { useSpawningPool } from 'hooks/useContract'
 import { BASE_EXCHANGE_URL } from 'config'
 import { getAddress } from 'utils/addressHelpers'
 import { getBalanceAmount, getDecimalAmount, getFullDisplayBalance } from 'utils/formatBalance'
@@ -12,8 +12,7 @@ import { useWeb3React } from '@web3-react/core'
 import tokens from 'config/constants/tokens'
 import { useTranslation } from 'contexts/Localization'
 import useToast from 'hooks/useToast'
-import { Grave } from '../../../../redux/types'
-import { grave, spawningPoolById } from '../../../../redux/get'
+import { spawningPoolById } from '../../../../redux/get'
 
 interface StakeZombieModalProps {
   pid: number,
@@ -37,8 +36,6 @@ const StakeZombieModal: React.FC<StakeZombieModalProps> = ({
   const { userInfo: { amount }, poolInfo } = spawningPoolById(pid)
   const spawningPoolContract = useSpawningPool(pid)
   const { account } = useWeb3React()
-  console.log(poolInfo)
-
   const { toastSuccess } = useToast()
   const { t } = useTranslation()
 

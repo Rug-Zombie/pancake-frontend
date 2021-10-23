@@ -1,5 +1,5 @@
 import React from 'react'
-import { BoxProps, Flex, Text } from '@rug-zombie-libs/uikit'
+import { Flex, Text } from '@rug-zombie-libs/uikit'
 import { BigNumber } from 'bignumber.js'
 import PositionTag from '../PositionTag'
 import { UsdPriceRow, PrizePoolRow, RoundResultBox } from './styles'
@@ -12,9 +12,9 @@ interface RoundResultProps {
   mb?: string;
 }
 
-const RoundResult: React.FC<RoundResultProps> = ({ bid, id,mb }) => {
-  const bidder = bid.bidder
-  const bidderLength = bid.bidder.length
+const RoundResult: React.FC<RoundResultProps> = ({ bid, id }) => {
+  const { bidder } = bid
+  const { length: bidderLength } = bidder
   const displayBidder = `${bidder.slice(0,6)}...${bidder.slice(bidderLength - 4, bidderLength)}`
   const { version } = auctionById(id)
   const v3 = version === 'v3'

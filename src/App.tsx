@@ -24,7 +24,6 @@ import PredictionsHome from './views/PredictionsHome'
 import SpawningPools from './views/SpawningPools'
 import Graveyard from './views/Graveyard'
 
-import { useMultiCall } from './hooks/useContract'
 import Profile from './views/Profile'
 import DataLab from './views/Catacombs/components/DataLab'
 import BlackMarket from './views/Catacombs/components/BlackMarket'
@@ -47,7 +46,7 @@ const App: React.FC = () => {
   }, [])
 
   const [isAuthenticated, setAuthenticated] = useState(false)
-  const [zombiePrice, setZombiePrice] = useState(0)
+  const [, setZombiePrice] = useState(0)
   const [modal, setModal] = useState( null)
 
 

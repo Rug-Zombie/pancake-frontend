@@ -1,25 +1,12 @@
 import React, { useState } from 'react'
-import { useWeb3React } from '@web3-react/core'
 import {
   Box,
-  ChevronDownIcon,
-  ChevronUpIcon,
   Flex,
-  IconButton,
   PlayCircleOutlineIcon,
   Text,
 } from '@rug-zombie-libs/uikit'
 import styled from 'styled-components'
-import { useAppDispatch } from 'state'
-import { markBetAsCollected } from 'state/predictions'
-import { Bet, BetPosition, PredictionStatus } from 'state/types'
-import { useGetCurrentEpoch, useGetPredictionsStatus } from 'state/hooks'
 import { useTranslation } from 'contexts/Localization'
-import { formatBnb, getPayout } from '../../helpers'
-import CollectWinningsButton from '../CollectWinningsButton'
-import ReclaimPositionButton from '../ReclaimPositionButton'
-import BetDetails from './BetDetails'
-import { Result } from './BetResult'
 
 interface BetProps {
   bid: any
@@ -35,21 +22,16 @@ const YourResult = styled(Box)`
   flex: 1;
 `
 
-const HistoricalBet: React.FC<BetProps> = ({ bid }) => {
+const HistoricalBet: React.FC<BetProps> = () => {
   const [isOpen, setIsOpen] = useState(false)
 
   const { t } = useTranslation()
-  const { account } = useWeb3React()
-  const dispatch = useAppDispatch()
-  const currentEpoch = useGetCurrentEpoch()
-  const status = useGetPredictionsStatus()
-
   const toggleOpen = () => setIsOpen(!isOpen)
 
-  const getRoundColor = () => {
+  // const getRoundColor = () => {
     // switch (result) {
     //   case Result.WIN:
-        return 'success'
+  //      return 'success'
       // case Result.LOSE:
       //   return 'failure'
       // case Result.CANCELED:
@@ -57,26 +39,10 @@ const HistoricalBet: React.FC<BetProps> = ({ bid }) => {
       // default:
       //   return 'text'
     // }
-  }
-
-  const getRoundPrefix = (result) => {
-    if (result === Result.LOSE) {
-      return '-'
-    }
-
-    if (result === Result.WIN) {
-      return '+'
-    }
-
-    return ''
-  }
-
-  const handleSuccess = async () => {
-    dispatch(markBetAsCollected({ account, betId: bid.id }))
-  }
+  // }
 
   const renderBetLabel = () => {
-    if (true) {
+    // if (true) {
       return (
         <Flex alignItems="center">
           <PlayCircleOutlineIcon color="primary" mr="6px" width="24px" />
@@ -85,29 +51,29 @@ const HistoricalBet: React.FC<BetProps> = ({ bid }) => {
           </Text>
         </Flex>
       )
-    }
+    // }
 
-    if (true) {
-      return (
-        <Flex alignItems="center">
-          <PlayCircleOutlineIcon color="secondary" mr="6px" width="24px" />
-          <Text color="secondary" bold>
-            {t('Live Now')}
-          </Text>
-        </Flex>
-      )
-    }
-
-    return (
-      <>
-        <Text fontSize="12px" color="textSubtle">
-          {t('Your Result')}
-        </Text>
-        <Text bold color={getRoundColor()} lineHeight={1}>
-          {/* {`${resultTextPrefix}${formatBnb(payout)}`} */}
-        </Text>
-      </>
-    )
+    // if (true) {
+    //   return (
+    //     <Flex alignItems="center">
+    //       <PlayCircleOutlineIcon color="secondary" mr="6px" width="24px" />
+    //       <Text color="secondary" bold>
+    //         {t('Live Now')}
+    //       </Text>
+    //     </Flex>
+    //   )
+    // }
+    //
+    // return (
+    //   <>
+    //     <Text fontSize="12px" color="textSubtle">
+    //       {t('Your Result')}
+    //     </Text>
+    //     <Text bold color={getRoundColor()} lineHeight={1}>
+    //       {/* {`${resultTextPrefix}${formatBnb(payout)}`} */}
+    //     </Text>
+    //   </>
+    // )
   }
 
   return (

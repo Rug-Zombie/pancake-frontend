@@ -1,28 +1,28 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Heading, Card, CardBody, Button, Text, LinkExternal } from '@rug-zombie-libs/uikit'
+import { Heading, Card, CardBody, Text, LinkExternal } from '@rug-zombie-libs/uikit'
 import { useTranslation } from 'contexts/Localization'
-import { Tweet } from 'react-twitter-widgets'
+// import { Tweet } from 'react-twitter-widgets'
 
-const TwitterContainer = () => {
-  return (
-    <section className='twitterContainer'>
-      <div className='twitter-embed' style={{
-        maxHeight: '320px',
-        overflow: 'scroll',
-      }}>
-        <Tweet
-          options={{
-            width: '100%',
-            height: '100%',
-            theme: 'dark',
-          }}
-          tweetId='1413144215026995215'
-        />
-      </div>
-    </section>
-  )
-}
+// const TwitterContainer = () => {
+//   return (
+//     <section className='twitterContainer'>
+//       <div className='twitter-embed' style={{
+//         maxHeight: '320px',
+//         overflow: 'scroll',
+//       }}>
+//         <Tweet
+//           options={{
+//             width: '100%',
+//             height: '100%',
+//             theme: 'dark',
+//           }}
+//           tweetId='1413144215026995215'
+//         />
+//       </div>
+//     </section>
+//   )
+// }
 
 const StyledAnnouncementCard = styled(Card)`
   background-size: 300px 300px;
@@ -33,7 +33,7 @@ const StyledAnnouncementCard = styled(Card)`
   box-shadow: rgb(204 246 108) 0px 0px 20px;
 `
 
-const AnnouncementCard = () => {
+const AnnouncementCard: React.FC = () => {
   const { t } = useTranslation()
 
   return (

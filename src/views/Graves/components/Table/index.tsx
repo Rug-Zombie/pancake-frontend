@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { BaseLayout } from '@rug-zombie-libs/uikit'
 import FrankEarned from '../FrankEarned/FrankEarned'
@@ -27,9 +27,9 @@ interface TableProps {
   zombieUsdPrice: number,
 }
 
-const Table: React.FC<TableProps> = ({ pid, isAllowance, bnbInBusd, updateAllowance, updateResult, zombieUsdPrice }: TableProps) => {
+const Table: React.FC<TableProps> = ({ pid, isAllowance, bnbInBusd, updateAllowance, zombieUsdPrice }: TableProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [graveData, setGraveData] = useState(grave(pid))
+  const [, setGraveData] = useState(grave(pid))
   const openInDetails = (data) => {
     setIsOpen(data);
   }

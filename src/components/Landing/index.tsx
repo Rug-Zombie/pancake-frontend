@@ -4,9 +4,6 @@ import Header from './Header';
 import TimeLine from './TimeLine';
 import Tokenomics from './Tokenomics';
 import Footer from './Footer';
-import { APESWAP_EXCHANGE_URL } from '../../config'
-import tokens from '../../config/constants/tokens'
-import { getAddress } from '../../utils/addressHelpers'
 import { routes } from "../../routes"
 
 interface LandingProps {
@@ -36,8 +33,8 @@ const Landing: React.FC<LandingProps> = (props: LandingProps) =>{
         </div>
       </div>
       <div className="_40_percent_block">
-        <a rel="noreferrer" target="_blank" href={`${APESWAP_EXCHANGE_URL}/swap?outputCurrency=${getAddress(tokens.zmbe.address)}`} className="button-2 w-button">
-          Buy on Apeswap
+        <a rel="noreferrer" target="_blank" href="https://rugzombie.medium.com/how-to-buy-zmbe-b763c2b3185f" className="button-2 w-button">
+          How to Buy
         </a>
       </div>
       <div className="_40_percent_block">

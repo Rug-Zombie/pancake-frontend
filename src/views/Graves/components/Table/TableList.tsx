@@ -1,15 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { BaseLayout, useMatchBreakpoints } from '@rug-zombie-libs/uikit'
-import { BIG_TEN, BIG_ZERO } from 'utils/bigNumber'
 import BigNumber from 'bignumber.js';
 import { getBalanceAmount, getDecimalAmount, getFullDisplayBalance } from 'utils/formatBalance'
 import tokens from 'config/constants/tokens';
 import numeral from 'numeral';
 import { getGraveTombApr } from '../../../../utils/apr'
-import { Grave } from '../../../../redux/types'
 import { grave, totalAllocPoint } from '../../../../redux/get'
-import { useDrFrankenstein } from '../../../../hooks/useContract'
 
 
 const DisplayFlex = styled(BaseLayout)`
@@ -50,7 +47,7 @@ interface TableListProps {
 
 const TableList: React.FC<TableListProps> = (props: TableListProps) => {
   const { pid, zombieUsdPrice, handler } = props
-  const { name, rug, poolInfo, isNew, requiresNft, requiredNftPath, userInfo: { pendingZombie } } = grave(pid);
+  const { name, rug, poolInfo, isNew, userInfo: { pendingZombie } } = grave(pid);
   const { isLg, isXl } = useMatchBreakpoints()
   const isDesktop = isLg || isXl
 

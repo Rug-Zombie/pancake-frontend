@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Flex, TooltipText, IconButton, useModal, CalculateIcon, Skeleton, useTooltip } from '@rug-zombie-libs/uikit'
+import { Flex, TooltipText, Skeleton } from '@rug-zombie-libs/uikit'
 import { BigNumber } from 'bignumber.js'
 import { auctionById } from '../../../../redux/get'
 import { useMausoleum } from '../../../../hooks/useContract'

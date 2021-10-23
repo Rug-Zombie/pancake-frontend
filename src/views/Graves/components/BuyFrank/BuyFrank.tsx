@@ -1,6 +1,6 @@
 import React, { useState , useEffect } from 'react'
 import ReactTooltip from 'react-tooltip';
-import { Skeleton, useModal } from '@rug-zombie-libs/uikit'
+import { Skeleton } from '@rug-zombie-libs/uikit'
 import { formatDuration } from '../../../../utils/timerHelpers'
 import { BIG_ZERO } from '../../../../utils/bigNumber'
 import { grave } from '../../../../redux/get'
@@ -50,7 +50,7 @@ const BuyFrank: React.FC<BuyFrankProps> = ({ pid }) => {
             </span> :
             <div>
               <div className="small-text">
-                <span className="white-color">NFT Timer</span>                
+                <span className="white-color">NFT Timer</span>
               </div>
               <span className="total-earned text-shadow" style={{fontSize: "20px"}}>
                 { nftRevivalDateFixed > 0 ? formatDuration(nftTime) :<Skeleton/> }</span>

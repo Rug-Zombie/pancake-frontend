@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { Heading, LinkExternal, Text, CardsLayout, Skeleton, Flex } from '@rug-zombie-libs/uikit'
-import { useWeb3React } from '@web3-react/core'
-import PageHeader from 'components/PageHeader'
-import { account, graves, nfts, tombs, zombiePriceUsd } from 'redux/get'
+import { Heading, LinkExternal, Text, CardsLayout } from '@rug-zombie-libs/uikit'
+import { account, nfts, zombiePriceUsd } from 'redux/get'
 import styled from 'styled-components'
 
 import { nftUserInfo } from 'redux/fetch'
@@ -16,7 +14,7 @@ import '../Profile.Styles.css'
 import Avatar from '../components/Avatar'
 import StakedTombs from '../components/StakedTombs'
 import { BIG_ZERO } from '../../../utils/bigNumber'
-import { getBalanceAmount, getDecimalAmount, getFullDisplayBalance } from '../../../utils/formatBalance'
+import { getBalanceAmount, getFullDisplayBalance } from '../../../utils/formatBalance'
 import StakedSpawningPools from '../components/StakedSpawningPools'
 
 const Row = styled.div`

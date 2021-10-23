@@ -1,10 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Bet } from 'state/types'
 import { useTranslation } from 'contexts/Localization'
 import { Flex, Text, Link, Heading } from '@rug-zombie-libs/uikit'
 import { RoundResult } from '../RoundResult'
-import BetResult, { Result } from './BetResult'
 
 interface BetDetailsProps {
   bid: any;

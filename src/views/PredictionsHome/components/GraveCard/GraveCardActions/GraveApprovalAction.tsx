@@ -1,15 +1,8 @@
 import React, { useState } from 'react'
 import { Button, AutoRenewIcon, Skeleton } from '@rug-zombie-libs/uikit'
-import { ethers } from 'ethers'
 import { useTranslation } from 'contexts/Localization'
-import { useCake, useCakeVaultContract } from 'hooks/useContract'
-import useToast from 'hooks/useToast'
-import { Pool } from 'state/types'
 import Web3 from 'web3'
 import { GraveConfig, Token } from '../../../../../config/constants/types'
-import tokens from '../../../../../config/constants/tokens'
-import { getAddress } from '../../../../../utils/addressHelpers'
-import { getBep20Contract, getContract } from '../../../../../utils/contractHelpers'
 
 interface ApprovalActionProps {
   grave: GraveConfig
@@ -21,11 +14,9 @@ interface ApprovalActionProps {
   web3: Web3
 }
 
-const ApprovalAction: React.FC<ApprovalActionProps> = ({ grave, account, isLoading = false, setLastUpdated, token, web3 }) => {
-  const tokenContract = getBep20Contract(getAddress(token.address), web3)
+const ApprovalAction: React.FC<ApprovalActionProps> = ({ isLoading = false, token }) => {
   const { t } = useTranslation()
-  const [requestedApproval, setRequestedApproval] = useState(false)
-  const { toastSuccess, toastError } = useToast()
+  const [requestedApproval, ] = useState(false)
 
   const handleApprove = () => {
     // tokenContract.methods

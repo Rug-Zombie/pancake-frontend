@@ -1,8 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from 'react'
-import CountUp from 'react-countup'
+import React from 'react'
 
-import styled from 'styled-components'
 import { useMatchBreakpoints } from '@rug-zombie-libs/uikit'
 
 interface VideoProps {
@@ -20,6 +18,7 @@ const Video: React.FC<VideoProps> = ({ path }) => {
       <source src={path} type='video/webm' />
     </video>
   ) : (
+    // eslint-disable-next-line
     <div dangerouslySetInnerHTML={{
       __html: `
                 <video  autoPlay loop muted style='max-height: ${maxMobileHeight}px; max-width: ${maxMobileWidth}px'>

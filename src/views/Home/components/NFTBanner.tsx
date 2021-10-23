@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import {
   Text,
-  Card,
-  CardBody,
-  Heading,
   Flex,
   ArrowForwardIcon,
   Button,
@@ -53,67 +50,19 @@ const LeftWrapper = styled(Flex)`
   }
 `
 
-const RightWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex: 0.5;
-
-  & img {
-    width: 80%;
-    margin-top: 24px;
-  }
-
-  ${({ theme }) => theme.mediaQueries.sm} {
-    & img {
-      margin-top: 0;
-    }
-  }
-
-  ${({ theme }) => theme.mediaQueries.md} {
-    flex: 0.8;
-  }
-
-  ${({ theme }) => theme.mediaQueries.lg} {
-    & img {
-      margin-top: -25px;
-    }
-  }
-`
-
-const PrizeFlex = styled(Flex)`
-  flex-direction: row;
-  flex-wrap: wrap;
-  margin-bottom: 8px;
-
-  ${({ theme }) => theme.mediaQueries.sm} {
-    max-width: 640px;
-  }
-`
-
 const Over = styled(Text)`
   :empty {
     margin-right: 0;
   }
 `
 
-const StyledNFTBanner = styled(Card)`
-  background-image: url('/images/zmbe-bg.png');
-  background-size: 400px 400px;
-  background-position-x: 100px;
-  background-repeat: no-repeat;
-  background-position: top right;
-  min-height: 100px;
-  margin-bottom: 10px;
-  border-radius: 0;
-`
 const NFTBanner: React.FC = () => {
   const { t } = useTranslation()
   const { isLg, isXl } = useMatchBreakpoints()
   const isDesktop = isLg || isXl
   const { end } = auctionById(1)
-  const [remainingTime, setRemainingTime] = useState(end - Math.floor(Date.now() / 1000))
-  const [timerSet, setTimerSet] = useState(false)
+  const [, setRemainingTime] = useState(end - Math.floor(Date.now() / 1000))
+  const [, setTimerSet] = useState(false)
 
   useEffect(() => {
     setInterval(() => {

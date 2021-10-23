@@ -1,14 +1,13 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { BalanceInput, Button, Flex, Modal, Slider, Text, useModal } from '@rug-zombie-libs/uikit'
+import { BalanceInput, Button, Flex, Modal, Slider, Text } from '@rug-zombie-libs/uikit'
 import useTheme from 'hooks/useTheme'
 import { useDrFrankenstein } from 'hooks/useContract'
 import {
     APESWAP_ADD_LIQUIDITY_URL,
     AUTOSHARK_ADD_LIQUIDITY_URL,
     BASE_ADD_LIQUIDITY_URL,
-    BASE_EXCHANGE_URL,
 } from 'config'
 import { getAddress } from 'utils/addressHelpers'
 import { getBalanceAmount, getDecimalAmount, getFullDisplayBalance } from 'utils/formatBalance'
@@ -17,11 +16,6 @@ import { useWeb3React } from '@web3-react/core';
 import { BIG_TEN, BIG_ZERO } from '../../../utils/bigNumber'
 import { tombByPid } from '../../../redux/get'
 import tokens from '../../../config/constants/tokens'
-
-interface Result {
-    paidUnlockFee: boolean,
-    rugDeposited: number
-}
 
 interface StakeLpTokenModalProps {
     pid: number,
@@ -43,7 +37,7 @@ const StakeLpTokenModal: React.FC<StakeLpTokenModalProps> = ({ pid, lpTokenBalan
     const [stakeAmount, setStakeAmount] = useState(BIG_ZERO);
     const [percent, setPercent] = useState(0);
     const tomb = tombByPid(pid)
-    const { name, quoteToken, token } = tomb
+    const { name } = tomb
 
     const handleStakeInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const inputValue = event.target.value || '0'

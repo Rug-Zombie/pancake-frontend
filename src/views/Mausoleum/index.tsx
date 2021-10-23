@@ -8,7 +8,7 @@ import SwiperProvider from './context/SwiperProvider'
 import Desktop from './Desktop'
 import Mobile from './Mobile'
 import { auction } from '../../redux/fetch'
-import { useMausoleum, useMultiCall } from '../../hooks/useContract'
+import { useMausoleum } from '../../hooks/useContract'
 import { auctionById } from '../../redux/get'
 
 interface ParamTypes {

@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { CardBody, Text, WaitIcon } from '@rug-zombie-libs/uikit'
 import { useTranslation } from 'contexts/Localization'
-import { Round, BetPosition } from 'state/types'
-import { useGetCurrentEpoch, useGetTotalIntervalBlocks } from 'state/hooks'
-import { formatRoundTime } from '../../helpers'
-import useRoundCountdown from '../../hooks/useRoundCountdown'
 import { RoundResultBox } from '../RoundResult'
-import MultiplierArrow from './MultiplierArrow'
 import Card from './Card'
 import CardHeader from './CardHeader'
 import { formatDuration } from '../../../../utils/timerHelpers'
@@ -20,11 +15,9 @@ interface SoonRoundCardProps {
 
 const SoonRoundCard: React.FC<SoonRoundCardProps> = ({lastBidId, id, bidId}) => {
   const { t } = useTranslation()
-  const interval = useGetTotalIntervalBlocks()
-  const currentEpoch = useGetCurrentEpoch()
   const { end } = auctionById(id)
   const [remainingTime, setRemainingTime] = useState(end - Math.floor(Date.now() / 1000))
-  const [timerSet, setTimerSet] = useState(false)
+  const [, setTimerSet] = useState(false)
 
   useEffect(() => {
     setInterval(() => {

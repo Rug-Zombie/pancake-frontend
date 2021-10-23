@@ -15,9 +15,9 @@ import CardHeader from './CardHeader'
 import SetPositionCard from './SetPositionCard'
 import { BIG_ZERO } from '../../../../utils/bigNumber'
 import { getBalanceAmount } from '../../../../utils/formatBalance'
-import { account, auctionById, auctions } from '../../../../redux/get'
+import { account, auctionById } from '../../../../redux/get'
 import { getMausoleumAddress } from '../../../../utils/addressHelpers'
-import { useERC20, useMausoleum, useMultiCall } from '../../../../hooks/useContract'
+import { useERC20, useMausoleum } from '../../../../hooks/useContract'
 import '../MobileCard/cardStyles.css'
 
 // PrizePoolRow
@@ -46,7 +46,7 @@ interface OpenRoundCardProps {
   refresh: boolean
 }
 
-const AuctionEndCard: React.FC<OpenRoundCardProps> = ({ lastBid, refresh, setRefresh, id, bidId }) => {
+const AuctionEndCard: React.FC<OpenRoundCardProps> = ({ lastBid, id, bidId }) => {
   const [state, setState] = useState({
     isSettingPosition: false,
     position: BetPosition.BULL,
@@ -69,7 +69,7 @@ const AuctionEndCard: React.FC<OpenRoundCardProps> = ({ lastBid, refresh, setRef
     }))
   }
 
-  const [allowance, setAllowance] = useState(BIG_ZERO)
+  const [, setAllowance] = useState(BIG_ZERO)
   const [amount, setAmount] = useState(lastBid.amount ? new BigNumber(lastBid.amount) : BIG_ZERO)
 
   if (!amount.eq(bid) && amount.eq(BIG_ZERO)) {
@@ -149,6 +149,7 @@ const AuctionEndCard: React.FC<OpenRoundCardProps> = ({ lastBid, refresh, setRef
         id={id}
         onBack={handleBack}
         onSuccess={async () => {
+          // eslint-disable-next-line
           console.log('success')
         }}
         position={position}

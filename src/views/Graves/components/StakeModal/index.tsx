@@ -15,7 +15,6 @@ import useToast from 'hooks/useToast'
 import { useTranslation } from 'contexts/Localization'
 import WarningModal from '../WarningModal'
 import WarningDepositRugModal from '../WarningDepositRugModal'
-import { Grave } from '../../../../redux/types'
 import { grave } from '../../../../redux/get'
 
 interface StakeModalProps {
@@ -68,10 +67,6 @@ const StakeModal: React.FC<StakeModalProps> = ({ pid, updateResult, onDismiss })
   const [onGetTokenClick] = useModal(
     <WarningModal url={url} />,
   )
-
-  const handleWithdrawal = () => {
-    console.log('withdrawal')
-  }
 
   const handleDepositRug = () => {
     const convertedStakeAmount = getDecimalAmount(new BigNumber(stakeAmount), rug.decimals);

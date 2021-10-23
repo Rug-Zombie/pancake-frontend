@@ -9,7 +9,7 @@ import { useIfoAllowance } from 'hooks/useAllowance';
 import useTokenBalance from 'hooks/useTokenBalance';
 import useToast from 'hooks/useToast'
 import { getFullDisplayBalance } from 'utils/formatBalance'
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import BigNumber from 'bignumber.js'
 import { getAddress, getDrFrankensteinAddress } from 'utils/addressHelpers';
 import { Token } from 'config/constants/types';
@@ -43,7 +43,7 @@ interface StartFarmingProps {
   zombieUsdPrice: number,
 }
 
-const StartFarming: React.FC<StartFarmingProps> = ({ pid, zombieUsdPrice, updateAllowance, updateResult }) => {
+const StartFarming: React.FC<StartFarmingProps> = ({ pid, zombieUsdPrice, updateAllowance }) => {
   const [isAllowanceForRugToken, setIsAllowanceForRugToken] = useState(false);
   const [isZombieAllowance, setZombieAllowance] = useState(!get.zombieAllowance().isZero());
   const [zombieBalance, setZombieBalance] = useState(get.zombieAllowance());
@@ -52,7 +52,7 @@ const StartFarming: React.FC<StartFarmingProps> = ({ pid, zombieUsdPrice, update
   const [hasNftGraveToken, setHasNftGraveToken] = useState(false)
   const { rug, userInfo, isClosed, requiresNft, nft, startingDate } = get.grave(pid)
   const [remainingTime, setRemainingTime] = useState(startingDate - Math.floor(Date.now() / 1000))
-  const [timerSet, setTimerSet] = useState(false)
+  const [, setTimerSet] = useState(false)
   const [updateUserInfo, setUpdateUserInfo] = useState(false)
   const onUpdate = () => {
     fetch.grave(pid, { update: updateUserInfo, setUpdate: setUpdateUserInfo })
@@ -146,7 +146,6 @@ const StartFarming: React.FC<StartFarmingProps> = ({ pid, zombieUsdPrice, update
     // if(account) {
       zmbeContract.methods.approve(getDrFrankensteinAddress(), ethers.constants.MaxUint256)
         .send({ from: get.account() }).then(() => {
-          console.log("approved zmbe")
           toastSuccess(t('Approved ZMBE'))
           setZombieAllowance(true)
       })

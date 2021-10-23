@@ -1,33 +1,19 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { useEffect, useState } from 'react'
-import styled from 'styled-components'
 import {
-  BalanceInput,
   Button,
   Flex,
-  Image,
-  Input,
-  LinkExternal,
   Modal,
-  Slider,
   Text,
   useModal,
 } from '@rug-zombie-libs/uikit'
 import useTheme from 'hooks/useTheme'
-import { useDrFrankenstein, useERC721, useMultiCall, useNftConverter, useNftOwnership } from 'hooks/useContract'
-import { BASE_BSC_SCAN_URL, BASE_EXCHANGE_URL, BASE_V1_EXCHANGE_URL } from 'config'
+import { useERC721, useNftConverter, useNftOwnership } from 'hooks/useContract'
 import { getAddress, getNftConverterAddress } from 'utils/addressHelpers'
-import useTokenBalance from 'hooks/useTokenBalance'
 import { BIG_ZERO } from 'utils/bigNumber'
-import { getDecimalAmount, getFullDisplayBalance } from 'utils/formatBalance'
 import BigNumber from 'bignumber.js'
-import { useWeb3React } from '@web3-react/core'
 import useToast from 'hooks/useToast'
 import { useTranslation } from 'contexts/Localization'
-import erc721Abi from 'config/abi/erc721.json'
-import WarningModal from '../WarningModal'
-import WarningDepositRugModal from '../WarningDepositRugModal'
-import { Grave } from '../../../../redux/types'
 import { account, graveByPid, nftByName } from '../../../../redux/get'
 import NftWarningModal from '../NftWarningModal'
 
@@ -37,10 +23,6 @@ interface StakeModalProps {
   onDismiss?: () => void,
   updateAllowance: any,
 }
-
-const StyledButton = styled(Button)`
-  flex-grow: 1;
-`
 
 const ConvertNftModal: React.FC<StakeModalProps> = ({ pid, updateResult, onDismiss }) => {
   const { nftConverterPid, nft } = graveByPid(pid)

@@ -5,11 +5,9 @@ import styled from 'styled-components'
 import { useWeb3React } from '@web3-react/core';
 import tokens from 'config/constants/tokens';
 import { ethers } from 'ethers';
-import { useIfoAllowance } from 'hooks/useAllowance';
 import useTokenBalance from 'hooks/useTokenBalance';
 import { getFullDisplayBalance } from 'utils/formatBalance'
 import React, { useEffect, useState } from 'react';
-import BigNumber from 'bignumber.js'
 import { getAddress, getDrFrankensteinAddress } from 'utils/addressHelpers';
 import { useERC20 } from '../../../hooks/useContract';
 import StakeLpTokenModal from '../StakeLpTokenModal';
@@ -40,7 +38,6 @@ const StartFarming: React.FC<StartFarmingProps> = ({pid, updateResult }) => {
   const [isLpTokenAllowance, setIsLpTokenAllowance] = useState(false);
   const tomb = tombByPid(pid)
   const { name, lpAddress, userInfo: { lpAllowance, amount } } = tomb
-  console.log(lpAllowance)
   const lpTokenBalance = useTokenBalance(getAddress(lpAddress));
   const lpTokenContract = useERC20(getAddress(lpAddress))
   useEffect(() => {

@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { BaseLayout, useMatchBreakpoints } from '@rug-zombie-libs/uikit'
-import { BIG_TEN, BIG_ZERO } from 'utils/bigNumber'
 import BigNumber from 'bignumber.js';
-import { getBalanceAmount, getDecimalAmount, getFullDisplayBalance } from 'utils/formatBalance'
+import { getBalanceAmount, getFullDisplayBalance } from 'utils/formatBalance'
 import tokens from 'config/constants/tokens';
 import numeral from 'numeral';
 import { getPoolApr } from '../../../../utils/apr'
-import { bnbPriceUsd, coingeckoPrice, grave, spawningPoolById } from '../../../../redux/get'
+import { bnbPriceUsd, coingeckoPrice, spawningPoolById } from '../../../../redux/get'
 import { fetchLpReserves } from '../../../../state/hooks'
 
 

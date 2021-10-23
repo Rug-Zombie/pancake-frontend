@@ -6,7 +6,6 @@ import { BASE_EXCHANGE_URL } from 'config'
 import useTheme from 'hooks/useTheme'
 import BigNumber from 'bignumber.js'
 import { getFullDisplayBalance, formatNumber, getDecimalAmount } from 'utils/formatBalance'
-import useToast from 'hooks/useToast'
 import Web3 from 'web3'
 import FeeSummary from './FeeSummary'
 import { GraveConfig } from '../../../../config/constants/types'
@@ -30,15 +29,12 @@ const GraveDepositRugModal: React.FC<VaultStakeModalProps> = ({
   grave,
   stakingMax,
   stakingTokenPrice,
-  account,
   userData,
   isRemovingStake = false,
   onDismiss,
-  web3,
 }) => {
   const { t } = useTranslation()
   const { theme } = useTheme()
-  const { toastSuccess, toastError } = useToast()
   const [pendingTx, setPendingTx] = useState(false)
   const [stakeAmount, setStakeAmount] = useState('')
   const [percent, setPercent] = useState(0)
@@ -61,7 +57,7 @@ const GraveDepositRugModal: React.FC<VaultStakeModalProps> = ({
     setPercent(sliderPercent)
   }
 
-  const handleDeposit = async (convertedStakeAmount: BigNumber) => {
+  // const handleDeposit = async () => {
     // restorationChefContract.methods
     //   .depositRug(grave.gid, convertedStakeAmount.toString())
     //   // .toString() being called to fix a BigNumber error in prod
@@ -81,12 +77,12 @@ const GraveDepositRugModal: React.FC<VaultStakeModalProps> = ({
     //     toastError(t('Error'), t(`${error.message} - Please try again.`))
     //     setPendingTx(false)
     //   })
-  }
+  // }
 
   const handleConfirmClick = async () => {
-    const convertedStakeAmount = getDecimalAmount(new BigNumber(stakeAmount), grave.ruggedToken.decimals)
+    // const convertedStakeAmount = getDecimalAmount(new BigNumber(stakeAmount), grave.ruggedToken.decimals)
     setPendingTx(true)
-    handleDeposit(convertedStakeAmount)
+    // handleDeposit(convertedStakeAmount)
   }
 
   return (

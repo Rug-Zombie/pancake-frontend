@@ -17,4 +17,5 @@ export const UPDATE_AUCTION_INFO = "updateAuctionInfo"
 export const UPDATE_AUCTION_USER_INFO = "updateAuctionUserInfo"
 export const UPDATE_NFT_USER_INFO = "updateNftUserInfo"
 export const UPDATE_BNB_BALANCE = "updateBnbBalance"
-
+export const UPDATE_TOMB_OVERLAY_POOL_INFO = "updateTombOverlayPoolInfo"
+export const UPDATE_TOMB_OVERLAY_USER_INFO = "updateTombOverlayUserInfo"

@@ -26,7 +26,7 @@ export const PoolsSlice = createSlice({
     setPoolsUserData: (state, action) => {
       const userData = action.payload
       state.data = state.data.map((pool) => {
-        const userPoolData = userData.find((entry) => entry.sousId === pool.sousId)
+        const userPoolData = userData.find(({ sousId }) => sousId === pool.sousId)
         return { ...pool, userData: userPoolData }
       })
     },
@@ -59,10 +59,7 @@ export const fetchPoolsPublicDataAsync = () => async (dispatch) => {
 }
 
 export const fetchPoolsUserDataAsync = (account) => async (dispatch) => {
-  console.log("fetching")
   const allowances = await fetchPoolsAllowance(account)
-  console.log("fetched")
-
   const stakingTokenBalances = await fetchUserBalances(account)
   const stakedBalances = await fetchUserStakeBalances(account)
   const pendingRewards = await fetchUserPendingRewards(account)

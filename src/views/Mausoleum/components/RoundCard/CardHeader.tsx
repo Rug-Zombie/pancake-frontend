@@ -61,7 +61,7 @@ const Round = styled.div`
   justify-self: center;
 `
 
-const CardHeader: React.FC<CardHeaderProps> = ({ status, title, icon, bid, id }) => {
+const CardHeader: React.FC<CardHeaderProps> = ({ status, title, icon, bid }) => {
   const textColor = getTextColorByStatus(status, 'text')
   const isLive = status === 'live'
 

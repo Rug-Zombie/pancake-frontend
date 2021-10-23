@@ -1,13 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { BaseLayout, Box, LinkExternal } from '@rug-zombie-libs/uikit'
-import styled, { DefaultTheme, useTheme } from 'styled-components'
-import { BigNumber } from 'bignumber.js'
-import auctions from '../../../redux/auctions'
-import { getMausoleumContract } from '../../../utils/contractHelpers'
-import { BIG_ZERO } from '../../../utils/bigNumber'
+import styled from 'styled-components'
 import { getBalanceAmount } from '../../../utils/formatBalance'
 import { auctionById, bnbPriceUsd } from '../../../redux/get'
-import { useMausoleum } from '../../../hooks/useContract'
 
 const TableCards = styled(BaseLayout)`
   align-items: stretch;
@@ -60,11 +55,11 @@ const PrizeTab:  React.FC<PrizeTabProps> = ({ id }) => {
                       View NFT Artist
                     </LinkExternal>
                   </span>
-                  {additionalDetails.map(details => {
+                  {additionalDetails.map(({ url, name }) => {
                     return <>
-                      <LinkExternal href={details.url}>
+                      <LinkExternal href={url}>
                         <br/>
-                        {details.name}
+                        {name}
                       </LinkExternal>
                       <br/>
                     </>

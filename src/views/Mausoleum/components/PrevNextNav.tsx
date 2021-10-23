@@ -1,5 +1,5 @@
 import React from 'react'
-import { ArrowBackIcon, ArrowForwardIcon, BunnyCardsIcon, Card, IconButton } from '@rug-zombie-libs/uikit'
+import { ArrowBackIcon, ArrowForwardIcon, Card, IconButton } from '@rug-zombie-libs/uikit'
 import styled from 'styled-components'
 import { useGetCurrentEpoch, useGetSortedRounds } from 'state/hooks'
 import useSwiper from '../hooks/useSwiper'

@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react'
 import styled from 'styled-components'
-import { ArrowUpIcon, ArrowDownIcon, Flex, FlexProps, Text } from '@rug-zombie-libs/uikit'
+import { ArrowUpIcon, Flex, FlexProps, Text } from '@rug-zombie-libs/uikit'
 import { BetPosition } from 'state/types'
 
 interface TagProps extends FlexProps {
@@ -40,7 +40,7 @@ interface PositionTagProps extends FlexProps {
   betPosition: BetPosition
 }
 
-const PositionTag: React.FC<PositionTagProps> = ({ betPosition, children, ...props }) => {
+const PositionTag: React.FC<PositionTagProps> = ({ children, ...props }) => {
   const icon = <ArrowUpIcon color="white" />
 
   return (

@@ -22,7 +22,7 @@ export const formatDuration = (duration: number, withSeconds?: boolean): string 
   return `${days}d ${hours}h ${minutes}m`
 }
 
-const displayInteger = (int: number): string => {
+export const displayInteger = (int: number): string => {
   if(int < 10) {
     return `0${int}`
   }

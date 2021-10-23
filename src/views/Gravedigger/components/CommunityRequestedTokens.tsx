@@ -20,7 +20,7 @@ const CommunityRequestedTokens:React.FC = () => {
         fetch('https://api.typeform.com/forms/LKwVHkPz/responses',requestOptions).then(async (response:any) => {
             const r = await response.json()
             setResponses(r.items)
-        }).catch(error => {
+        }).catch(() => {
             toastError('Failed to fetch form responses')
         })
     // eslint-disable-next-line react-hooks/exhaustive-deps

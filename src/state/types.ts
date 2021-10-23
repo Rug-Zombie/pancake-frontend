@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js'
-import { Address, CampaignType, FarmConfig, GraveConfig, Nft, PoolConfig, Team } from 'config/constants/types'
+import { CampaignType, FarmConfig, Nft, PoolConfig, Team } from 'config/constants/types'
 
 export type TranslatableText =
   | string

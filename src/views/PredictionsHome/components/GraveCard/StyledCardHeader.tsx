@@ -1,17 +1,15 @@
 import React from 'react'
-import { CardHeader, Heading, Text, Flex, Image } from '@rug-zombie-libs/uikit'
+import { CardHeader, Heading, Text, Flex } from '@rug-zombie-libs/uikit'
 import styled from 'styled-components'
-import { useTranslation } from 'contexts/Localization'
 import { auctionById } from '../../../../redux/get'
 
 const Wrapper = styled(CardHeader)<{ isFinished?: boolean; background?: string }>`
-  background: ${({ isFinished, background, theme }) =>
+  background: ${({ isFinished, theme }) =>
           isFinished ? '#101820' : theme.colors.primary};
 `
 
 const StyledCardHeader: React.FC<{ id: number }> = ({ id }) => {
-  const { t } = useTranslation()
-  const { aid, prize, prizeSymbol, isFinished } = auctionById(id)
+  const { prizeSymbol, isFinished } = auctionById(id)
   const getSubHeading = () => {
     return `#${id}`
   }
