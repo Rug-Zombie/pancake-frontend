@@ -3,7 +3,7 @@ import { BigNumber } from 'bignumber.js'
 import { BIG_ZERO } from 'utils/bigNumber'
 import SwiperCore, { Keyboard, Mousewheel } from 'swiper'
 import styled from 'styled-components'
-import { Swiper, SwiperSlide } from 'swiper/react'
+import { Swiper } from 'swiper/react'
 import SoonRoundCard from '../RoundCard/SoonRoundCard'
 import './cardStyles.css'
 import IncreaseBidCard from '../RoundCard/IncreaseBidCard'
@@ -33,7 +33,7 @@ const StyledSwiper = styled.div`
   }
 `
 
-const MobileCard: React.FC<MobileCardProps> = ({ bids, id, refresh, lastBidId, setRefresh, userInfo }) => {
+const MobileCard: React.FC<MobileCardProps> = ({ bids, id, refresh, lastBidId, setRefresh }) => {
   const { setSwiper } = useSwiper()
 
   const formattedBids = bids.map((bid, i) => {

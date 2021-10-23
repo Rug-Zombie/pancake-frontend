@@ -1,10 +1,5 @@
-import { useTranslation } from 'contexts/Localization'
-import React, { useState } from 'react'
-import {
-  Card,
-  Button, Flex,
-} from '@catacombs-libs/uikit'
-import { isMobile } from 'react-device-detect'
+import React from 'react'
+import { Flex } from '@catacombs-libs/uikit'
 import styled from 'styled-components'
 import { useMatchBreakpoints } from '@rug-zombie-libs/uikit' // requires a loader
 import Menu from '../../../../components/Catacombs/Menu'
@@ -13,18 +8,6 @@ import CatacombsBackgroundMobileSVG from '../../../../images/CatacombsMain-414x7
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
 import Page from '../../../../components/layout/Page'
 import InstabuyCard from './InstabuyCard'
-
-const StyledCard = styled(Card)`
-  margin: 5%;
-  @media (max-width: 479px) {
-    margin: 7%;
-  }
-`
-
-const StyledButton = styled(Button)`
-  border: 2px solid white;
-  color: white;
-`
 
 const StyledDiv = styled.div`
   text-align: center;
@@ -47,23 +30,6 @@ const Container = styled.div`
     width: 90%;
     left: 5%;
   }
-`
-
-const StyleDetails = styled.div`
-  display: flex;
-  justify-content: center;
-`
-
-const StyleCardHeader = styled.div`
-  width: 100%;
-  height: 300px;
-  background: #111820;
-`
-
-const StyleCursorPointer = styled.div`
-  cursor: pointer;
-  display: flex;
-  padding-left: 20px;
 `
 
 interface DataLabProps {

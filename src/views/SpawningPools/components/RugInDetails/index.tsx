@@ -1,12 +1,11 @@
 import { LinkExternal } from '@rug-zombie-libs/uikit'
 import tokens from 'config/constants/tokens';
-import { useDrFrankenstein, useSpawningPool } from 'hooks/useContract'
+import { useSpawningPool } from 'hooks/useContract'
 import React, { useEffect, useState } from 'react'
-import { BIG_ZERO } from 'utils/bigNumber';
-import { getBalanceAmount, getDecimalAmount, getFullDisplayBalance } from 'utils/formatBalance'
+import { getFullDisplayBalance } from 'utils/formatBalance'
 import BigNumber from 'bignumber.js';
 import { registerToken } from 'utils/wallet'
-import { bnbPriceUsd, grave, spawningPoolById } from '../../../../redux/get'
+import { bnbPriceUsd, spawningPoolById } from '../../../../redux/get'
 
 
 interface RugInDetailsProps {
@@ -17,7 +16,7 @@ interface RugInDetailsProps {
 }
 
 const RugInDetails: React.FC<RugInDetailsProps> = ({ id, account }) => {
-  const { subtitle, poolInfo, pcsVersion, liquidityDetails, project, path, type, withdrawalCooldown, nftRevivalTime, endBlock, artist, rewardToken } = spawningPoolById(id)
+  const { subtitle, poolInfo, project, path, type, withdrawalCooldown, nftRevivalTime, endBlock, artist, rewardToken } = spawningPoolById(id)
   const spawningPoolContract = useSpawningPool(id);
 
   const [unlockFee, setUnlockFee] = useState(0);
@@ -94,7 +93,7 @@ const RugInDetails: React.FC<RugInDetailsProps> = ({ id, account }) => {
         </span>
         <br />
         <span className="indetails-title">
-          {account && isMetaMaskInScope && (          
+          {account && isMetaMaskInScope && (
             <button
               className='btn w-auto harvest' type='button'
               onClick={() => registerToken(rewardToken.address[56], rewardToken.symbol, rewardToken.decimals, rewardToken.tokenLogo)}

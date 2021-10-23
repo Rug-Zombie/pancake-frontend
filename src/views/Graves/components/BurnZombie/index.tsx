@@ -1,16 +1,14 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React from 'react'
-import styled from 'styled-components'
 import { Button, Flex, Image, Modal, Text } from '@rug-zombie-libs/uikit'
 import { useDrFrankenstein } from 'hooks/useContract'
-import { APESWAP_EXCHANGE_URL, BASE_EXCHANGE_URL, BASE_V1_EXCHANGE_URL } from 'config'
-import { getAddress, getZombieAddress } from 'utils/addressHelpers'
-import useTokenBalance from 'hooks/useTokenBalance'
-import { BIG_TEN, BIG_ZERO } from 'utils/bigNumber'
+import { APESWAP_EXCHANGE_URL } from 'config'
+import { getZombieAddress } from 'utils/addressHelpers'
+import { BIG_TEN } from 'utils/bigNumber'
 import { useWeb3React } from '@web3-react/core'
 import useToast from 'hooks/useToast'
 import { useTranslation } from 'contexts/Localization'
-import { grave, zombieBalance } from '../../../../redux/get'
+import { zombieBalance } from '../../../../redux/get'
 import tokens from '../../../../config/constants/tokens'
 
 interface BurnZombieModalProps {

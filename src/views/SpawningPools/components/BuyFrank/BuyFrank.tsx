@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import ReactTooltip from 'react-tooltip';
 import { formatDuration } from '../../../../utils/timerHelpers'
 import { BIG_ZERO } from '../../../../utils/bigNumber'

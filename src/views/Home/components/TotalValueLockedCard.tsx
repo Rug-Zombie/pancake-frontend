@@ -1,21 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { Card, CardBody, Heading, Skeleton, Text } from '@rug-zombie-libs/uikit'
-import { BigNumber } from 'bignumber.js'
+import { Card, CardBody, Heading, Text } from '@rug-zombie-libs/uikit'
 import numeral from 'numeral'
 import { getBalanceAmount } from '../../../utils/formatBalance'
 import {
   bnbPriceUsd,
   drFrankensteinZombieBalance,
-  zmbeBnbTomb,
   zombiePriceUsd,
   tombs,
   spawningPools,
 } from '../../../redux/get'
-import { initialTombData, spawningPool, initialSpawningPoolData, tomb } from '../../../redux/fetch'
+import { initialTombData, initialSpawningPoolData } from '../../../redux/fetch'
 
 import { useMultiCall, useZombie } from '../../../hooks/useContract'
-import * as get from '../../../redux/get'
 import { BIG_ZERO } from '../../../utils/bigNumber'
 
 const StyledTotalValueLockedCard = styled(Card)`

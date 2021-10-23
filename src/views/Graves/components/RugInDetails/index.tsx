@@ -3,13 +3,10 @@ import tokens from 'config/constants/tokens';
 import { useDrFrankenstein } from 'hooks/useContract'
 import React, { useEffect, useState } from 'react'
 import { BIG_ZERO } from 'utils/bigNumber';
-import { getBalanceAmount, getDecimalAmount, getFullDisplayBalance } from 'utils/formatBalance'
+import { getBalanceAmount, getFullDisplayBalance } from 'utils/formatBalance'
 import BigNumber from 'bignumber.js';
 import numeral from 'numeral';
 import { registerToken } from 'utils/wallet'
-import { Token } from '../../../../config/constants/types'
-import { BASE_V1_EXCHANGE_URL } from '../../../../config'
-import { Grave } from '../../../../redux/types'
 import { bnbPriceUsd, grave } from '../../../../redux/get'
 import { formatDuration } from '../../../../utils/timerHelpers'
 import Video from '../../../../components/Video'
@@ -23,7 +20,7 @@ interface RugInDetailsProps {
 }
 
 const RugInDetails: React.FC<RugInDetailsProps> = ({
-  pid , zombieUsdPrice, bnbInBusd, account
+  pid , zombieUsdPrice, account
 }) => {
   const { subtitle, rug, pcsVersion, liquidityDetails, path, type, endDate, latestEntryDate, isEnding, withdrawalCooldown, nftRevivalTime, poolInfo, artist } = grave(pid)
   const drFrankenstein = useDrFrankenstein();
@@ -105,7 +102,7 @@ const RugInDetails: React.FC<RugInDetailsProps> = ({
         </span>
         <br />
         <span className="indetails-title">
-          {account && isMetaMaskInScope && (          
+          {account && isMetaMaskInScope && (
             <button
               className='btn w-auto harvest' type='button'
               onClick={() => registerToken('0x50ba8bf9e34f0f83f96a340387d1d3888ba4b3b5', 'ZMBE', 18, 'https://bscscan.com/token/images/rugzombie_32.png')}

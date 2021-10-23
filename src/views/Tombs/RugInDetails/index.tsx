@@ -20,6 +20,7 @@ interface RugInDetailsProps {
   bracketCStart: number
 }
 
+
 const RugInDetails: React.FC<RugInDetailsProps> = ({ pid, tvl, bracketBStart, bracketCStart }) => {
   const tomb = tombByPid(pid)
   const { id, name, withdrawalCooldown, exchange, overlayId, userInfo: { amount }, poolInfo: { allocPoint, totalStaked } } = tomb

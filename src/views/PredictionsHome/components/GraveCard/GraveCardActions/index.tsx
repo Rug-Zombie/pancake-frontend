@@ -2,9 +2,6 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { Flex, Text, Box, Button } from '@rug-zombie-libs/uikit'
 import { useHistory } from 'react-router'
-import tokens from '../../../../../config/constants/tokens'
-import { getAddress } from '../../../../../utils/addressHelpers'
-import { getBep20Contract, getContract } from '../../../../../utils/contractHelpers'
 import { routes } from '../../../../../routes'
 import { auctionById } from '../../../../../redux/get'
 import { formatDuration } from '../../../../../utils/timerHelpers'
@@ -13,7 +10,7 @@ const InlineText = styled(Text)`
   display: inline;
 `
 
-async function getZombieAllowance(account, setState) {
+// async function getZombieAllowance(account, setState) {
 
   // zombie.methods.allowance(account, getRestorationChefAddress()).call()
   //   .then(amount => {
@@ -24,10 +21,10 @@ async function getZombieAllowance(account, setState) {
   //   .catch(() => {
   //     console.log('Failed to get zombie allowance')
   //   })
-}
+// }
 
-async function getTokenAllowance(account, token, setState, resetTimer, web3) {
-  const tokenContract = getBep20Contract(getAddress(token.address), web3)
+// async function getTokenAllowance(account, token, setState, resetTimer, web3) {
+  // const tokenContract = getBep20Contract(getAddress(token.address), web3)
   // tokenContract.methods.allowance(account, getRestorationChefAddress()).call()
   //   .then(amount => {
   //     resetTimer()
@@ -37,13 +34,13 @@ async function getTokenAllowance(account, token, setState, resetTimer, web3) {
   //   .catch(() => {
   //     console.log(`Failed to get ${token.symbol} allowance`)
   //   })
-}
+// }
 
 const GraveCardActions: React.FC<{ id: number }> = ({ id }) => {
   const history = useHistory()
   const { bt, isFinished, end } = auctionById(id)
   const [remainingTime, setRemainingTime] = useState(end - Math.floor(Date.now() / 1000))
-  const [timerSet, setTimerSet] = useState(false)
+  const [, setTimerSet] = useState(false)
 
   useEffect(() => {
     setInterval(() => {

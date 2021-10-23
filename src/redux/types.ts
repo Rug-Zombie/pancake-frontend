@@ -1,5 +1,5 @@
-import { Address, Id, Token } from '../config/constants/types'
 import { BigNumber } from 'bignumber.js'
+import { Address, Id, Token } from '../config/constants/types'
 
 export interface UserInfo {
   paidUnlockFee: boolean,

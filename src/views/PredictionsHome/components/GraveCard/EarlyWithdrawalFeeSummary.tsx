@@ -14,7 +14,7 @@ interface FeeSummaryProps {
   feeInZombie: BigNumber
 }
 
-const FeeSummary: React.FC<FeeSummaryProps> = ({ stakingTokenSymbol, userData, grave, feeInZombie }) => {
+const FeeSummary: React.FC<FeeSummaryProps> = ({ userData, grave, feeInZombie }) => {
   const { t } = useTranslation()
   const { targetRef, tooltip, tooltipVisible } = useTooltip(
     <>

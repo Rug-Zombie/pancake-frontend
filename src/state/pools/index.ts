@@ -26,7 +26,7 @@ export const PoolsSlice = createSlice({
     setPoolsUserData: (state, action) => {
       const userData = action.payload
       state.data = state.data.map((pool) => {
-        const userPoolData = userData.find((entry) => entry.sousId === pool.sousId)
+        const userPoolData = userData.find(({ sousId }) => sousId === pool.sousId)
         return { ...pool, userData: userPoolData }
       })
     },

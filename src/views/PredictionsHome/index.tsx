@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
-import { getBep20Contract, getContract } from 'utils/contractHelpers'
-import { Heading, Flex, Image, Button, Input } from '@rug-zombie-libs/uikit'
+import { Heading, Flex, Image } from '@rug-zombie-libs/uikit'
 import Page from 'components/layout/Page'
 import PageHeader from 'components/PageHeader'
 import { Route, useRouteMatch } from 'react-router-dom'
@@ -38,7 +37,7 @@ const PredictionsHome: React.FC = () => {
         />
         <FlexLayout>
 
-          {visibleAuctions.reverse().map(auction => {
+          {visibleAuctions.reverse().map(() => {
             key += 1
             return <AuctionCard id={ids[key]} key={key} />
           })}

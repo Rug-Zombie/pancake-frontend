@@ -1,7 +1,6 @@
 import artists from '../config/constants/artists'
 import { Auction } from './types'
 import { BIG_ZERO } from '../utils/bigNumber'
-import tokens from '../config/constants/tokens'
 
 const DEFAULT_AUCTION_INFO = {
   lastBidId: 0,

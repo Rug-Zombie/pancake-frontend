@@ -6,7 +6,6 @@ import { BASE_EXCHANGE_URL } from 'config'
 import useTheme from 'hooks/useTheme'
 import BigNumber from 'bignumber.js'
 import { getFullDisplayBalance, formatNumber, getDecimalAmount } from 'utils/formatBalance'
-import useToast from 'hooks/useToast'
 import Web3 from 'web3'
 import FeeSummary from './FeeSummary'
 import { GraveConfig } from '../../../../config/constants/types'
@@ -31,11 +30,9 @@ const GraveStakeModal: React.FC<VaultStakeModalProps> = ({
   grave,
   stakingMax,
   stakingTokenPrice,
-  account,
   userData,
   isRemovingStake = false,
   onDismiss,
-  web3
 }) => {
   const { t } = useTranslation()
   const { theme } = useTheme()

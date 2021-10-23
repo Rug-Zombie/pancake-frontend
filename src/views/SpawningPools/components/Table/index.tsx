@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { BaseLayout } from '@rug-zombie-libs/uikit'
 import FrankEarned from '../FrankEarned/FrankEarned'
@@ -28,9 +28,9 @@ interface TableProps {
   account: string,
 }
 
-const Table: React.FC<TableProps> = ({ id, isAllowance, bnbInBusd, updateAllowance, updateResult, zombieUsdPrice, account }: TableProps) => {
+const Table: React.FC<TableProps> = ({ id, isAllowance, bnbInBusd, updateAllowance, zombieUsdPrice, account }: TableProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [poolData, setPoolData] = useState(spawningPoolById(id))
+  const [, setPoolData] = useState(spawningPoolById(id))
   const openInDetails = (data) => {
     setIsOpen(data);
   }

@@ -1,13 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import { Card, CardBody, Heading, Skeleton, Text } from '@rug-zombie-libs/uikit'
-import { BigNumber } from 'bignumber.js'
-import numeral from 'numeral'
-import { getBalanceAmount } from '../../../utils/formatBalance'
-import { bnbPriceUsd, drFrankensteinZombieBalance, zmbeBnbTomb, zombiePriceUsd } from '../../../redux/get'
-import store from '../../../redux/store'
-import tombs from '../../../redux/tombs'
-import { tomb } from '../../../redux/fetch'
+import { Card, CardBody, Heading, Text } from '@rug-zombie-libs/uikit'
 
 const StyledTotalValueLockedCard = styled(Card)`
   align-items: center;

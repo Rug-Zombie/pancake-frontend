@@ -1,10 +1,7 @@
 import React from 'react'
-import { CardBody, Text, Flex, BlockIcon, LinkExternal } from '@rug-zombie-libs/uikit'
+import { CardBody, Flex, BlockIcon, LinkExternal } from '@rug-zombie-libs/uikit'
 import { useTranslation } from 'contexts/Localization'
-import { Round, BetPosition } from 'state/types'
-import { useGetTotalIntervalBlocks } from 'state/hooks'
-import ReclaimPositionButton from '../ReclaimPositionButton'
-import useIsRefundable from '../../hooks/useIsRefundable'
+import { BetPosition } from 'state/types'
 import { RoundResultBox } from '../RoundResult'
 import MultiplierArrow from './MultiplierArrow'
 import Card from './Card'
@@ -17,14 +14,9 @@ interface CanceledRoundCardProps {
 
 const CanceledRoundCard: React.FC<CanceledRoundCardProps> = ({ bid, id }) => {
   const { t } = useTranslation()
-  const interval = useGetTotalIntervalBlocks()
   // const { isRefundable, setIsRefundable } = useIsRefundable(round.epoch)
   // const { epoch, startBlock } = round
   // const estimatedEndBlock = startBlock + interval
-
-  const handleSuccess = async () => {
-    // setIsRefundable(false)
-  }
 
   return (
     <Card>

@@ -2,21 +2,14 @@ import React from 'react'
 import styled from 'styled-components'
 import {
   Text, Button,
-  ButtonMenu,
   Cards, Flex,
 } from '@rug-zombie-libs/uikit'
-import {  useIsChartPaneOpen, useIsHistoryPaneOpen } from 'state/hooks'
 import { getFullDisplayBalance } from '../../../utils/formatBalance'
 import { APESWAP_ADD_LIQUIDITY_URL } from '../../../config'
 import { auctionById } from '../../../redux/get'
 
 const ButtonNav = styled.div`
   flex: none;
-`
-
-const TabNav = styled.div`
-  flex: 1;
-  text-align: center;
 `
 
 const StyledMobileMenu = styled.div`
@@ -28,28 +21,12 @@ const StyledMobileMenu = styled.div`
     display: none;
   }
 `
-
-const getActiveIndex = (isHistoryOpen: boolean, isChartOpen: boolean) => {
-  if (isHistoryOpen) {
-    return 2
-  }
-
-  if (isChartOpen) {
-    return 1
-  }
-
-  return 0
-}
-
 interface MobileMenuProps {
   id: number;
   refreshMobile: any;
 }
 
 const MobileMenu: React.FC<MobileMenuProps> = ({ id, refreshMobile }) => {
-  const isHistoryOpen = useIsHistoryPaneOpen()
-  const isChartOpen = useIsChartPaneOpen()
-  const activeIndex = getActiveIndex(isHistoryOpen, isChartOpen)
   const {token0, token1, version, userInfo: { bid }} = auctionById(id)
   const v3 = version === 'v3'
   const handleItemClick = () => {

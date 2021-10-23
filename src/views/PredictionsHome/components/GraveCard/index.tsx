@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import { Card, CardBody, Flex, Image, Text } from '@rug-zombie-libs/uikit'
+import { CardBody, Flex } from '@rug-zombie-libs/uikit'
 import UnlockButton from 'components/UnlockButton'
 import StartingBid from './StartingBid'
 import StyledCard from './StyledCard'
@@ -15,7 +15,7 @@ const StyledCardBody = styled(CardBody)<{ isLoading: boolean }>`
 `
 
 const AuctionCard: React.FC<{ id: number }> = ({ id }) => {
-  const { prize, prizeSymbol, path } = auctionById(id)
+  const { prize, path } = auctionById(id)
   const isLoading = false
   return (
     <StyledCard isStaking={false} style={{

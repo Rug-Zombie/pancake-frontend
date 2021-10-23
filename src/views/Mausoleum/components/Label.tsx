@@ -1,13 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Box, Button, Card, Flex, HelpIcon, Image, LinkExternal, IconButton, Text } from '@rug-zombie-libs/uikit'
-import { useTranslation } from 'contexts/Localization'
-import { formatRoundTime } from '../helpers'
-import useRoundCountdown from '../hooks/useRoundCountdown'
-import tokens from '../../../config/constants/tokens'
+import { Box, Card, Flex, HelpIcon, Image, LinkExternal, IconButton, Text } from '@rug-zombie-libs/uikit'
 import { getBalanceAmount } from '../../../utils/formatBalance'
-import { APESWAP_ADD_LIQUIDITY_URL, APESWAP_EXCHANGE_URL, BASE_EXCHANGE_URL } from '../../../config'
-import auctions from '../../../redux/auctions'
+import { APESWAP_ADD_LIQUIDITY_URL } from '../../../config'
 import { auctionById } from '../../../redux/get'
 
 const Token = styled(Box)`

@@ -31,6 +31,7 @@ const BuyFrank: React.FC<BuyFrankProps> = ({ pid, updateOverlay }) => {
   const overlay = tomb.overlayId ? tombOverlayByPoolId(getId(tomb.overlayId)) : undefined
   const [userInfo, setUserInfo] = useState(DEFAULT_USER_INFO)
   const { userInfo: { amount, tokenWithdrawalDate } } = tomb
+
   const mintingReady = userInfo.randomNumber > 0
   const initialWithdrawCooldownTime = tokenWithdrawalDate - currentDate
   const [nftMintTime, setNftMintTime] = useState(BIG_ZERO)
@@ -82,7 +83,7 @@ const BuyFrank: React.FC<BuyFrankProps> = ({ pid, updateOverlay }) => {
     }
   }, [update, tomb.overlayId, tombOverlay.methods])
 
-  let addLiquidityUrl
+  let addLiquidityUrl: string
 
   if (tomb.exchange === 'Apeswap') {
     addLiquidityUrl = `${APESWAP_ADD_LIQUIDITY_URL}/${quoteTokenUrl}/${getAddress(tomb.token.address)}`

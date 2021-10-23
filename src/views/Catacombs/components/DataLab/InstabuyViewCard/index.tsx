@@ -19,13 +19,9 @@ interface ViewCardProps {
   refresh: () => void;
 }
 
-const InstabuyViewCard: React.FC<ViewCardProps> = ({ id, refresh }: ViewCardProps) => {
+const InstabuyViewCard: React.FC<ViewCardProps> = ({ id }) => {
   const { path, type, userInfo: { ownedIds } } = nftById(id);
   const isOwned = ownedIds.length > 0
-
-  const handleSuccess = () => {
-    refresh()
-  }
 
   return (
     <div>

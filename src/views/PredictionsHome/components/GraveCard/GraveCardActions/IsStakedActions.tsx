@@ -1,13 +1,9 @@
 import React from 'react'
-import { Flex, Text, IconButton, AddIcon, MinusIcon, Heading, useModal, Skeleton, Button } from '@rug-zombie-libs/uikit'
+import { Flex, Text, Heading, useModal, Skeleton, Button } from '@rug-zombie-libs/uikit'
 import BigNumber from 'bignumber.js'
-import { getBalanceNumber, formatNumber } from 'utils/formatBalance'
-import { Pool } from 'state/types'
 import Web3 from 'web3'
-import { convertSharesToCake } from '../../../helpers'
 import GraveStakeModal from '../GraveStakeModal'
 import { GraveConfig } from '../../../../../config/constants/types'
-import tokens from '../../../../../config/constants/tokens'
 import { BIG_TEN } from '../../../../../utils/bigNumber'
 
 interface HasStakeActionProps {
@@ -22,7 +18,6 @@ interface HasStakeActionProps {
 
 const IsStakedActions: React.FC<HasStakeActionProps> = ({
   grave,
-  stakingTokenBalance,
   zombiePrice,
   stakingMax,
   userData,
@@ -45,7 +40,7 @@ const IsStakedActions: React.FC<HasStakeActionProps> = ({
     />,
   )
 
-  const [onPresentUnstake] = useModal(
+  useModal(
     <GraveStakeModal
       account={account}
       grave={grave}

@@ -1,12 +1,10 @@
 import React from 'react'
-import BigNumber from 'bignumber.js'
 import { getFullDisplayBalance } from 'utils/formatBalance'
-import tokens from 'config/constants/tokens'
-import { useDrFrankenstein, useSpawningPool } from 'hooks/useContract'
+import { useSpawningPool } from 'hooks/useContract'
 import { useWeb3React } from '@web3-react/core'
 import { useTranslation } from 'contexts/Localization'
 import useToast from 'hooks/useToast'
-import { grave, spawningPoolById } from '../../../../redux/get'
+import { spawningPoolById } from '../../../../redux/get'
 import { BIG_ZERO } from '../../../../utils/bigNumber'
 
 interface FrankEarnedProps {

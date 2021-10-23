@@ -3,16 +3,11 @@ import styled from 'styled-components'
 import {
   ButtonMenu,
   ButtonMenuItem,
-  Button,
-  HelpIcon,
-  Toggle,
   Text,
   Flex,
   NotificationDot,
-  Link as UiKitLink, Dropdown, useMatchBreakpoints,
 } from '@rug-zombie-libs/uikit'
 import { useTranslation } from 'contexts/Localization'
-import { graves } from '../../../redux/get'
 
 const GraveTabButtons = ({ setFilter }) => {
   const { t } = useTranslation()

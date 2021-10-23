@@ -6,7 +6,6 @@ import Web3 from 'web3'
 import GraveStakeModal from '../GraveStakeModal'
 import IsStakedActions from './IsStakedActions'
 import { GraveConfig } from '../../../../../config/constants/types'
-import tokens from '../../../../../config/constants/tokens'
 
 interface VaultStakeActionsProps {
   grave: GraveConfig

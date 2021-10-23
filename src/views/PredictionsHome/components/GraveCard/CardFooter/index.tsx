@@ -1,12 +1,9 @@
 import React, { useState } from 'react'
-import BigNumber from 'bignumber.js'
 import styled from 'styled-components'
 import { useTranslation } from 'contexts/Localization'
-import { Flex, CardFooter, ExpandableLabel, HelpIcon, useTooltip, Box } from '@rug-zombie-libs/uikit'
-import { Pool } from 'state/types'
-import { CompoundingPoolTag, CoreTag, EndedTag, ManualPoolTag, OngoingTag } from 'components/Tags'
+import { Flex, CardFooter, ExpandableLabel, useTooltip, Box } from '@rug-zombie-libs/uikit'
+import { EndedTag, OngoingTag } from 'components/Tags'
 import ExpandedFooter from './ExpandedFooter'
-import { GraveConfig } from '../../../../../config/constants/types'
 import { auctionById } from '../../../../../redux/get'
 
 interface FooterProps {
@@ -23,7 +20,7 @@ const ExpandableButtonWrapper = styled(Flex)`
 
 const Footer: React.FC<FooterProps> = ({ id }) => {
   const { t } = useTranslation()
-  const { aid, isFinished } = auctionById(id)
+  const { isFinished } = auctionById(id)
   const [isExpanded, setIsExpanded] = useState(false)
   const manualTooltipText = isFinished ? "Auction has ended" : "Auction is live!"
   const { targetRef, tooltip, tooltipVisible } = useTooltip( manualTooltipText, {

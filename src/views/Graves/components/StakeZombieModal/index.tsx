@@ -12,7 +12,6 @@ import { useWeb3React } from '@web3-react/core'
 import tokens from 'config/constants/tokens'
 import { useTranslation } from 'contexts/Localization'
 import useToast from 'hooks/useToast'
-import { Grave } from '../../../../redux/types'
 import { grave } from '../../../../redux/get'
 
 interface StakeZombieModalProps {
@@ -31,10 +30,10 @@ const StakeZombieModal: React.FC<StakeZombieModalProps> = ({pid, zombieUsdPrice,
   const {userInfo: {amount}, poolInfo} = grave(pid)
   const drFrankenstein = useDrFrankenstein();
   const { account } = useWeb3React();
-  
+
   const { toastSuccess } = useToast()
   const { t } = useTranslation()
-  
+
   const { theme } = useTheme();
   const [percent, setPercent] = useState(0);
   const [stakeAmount, setStakeAmount] = useState(new BigNumber(poolInfo.minimumStake));

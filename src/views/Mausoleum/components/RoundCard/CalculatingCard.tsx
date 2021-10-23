@@ -1,8 +1,7 @@
 import React from 'react'
 import { CardBody, Flex, Spinner, WaitIcon } from '@rug-zombie-libs/uikit'
 import { useTranslation } from 'contexts/Localization'
-import { Round, BetPosition } from 'state/types'
-import { useGetTotalIntervalBlocks } from 'state/hooks'
+import { BetPosition } from 'state/types'
 import { RoundResultBox } from '../RoundResult'
 import MultiplierArrow from './MultiplierArrow'
 import Card from './Card'
@@ -15,7 +14,6 @@ interface CalculatingCardProps {
 
 const CalculatingCard: React.FC<CalculatingCardProps> = ({ bid, id }) => {
   const { t } = useTranslation()
-  const interval = useGetTotalIntervalBlocks()
 
   return (
     <Card>

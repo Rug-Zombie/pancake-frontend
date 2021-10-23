@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { CardsLayout, Heading, useMatchBreakpoints } from '@rug-zombie-libs/uikit'
+import { CardsLayout, Heading } from '@rug-zombie-libs/uikit'
 import './Collectibles.Styles.css'
 import CollectiblesCard from './CollectiblesCard';
 import { nftUserInfo } from '../../../../redux/fetch'
-import { useMultiCall, useNftOwnership } from '../../../../hooks/useContract'
+import { useNftOwnership } from '../../../../hooks/useContract'
 import CollectibleTabButtons from '../CollectibleTabButtons'
 import { nfts } from '../../../../redux/get'
 

@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { BalanceInput, Button, Flex, Image, Modal, Slider, Text } from '@rug-zombie-libs/uikit'
 import useTheme from 'hooks/useTheme'
-import { useDrFrankenstein, useSpawningPool } from 'hooks/useContract'
+import { useSpawningPool } from 'hooks/useContract'
 import { getBalanceAmount, getDecimalAmount, getFullDisplayBalance } from 'utils/formatBalance'
 import BigNumber from 'bignumber.js'
 import { useWeb3React } from '@web3-react/core'
@@ -11,8 +11,7 @@ import tokens from 'config/constants/tokens'
 import { useTranslation } from 'contexts/Localization'
 import useToast from 'hooks/useToast'
 import { BIG_TEN, BIG_ZERO } from '../../../../utils/bigNumber'
-import { Grave } from '../../../../redux/types'
-import { grave, spawningPoolById } from '../../../../redux/get'
+import { spawningPoolById } from '../../../../redux/get'
 
 interface WithdrawZombieModalProps {
   pid: number,

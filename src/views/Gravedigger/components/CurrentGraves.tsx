@@ -2,7 +2,6 @@ import React from 'react'
 import { Grave } from 'redux/types'
 import { Flex, Heading, LinkExternal, Text } from '@rug-zombie-libs/uikit'
 import styled from 'styled-components'
-import { ExternalLink } from 'react-feather'
 
 export type CurrentGravesProps = {
   grave: Grave

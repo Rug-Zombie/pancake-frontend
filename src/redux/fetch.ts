@@ -388,7 +388,7 @@ export const spawningPool = (id: number, zombie: any, poolUpdateObj?: { update: 
               userUpdateObj.setUpdate(userUpdateObj.update + 1)
             }
           })
-          .catch((err) => {
+          .catch(() => {
             console.log('allowance failed')
           })
       })
