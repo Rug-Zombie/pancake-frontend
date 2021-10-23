@@ -64,8 +64,9 @@ const StartFarming: React.FC<StartFarmingProps> = ({pid, updateResult }) => {
   )
 
   const handleApproveLPToken = () => {
-    lpTokenContract.methods.approve(getDrFrankensteinAddress(), ethers.constants.MaxUint256)
-      .send({ from: account }).then(() => {
+    if(account) {
+      lpTokenContract.methods.approve(getDrFrankensteinAddress(), ethers.constants.MaxUint256)
+        .send({ from: account }).then(() => {
         lpTokenContract.methods.allowance(account, getDrFrankensteinAddress()).call().then((res) => {
           if(res.toString() !== "0") {
             setIsLpTokenAllowance(true);
@@ -74,6 +75,7 @@ const StartFarming: React.FC<StartFarmingProps> = ({pid, updateResult }) => {
           }
         })
       })
+    }
   }
 
   const renderButtonsForGrave = () => {

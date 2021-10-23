@@ -176,15 +176,18 @@ export const initialTombData = (updatePoolObj?: { update: number, setUpdate: any
 }
 
 export const multicallTombData = (updatePoolObj?: { update: boolean, setUpdate: any }, updateUserObj?: { update: boolean, setUpdate: any }) => {
-  const totalSupplyCalls = []
+  const lpTokenCalls = []
   get.tombs().forEach(t => {
-    totalSupplyCalls.push({ address: getAddress(t.lpAddress), name: 'totalSupply', params: [] })
-    totalSupplyCalls.push({ address: getAddress(t.lpAddress), name: 'balanceOf', params: [getDrFrankensteinAddress()] })
-    totalSupplyCalls.push({ address: getAddress(t.lpAddress), name: 'getReserves', params: [] })
+    lpTokenCalls.push({ address: getAddress(t.lpAddress), name: 'totalSupply', params: [] })
+    lpTokenCalls.push({ address: getAddress(t.lpAddress), name: 'balanceOf', params: [getDrFrankensteinAddress()] })
+    lpTokenCalls.push({ address: getAddress(t.lpAddress), name: 'getReserves', params: [] })
+    if(account()) {
+      lpTokenCalls.push({ address: getAddress(t.lpAddress), name: 'allowance', params: [account(), getDrFrankensteinAddress()] })
+    }
   })
 
-  multicallv2(pancakePairAbi, totalSupplyCalls)
-    .then(totalSupplyRes => {
+  multicallv2(pancakePairAbi, lpTokenCalls)
+    .then(lpTokenRes => {
       if (account()) {
         const drFCalls = []
         get.tombs().forEach(t => {
@@ -206,14 +209,14 @@ export const multicallTombData = (updatePoolObj?: { update: boolean, setUpdate: 
               store.dispatch(updateTombPoolInfo(getId(t.pid), {
                 allocPoint: new BigNumber(poolInfoRes.allocPoint.toString()),
                 minimumStake: new BigNumber(poolInfoRes.minimumStake.toString()),
-                lpTotalSupply: new BigNumber(totalSupplyRes[index * 3].toString()),
-                totalStaked: new BigNumber(totalSupplyRes[(index * 3) + 1].toString()),
-                reserves: [new BigNumber(totalSupplyRes[(index * 3) + 2]._reserve0.toString()), new BigNumber(totalSupplyRes[(index * 3) + 2]._reserve1.toString())],
+                lpTotalSupply: new BigNumber(lpTokenRes[index * 4].toString()),
+                totalStaked: new BigNumber(lpTokenRes[(index * 4) + 1].toString()),
+                reserves: [new BigNumber(lpTokenRes[(index * 4) + 2]._reserve0.toString()), new BigNumber(lpTokenRes[(index * 4) + 2]._reserve1.toString())],
               }))
               store.dispatch(updateTombUserInfo(getId(t.pid), {
                 amount: new BigNumber(userInfoRes.amount.toString()),
                 tokenWithdrawalDate: userInfoRes.tokenWithdrawalDate,
-                lpAllowance: new BigNumber(userInfoRes.toString()),
+                lpAllowance: new BigNumber(lpTokenRes[(index * 4) + 3].toString()),
                 pendingZombie: new BigNumber(drFRes[(index * 3) + 2].toString()),
               }))
             })
@@ -234,9 +237,9 @@ export const multicallTombData = (updatePoolObj?: { update: boolean, setUpdate: 
               store.dispatch(updateTombPoolInfo(getId(t.pid), {
                 allocPoint: new BigNumber(poolInfoRes.allocPoint.toString()),
                 minimumStake: new BigNumber(poolInfoRes.minimumStake.toString()),
-                lpTotalSupply: new BigNumber(totalSupplyRes[index * 3].toString()),
-                totalStaked: new BigNumber(totalSupplyRes[(index * 3) + 1].toString()),
-                reserves: [new BigNumber(totalSupplyRes[(index * 3) + 2]._reserve0.toString()), new BigNumber(totalSupplyRes[(index * 3) + 2]._reserve1.toString())],
+                lpTotalSupply: new BigNumber(lpTokenRes[index * 3].toString()),
+                totalStaked: new BigNumber(lpTokenRes[(index * 3) + 1].toString()),
+                reserves: [new BigNumber(lpTokenRes[(index * 3) + 2]._reserve0.toString()), new BigNumber(lpTokenRes[(index * 3) + 2]._reserve1.toString())],
               }))
             })
             if (!updatePoolObj.update) {
