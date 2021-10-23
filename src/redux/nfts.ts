@@ -1,5 +1,6 @@
 import { BIG_ZERO } from '../utils/bigNumber'
 import { Nft, NftUserInfo } from './types'
+import artists from '../config/constants/artists'
 
 const DEFAULT_USER_INFO: NftUserInfo = {
   ownedIds: [],
@@ -408,7 +409,7 @@ const nfts: Nft[] = [
   {
     id: 25,
     name: 'Leonhard Euler\'s Day Off',
-    symbol: 'INEVITABLE',
+    symbol: 'EULER',
     description: 'Now I will have less distraction.',
     address: {
       56: '0x58D739aF3aBBb8d34A2D9068dCC60a95D172f80c',
@@ -491,7 +492,7 @@ const nfts: Nft[] = [
     symbol: 'ZWALLET',
     description: 'Genuine Human Leather!',
     address: {
-      56: '0xd651aa4a1fc01505bc8c496a0c6f53403efc30bc',
+      56: '0xcf9ce4bb89a7848015b1b281427694d417a0ce2a',
       97: '0x2d8b022125f4afbf9594a4dff269eb44e15ae295',
 
     },
@@ -707,6 +708,88 @@ const nfts: Nft[] = [
     type: 'image',
     rarity: 'Mythic',
     userInfo: { ...DEFAULT_USER_INFO }
+  },
+  {
+    id: 44,
+    name: 'Zomberina',
+    symbol: 'ZOMBERINA',
+    description: 'Arabesque!',
+    address: {
+      56: '0x4CD0F32bf663EF1d8C016E393243dA753Db19CF3',
+      97: '0x2d8b022125f4afbf9594a4dff269eb44e15ae295',
+
+    },
+    totalSupply: BIG_ZERO,
+    path: 'https://ipfs.io/ipfs/QmTKuQUr7t4rTmFCSm2kFD8azSK24ysUDWDKBDtHXnkhmT',
+    type: 'image',
+    rarity: 'Common',
+    artist: artists.jussjoshinduh,
+    userInfo: { ...DEFAULT_USER_INFO },
+  },
+  {
+    id: 45,
+    name: 'Zomboni',
+    symbol: 'ZOMBONI',
+    description: 'Ice, Ice, Zombie',
+    address: {
+      56: '0xb256Bf0E888c34FE67a4169f0A5f80AC9F9e2f6D',
+      97: '0x2d8b022125f4afbf9594a4dff269eb44e15ae295',
+
+    },
+    totalSupply: BIG_ZERO,
+    path: 'https://ipfs.io/ipfs/QmcDG9auXhMRJdF9eaSMhrmcWeJe6kHrDAbYvDrVTYPaub',
+    type: 'image',
+    rarity: 'Uncommon',
+    artist: artists.jussjoshinduh,
+    userInfo: { ...DEFAULT_USER_INFO },
+  },
+  {
+    id: 46,
+    name: 'I am Drol',
+    symbol: 'DROL',
+    description: 'There can only be one.',
+    address: {
+      56: '0x431b4049B278edaE5856DE6BDA7898b8267c8253',
+      97: '0x2d8b022125f4afbf9594a4dff269eb44e15ae295',
+    },
+    totalSupply: BIG_ZERO,
+    path: 'https://ipfs.io/ipfs/QmW5KmNsBPHWfc8UBEMWvtQvVwM33UsBuiqqynjKftWSnX',
+    type: 'image',
+    rarity: 'Rare',
+    artist: artists.jussjoshinduh,
+    userInfo: { ...DEFAULT_USER_INFO },
+  },
+  {
+    id: 47,
+    name: 'Ocean',
+    symbol: 'OCEAN',
+    description: 'It\'s the shark\'s house.',
+    address: {
+      56: '0x8c1F3947881662C7F1753A3432891227ffab92B1',
+      97: '0x2d8b022125f4afbf9594a4dff269eb44e15ae295',
+    },
+    totalSupply: BIG_ZERO,
+    path: 'https://storage.googleapis.com/rug-zombie/Ocean-Compresed.webm',
+    type: 'video',
+    rarity: 'Legendary',
+    artist: artists.ZomBaes,
+    userInfo: { ...DEFAULT_USER_INFO },
+  },
+  {
+    id: 48,
+    name: 'Shiny Inevitable Ape',
+    symbol: 'INEVITABLE',
+    description: 'Welcome to the Jungle.',
+    address: {
+      56: '0xE501dB597207F41599b05e8fD45e229686683D5a',
+      97: '0x2d8b022125f4afbf9594a4dff269eb44e15ae295',
+    },
+    totalSupply: BIG_ZERO,
+    path: 'https://ipfs.io/ipfs/QmTUNZZSZZSbVtfvDkHFXPr9fuHdXYLnQeTJMTiRMJ7epq',
+    type: 'video',
+    rarity: 'Legendary',
+    artist: artists.jussjoshinduh,
+    userInfo: { ...DEFAULT_USER_INFO },
   },
 ]
 

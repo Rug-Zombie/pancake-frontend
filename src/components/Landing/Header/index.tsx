@@ -1,5 +1,6 @@
 import React from 'react';
 import './Header.Styles.css';
+import HashEx from './HashEx';
 
 const Header = () => {
 	return (
@@ -17,6 +18,9 @@ const Header = () => {
 					<a href="/#How-To-Buy" className="nav_link-2">How to buy</a>
 					<a rel="noreferrer" target="_blank" href="https://rugzombie-1.gitbook.io/docs/" className="nav_link-2">Gitbook Documents</a>
 					{/* <a href="#the-team" className="nav_link-2">Meet The Team</a> */}
+					<a rel="noreferrer" target="_blank" href="https://github.com/HashEx/public_audits/blob/master/rugzombie/Zombie%20report.pdf">
+						<HashEx />
+					</a>
 				</div>
 			</nav>
 		</header>

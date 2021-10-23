@@ -47,24 +47,28 @@ const StakedGraves: React.FC<{ zombieStaked }> = ({ zombieStaked }) => {
     })
     return total
   }
-  const drFrankenstein = useDrFrankenstein()
-  const { toastSuccess } = useToast()
-  const { t } = useTranslation()
-  const handleHarvest = () => {
-    stakedGraves.forEach((stakedGrave) => {
-      if (getId(stakedGrave.pid) === 0) {
-        drFrankenstein.methods.leaveStaking(0)
-          .send({ from: account() }).then(() => {
-          toastSuccess(t('Claimed ZMBE'))
-        })
-      } else {
-        drFrankenstein.methods.withdraw(getId(stakedGrave.pid), 0)
-          .send({ from: account() }).then(() => {
-          toastSuccess(t('Claimed ZMBE'))
-        })
+
+
+    const drFrankenstein = useDrFrankenstein();
+    const { toastSuccess } = useToast()
+    const { t } = useTranslation()
+    const handleHarvest = () => {
+
+      stakedGraves.forEach((stakedGrave) => {
+        if (getId(stakedGrave.pid) === 0) {
+          drFrankenstein.methods.leaveStaking(0)
+          .send({from: account()}).then(() => {
+            toastSuccess(t('Claimed ZMBE'))
+          });
+        } else {
+          drFrankenstein.methods.withdraw(getId(stakedGrave.pid), 0)
+          .send({from: account()}).then(() => {
+            toastSuccess(t('Claimed ZMBE'))
+          });
+        }
+      })
       }
-    })
-  }
+
 
   const buttonStyle = isDesktop ? {} : { fontSize: '10px' }
   return (

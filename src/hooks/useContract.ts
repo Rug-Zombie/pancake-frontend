@@ -27,6 +27,7 @@ import {
   getMulticallContract,
   getCatacombsContract,
   getInstaBuyContract,
+  getTombOverlayContract
 } from 'utils/contractHelpers'
 
 /**
@@ -163,4 +164,9 @@ export const useCatacombsContract = () => {
 export const useInstaBuyContract = () => {
   const web3 = useWeb3()
   return useMemo(() => getInstaBuyContract(web3), [web3])
+}
+
+export const useTombOverlay = () => {
+  const web3 = useWeb3();
+  return useMemo(() => getTombOverlayContract(web3), [web3]);
 }
