@@ -492,7 +492,7 @@ const nfts: Nft[] = [
     symbol: 'ZWALLET',
     description: 'Genuine Human Leather!',
     address: {
-      56: '0x32c5ec65beB8482b5c727A0E3A352F8E330eb312',
+      56: '0xcf9ce4bb89a7848015b1b281427694d417a0ce2a',
       97: '0x2d8b022125f4afbf9594a4dff269eb44e15ae295',
 
     },
