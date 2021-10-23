@@ -33,7 +33,7 @@ export default {
     56: '0xa7E5bE955311988cb9d74d0edc4e3bFabA7439B5',
   },
   nftOwnership: {
-    97: '',
+    97: '0x4597A2BC052086109cd6173EEc9B8Ef58dF49829',
     56: '0x156537f9C6eb300A3FDf73cD77d1181CEbFd1c88',
   },
   sousChef: {
@@ -103,5 +103,9 @@ export default {
   tombOverlay: {
     56: '0x2974b990787aeC9fAAf4f210F841095389768A5D',
     97: '0x38b3566D6Ce10F605a1EA308CAA6c681e1BdE69b',
+  },
+  nftSwapper: {
+    56: '',
+    97: '0x889E97403400257454dF59796Fc7A15bB6b9c03a',
   }
 }

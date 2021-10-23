@@ -1,36 +1,9 @@
 import React from 'react'
-import styled from 'styled-components'
-import { Flex, Heading, BaseLayout } from '@rug-zombie-libs/uikit'
+import { Flex, Heading } from '@rug-zombie-libs/uikit'
 import PageHeader from 'components/PageHeader'
 import artists from 'config/constants/artists'
 import Page from 'components/layout/Page'
 import NftCard from './NftCard'
-
-const TableCards = styled(BaseLayout)`
-  width: 100%;
-
-  & > div {
-    grid-column: span 12;
-    width: 80%;
-  }
-`
-const DisplayFlex = styled(BaseLayout)`
-  display: flex;
-  flex-direction: column;
-  -webkit-box-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  justify-content: center;
-  grid-gap: 0px;
-}`
-
-const Row = styled.div`
-  align-items: center;
-  display: flex;
-  font-size: 14px;
-  justify-content: space-between;
-  margin-bottom: 8px;
-`
 
 const DayOfDeadSwap: React.FC = () => {
     return (
@@ -48,9 +21,9 @@ const DayOfDeadSwap: React.FC = () => {
                 </Flex>
             </PageHeader>
             <Page>
-                <NftCard name='Common' artist={artists.RugZombie} rznftid={6} dodnftid={0} />
-                <NftCard name='Unommon' artist={artists.RugZombie} rznftid={19} dodnftid={1} />
-                <NftCard name='Rare' artist={artists.RugZombie} rznftid={29} dodnftid={2} />
+                <NftCard name='Common' artist={artists.RugZombie} rznftid={49} dodnftid={52} />
+                <NftCard name='Unommon' artist={artists.RugZombie} rznftid={50} dodnftid={53} />
+                <NftCard name='Rare' artist={artists.RugZombie} rznftid={51} dodnftid={54} />
             </Page>
         </>
     )

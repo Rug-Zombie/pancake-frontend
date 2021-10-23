@@ -791,6 +791,105 @@ const nfts: Nft[] = [
     artist: artists.jussjoshinduh,
     userInfo: { ...DEFAULT_USER_INFO },
   },
+
+
+
+  {
+    id: 49,
+    name: 'Fake RZ Common',
+    symbol: 'RZCOMMON',
+    description: 'This is a fake testnet NFT.',
+    address: {
+      56: '',
+      97: '0x3255A5CA2f9bC39970031bA298d60Da22723C24D',
+    },
+    totalSupply: BIG_ZERO,
+    path: 'images/rugZombie/BasicZombie.gif',
+    type: 'image',
+    rarity: 'Common',
+    artist: artists.jussjoshinduh,
+    userInfo: { ...DEFAULT_USER_INFO },
+  },
+  {
+    id: 50,
+    name: 'Fake RZ Unommon',
+    symbol: 'RZUNCOMMON',
+    description: 'This is a fake testnet NFT.',
+    address: {
+      56: '',
+      97: '0x996540168b5981A5a249e44BA4347fd099a6d1e7',
+    },
+    totalSupply: BIG_ZERO,
+    path: 'images/rugZombie/Zombie Multiplier.png',
+    type: 'image',
+    rarity: 'Unommon',
+    artist: artists.jussjoshinduh,
+    userInfo: { ...DEFAULT_USER_INFO },
+  },
+  {
+    id: 51,
+    name: 'Fake RZ Rare',
+    symbol: 'RZRARE',
+    description: 'This is a fake testnet NFT.',
+    address: {
+      56: '',
+      97: '0x71332418219A3529e317806F4E9Ee0B5efe5C30d',
+    },
+    totalSupply: BIG_ZERO,
+    path: 'https://ipfs.io/ipfs/Qmdi7wTt8iF62ay8foD7nqP5F7qSB9YGaYgY3NL1URA5Cw',
+    type: 'image',
+    rarity: 'Rare',
+    artist: artists.jussjoshinduh,
+    userInfo: { ...DEFAULT_USER_INFO },
+  },
+  {
+    id: 52,
+    name: 'Fake DOD Common',
+    symbol: 'DODCOMMON',
+    description: 'This is a fake testnet NFT.',
+    address: {
+      56: '',
+      97: '0x4811502B1d2E3695852d331E8e7Ec8acFd18cff3',
+
+    },
+    totalSupply: BIG_ZERO,
+    path: 'images/rugZombie/yPandaCommon.jpeg',
+    type: 'image',
+    rarity: 'Common',
+    userInfo: { ...DEFAULT_USER_INFO },
+  },
+  {
+    id: 53,
+    name: 'Fake DOD Uncommon',
+    symbol: 'DODUNCOMMON',
+    description: 'This is a fake testnet NFT.',
+    address: {
+      56: '',
+      97: '0x7742D9F34010F5d1015885c5d10ED615DFa2eb53',
+
+    },
+    totalSupply: BIG_ZERO,
+    path: 'images/rugZombie/Electric Zombie.png',
+    type: 'image',
+    rarity: 'Uncommon',
+    userInfo: { ...DEFAULT_USER_INFO },
+  },
+  {
+    id: 54,
+    name: 'Fake DOD Rare',
+    symbol: 'DODRARE',
+    description: 'This is a fake testnet NFT.',
+    address: {
+      56: '',
+      97: '0x701855c54F7084D494DA18157bD164d3AB32a0a0',
+
+    },
+    totalSupply: BIG_ZERO,
+    path: 'https://storage.googleapis.com/rug-zombie/Young%20Fool.jpeg',
+    type: 'image',
+    rarity: 'Rare',
+    userInfo: { ...DEFAULT_USER_INFO },
+  },
 ]
 
 export default nfts

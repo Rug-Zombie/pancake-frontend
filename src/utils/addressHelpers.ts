@@ -105,3 +105,7 @@ export const getInstaBuyAddress = () => {
 export const getTombOverlayAddress = () => {
   return getAddress(addresses.tombOverlay)
 }
+
+export const getNftSwapperAddress = () => {
+  return getAddress(addresses.nftSwapper)
+}
