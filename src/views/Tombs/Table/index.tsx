@@ -7,7 +7,7 @@ import BuyFrank from '../BuyFrank/BuyFrank'
 import RugInDetails from '../RugInDetails'
 import TableList from './TableList'
 import { getBalanceAmount } from '../../../utils/formatBalance'
-import { bnbPriceUsd, tombByPid, zombiePriceUsd, tombOverlayByPoolId } from '../../../redux/get'
+import { bnbPriceUsd, tombByPid, zombiePriceUsd } from '../../../redux/get'
 
 const TableCards = styled(BaseLayout)`
   align-items: stretch;

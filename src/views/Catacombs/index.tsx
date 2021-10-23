@@ -23,7 +23,6 @@ const Catacombs: React.FC = () => {
           })
     }
   }, [catacombs.methods])
-  console.log(unlocked)
   return (
     <>
       {/* eslint-disable-next-line no-nested-ternary */}

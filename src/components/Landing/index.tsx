@@ -4,9 +4,6 @@ import Header from './Header';
 import TimeLine from './TimeLine';
 import Tokenomics from './Tokenomics';
 import Footer from './Footer';
-import { APESWAP_EXCHANGE_URL } from '../../config'
-import tokens from '../../config/constants/tokens'
-import { getAddress } from '../../utils/addressHelpers'
 import { routes } from "../../routes"
 
 interface LandingProps {

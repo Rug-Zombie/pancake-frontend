@@ -12,7 +12,6 @@ import React, { useEffect, useState } from 'react';
 import BigNumber from 'bignumber.js'
 import { getAddress, getSpawningPoolAddress } from 'utils/addressHelpers'
 import { useERC20, useSpawningPool, useZombie } from '../../../../hooks/useContract'
-import StakeModal from '../StakeModal';
 import StakeZombieModal from '../StakeZombieModal';
 import WithdrawZombieModal from '../WithdrawZombieModal';
 import * as get from '../../../../redux/get'
@@ -38,7 +37,7 @@ interface StartFarmingProps {
   zombieUsdPrice: number,
 }
 
-const StartFarming: React.FC<StartFarmingProps> = ({ id, zombieUsdPrice, updateAllowance }) => {
+const StartFarming: React.FC<StartFarmingProps> = ({ id, zombieUsdPrice }) => {
   const zombie = useZombie()
   const { toastSuccess } = useToast()
   const { t } = useTranslation()
@@ -56,15 +55,6 @@ const StartFarming: React.FC<StartFarmingProps> = ({ id, zombieUsdPrice, updateA
       { update: userInfoUpdate, setUpdate: setUserInfoUpdate },
     )
   }
-
-  useModal(
-    <StakeModal
-      pid={id}
-      updateResult={onUpdate}
-      updateAllowance={updateAllowance}
-    />,
-  );
-
 
   const [onPresentZombieStake] = useModal(
     <StakeZombieModal

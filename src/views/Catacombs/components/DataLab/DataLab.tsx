@@ -50,6 +50,7 @@ const DataLab: React.FC<DataLabProps>  = ({ modalObj }) => {
         <Container>
           <Page >
               <InstabuyCard id={43} refresh={() => {
+                // eslint-disable-next-line
                 console.log('refresh')
               }} modalObj={modalObj}/>
           </Page>

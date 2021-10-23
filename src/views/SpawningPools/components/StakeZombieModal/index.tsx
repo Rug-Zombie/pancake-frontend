@@ -36,8 +36,6 @@ const StakeZombieModal: React.FC<StakeZombieModalProps> = ({
   const { userInfo: { amount }, poolInfo } = spawningPoolById(pid)
   const spawningPoolContract = useSpawningPool(pid)
   const { account } = useWeb3React()
-  console.log(poolInfo)
-
   const { toastSuccess } = useToast()
   const { t } = useTranslation()
 

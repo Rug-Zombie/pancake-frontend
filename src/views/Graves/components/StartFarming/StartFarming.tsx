@@ -146,7 +146,6 @@ const StartFarming: React.FC<StartFarmingProps> = ({ pid, zombieUsdPrice, update
     // if(account) {
       zmbeContract.methods.approve(getDrFrankensteinAddress(), ethers.constants.MaxUint256)
         .send({ from: get.account() }).then(() => {
-          console.log("approved zmbe")
           toastSuccess(t('Approved ZMBE'))
           setZombieAllowance(true)
       })

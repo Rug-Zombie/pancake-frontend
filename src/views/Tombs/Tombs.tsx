@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react'
 import PageHeader from 'components/PageHeader'
 import { Flex, Heading, LinkExternal } from '@rug-zombie-libs/uikit'
-import { useDrFrankenstein } from 'hooks/useContract'
 import { getDrFrankensteinAddress, getTombOverlayAddress } from 'utils/addressHelpers'
 import Page from '../../components/layout/Page'
 import Table from './Table'
@@ -19,7 +18,6 @@ const Tombs: React.FC = () => {
   const [updateUserInfo, setUpdateUserInfo] = useState(0)
   const [updateOverlayPoolInfo, setUpdateOverlayPoolInfo] = useState(false)
   const [updateOverlayUserInfo, setUpdateOverlayUserInfo] = useState(false)
-  const [updateEvery, setUpdateEvery] = useState(false)
   const [bracketBStart, setBracketBStart] = useState(0)
   const [bracketCStart, setBracketCStart] = useState(0)
   const wallet = account()
@@ -49,8 +47,6 @@ const Tombs: React.FC = () => {
         setBracketBStart(res[0])
         setBracketCStart(res[1])
       })
-    console.log(wallet) // to refresh on account change
-
   }, [wallet])
 
   const updateOverlay = () => {

@@ -149,6 +149,7 @@ const AuctionEndCard: React.FC<OpenRoundCardProps> = ({ lastBid, id, bidId }) =>
         id={id}
         onBack={handleBack}
         onSuccess={async () => {
+          // eslint-disable-next-line
           console.log('success')
         }}
         position={position}

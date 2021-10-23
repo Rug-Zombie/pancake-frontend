@@ -359,10 +359,7 @@ export const spawningPool = (id: number, zombie: any, poolUpdateObj?: { update: 
           }
         })
     })
-    .catch((res) => {
-      console.log('res')
-      console.log(res)
-    })
+
   if (account()) {
     calls = [
       { address, name: 'userInfo', params: [account()] },
@@ -388,12 +385,6 @@ export const spawningPool = (id: number, zombie: any, poolUpdateObj?: { update: 
               userUpdateObj.setUpdate(userUpdateObj.update + 1)
             }
           })
-          .catch(() => {
-            console.log('allowance failed')
-          })
-      })
-      .catch(() => {
-        console.count('userinfo multicall failed')
       })
   }
 }
@@ -437,7 +428,6 @@ export const auction = (
                 bidder: bid.bidder,
               }
             })
-            console.log(bids)
 
             const userInfoRes = res[0]
             const auctionInfoRes = v3 ? res[1] : res[2]
@@ -465,9 +455,6 @@ export const auction = (
             if (everyUpdateObj) {
               everyUpdateObj.setUpdate(!everyUpdateObj.update)
             }
-          })
-          .catch((res) => {
-            console.log(res)
           })
       })
   } else {
@@ -512,9 +499,6 @@ export const auction = (
               everyUpdateObj.setUpdate(!everyUpdateObj.update)
             }
           })
-          .catch((res) => {
-            console.log(res)
-          })
       })
   }
 }
@@ -551,9 +535,6 @@ export const nftUserInfo = (contract: any, updateUserObj: { update: boolean, set
         if (updateEveryObj) {
           updateEveryObj.setUpdate(!updateEveryObj.update)
         }
-      })
-      .catch(() => {
-        console.log('massCheckOwnership failed')
       })
   }
 }
@@ -607,15 +588,12 @@ export const initialTombOverlayData = (updatePoolObj?: { update: boolean, setUpd
           const poolInfo = overlayRes[index - 2]
           const userInfo = overlayRes[index - 1]
           const nftMintTime = new BigNumber(overlayRes[index].toString())
-          console.log('before')
-          console.log(nftMintTime.toString())
           store.dispatch(updateTombOverlayPoolInfo(getId(tombOverlay.pid), {
             isEnabled: poolInfo.isEnabled,
             poolId: poolInfo.poolId,
             mintingTime: poolInfo.mintingTime,
             mintingFee: new BigNumber(overlayRes[0].toString()),
           }))
-          console.log('after')
 
           store.dispatch(updateTombOverlayUserInfo(getId(tombOverlay.pid), {
             nextNftMintDate: userInfo.nextNftMintDate,
@@ -628,16 +606,11 @@ export const initialTombOverlayData = (updatePoolObj?: { update: boolean, setUpd
           everyUpdateObj.setUpdate(!everyUpdateObj.update)
         }
         if (updateUserObj && updateUserObj.update) {
-          console.log('updating')
           updateUserObj.setUpdate(!updateUserObj.update)
         }
       })
-      .catch((res) => {
-        console.log(res)
-      })
   } else {
     const calls = [{ address, name: 'mintingFee', params: [] }]
-
     get.tombOverlays().forEach(o => {
       calls.push({ address, name: 'poolInfo', params: [getId(o.pid)] })
     })
@@ -648,26 +621,20 @@ export const initialTombOverlayData = (updatePoolObj?: { update: boolean, setUpd
           const tombOverlay = get.tombOverlays()[i]
           const index = i + 1
           const poolInfo = overlayRes[index]
-          console.log('before')
           store.dispatch(updateTombOverlayPoolInfo(getId(tombOverlay.pid), {
             isEnabled: poolInfo.isEnabled,
             poolId: poolInfo.poolId,
             mintingTime: poolInfo.mintingTime,
             mintingFee: new BigNumber(overlayRes[0].toString()),
           }))
-          console.log('after')
 
           if (everyUpdateObj) {
             everyUpdateObj.setUpdate(!everyUpdateObj.update)
           }
           if (updatePoolObj && updatePoolObj.update) {
-            console.log('updating')
             updatePoolObj.setUpdate(!updatePoolObj.update)
           }
         }
-      })
-      .catch((res) => {
-        console.log(res)
       })
   }
 }

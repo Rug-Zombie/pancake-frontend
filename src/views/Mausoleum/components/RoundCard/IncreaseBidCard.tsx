@@ -268,7 +268,10 @@ const IncreaseBidCard: React.FC<OpenRoundCardProps> = ({ lastBid, refresh, setRe
       <SetPositionCard
         id={id}
         onBack={handleBack}
-        onSuccess={async ()=>{console.log('success')}}
+        onSuccess={async ()=>{
+          // eslint-disable-next-line
+          console.log('success')}
+        }
         position={position}
         togglePosition={togglePosition}
       />

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import styled from 'styled-components'
 import { Button, Flex, Image, Modal, Text } from '@rug-zombie-libs/uikit'
 import { useTombOverlay } from 'hooks/useContract'
 import { useWeb3React } from '@web3-react/core'
@@ -7,7 +6,6 @@ import useToast from 'hooks/useToast'
 import { useTranslation } from 'contexts/Localization'
 import BigNumber from 'bignumber.js'
 import { getFullDisplayBalance } from 'utils/formatBalance'
-import { tombOverlayByPoolId } from '../../../redux/get'
 import { BIG_ZERO } from '../../../utils/bigNumber'
 
 interface StartMintingModalProps {
