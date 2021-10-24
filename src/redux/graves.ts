@@ -217,8 +217,11 @@ const graves: Grave[] = [
     stakingToken: '0x0c6BE9c0c47d533be7e417E08b870935814c7dB8',
     pcsVersion: 'v2',
     liquidityDetails: '',
-    isNew: true,
+    isNew: false,
     isFeatured: true,
+    isClosed: true,
+    isEnding: true,
+    endDate: 1637750171,
     rarity: "Legendary",
     userInfo: {
       paidUnlockFee: false,
