@@ -13,6 +13,7 @@ import Gravedigger from 'views/Gravedigger/'
 import { useWeb3React } from '@web3-react/core'
 import SpawnWithUs from 'views/SpawnWithUs'
 import Catacombs from 'views/Catacombs'
+import ZombieSwap from 'views/ZombieSwap/Swap'
 import SuspenseWithChunkError from './components/SuspenseWithChunkError'
 import history from './routerHistory'
 import GlobalStyle from './style/Global'
@@ -89,6 +90,7 @@ const App: React.FC = () => {
             <Route exact path={routes.AUCTION}><Mausoleum /></Route>
             <Route exact path={routes.GRAVEYARD}><Graveyard /></Route>
             <Route exact path={routes.PROFILE}><Profile /></Route>
+            <Route exact path={routes.ZOMBIESWAP}><ZombieSwap /></Route>
           </Menu>
         </Switch>
       </SuspenseWithChunkError>
