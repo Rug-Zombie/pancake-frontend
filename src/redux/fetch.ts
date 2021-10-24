@@ -572,7 +572,7 @@ const nfts = () => {
   })
 }
 
-export const initialTombOverlayData = (updatePoolObj?: { update: boolean, setUpdate: any }, updateUserObj?: { update: boolean, setUpdate: any }, everyUpdateObj?: { update: boolean, setUpdate: any }) => {
+export const multicallTombOverlayData = (updatePoolObj?: { update: boolean, setUpdate: any }, updateUserObj?: { update: boolean, setUpdate: any }, everyUpdateObj?: { update: boolean, setUpdate: any }) => {
   const address = getTombOverlayAddress()
   if (account()) {
     const calls = [{ address, name: 'mintingFee', params: [] }]

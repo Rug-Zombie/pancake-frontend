@@ -7,7 +7,7 @@ import Page from '../../components/layout/Page'
 import Table from './Table'
 import '../Graves/Graves.Styles.css'
 import { account, tombs } from '../../redux/get'
-import { initialTombData, tomb, initialTombOverlayData, multicallTombData } from '../../redux/fetch'
+import { initialTombData, tomb, multicallTombOverlayData, multicallTombData } from '../../redux/fetch'
 import { getId } from '../../utils'
 import { multicallv2 } from '../../utils/multicall'
 import tombOverlayAbi from '../../config/abi/tombOverlay.json'
@@ -50,7 +50,7 @@ const Tombs: React.FC = () => {
   }, [wallet])
 
   const updateOverlay = () => {
-    initialTombOverlayData(
+    multicallTombOverlayData(
       undefined,
       undefined,
       { update: updateOverlayUserInfo, setUpdate: setUpdateOverlayUserInfo }
