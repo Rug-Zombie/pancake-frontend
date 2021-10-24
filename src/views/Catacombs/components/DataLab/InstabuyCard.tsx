@@ -49,7 +49,8 @@ interface InstabuyCardProps {
 
 const initialNftInfo = {
   price: BIG_ZERO,
-  maxMints: BIG_ZERO
+  maxMints: BIG_ZERO,
+  maxMintsPerUser: BIG_ZERO
 }
 
 const InstabuyCard: React.FC<InstabuyCardProps> = ({ id, modalObj }) => {
@@ -64,7 +65,8 @@ const InstabuyCard: React.FC<InstabuyCardProps> = ({ id, modalObj }) => {
       .then(res => {
         setNftInfo({
           price: new BigNumber(res.price),
-          maxMints: new BigNumber(res.maxMints)
+          maxMints: new BigNumber(res.maxMints),
+          maxMintsPerUser: new BigNumber(res.maxMintsPerUser),
         })
       })
   }, [address, instaBuy.methods])
@@ -130,7 +132,7 @@ const InstabuyCard: React.FC<InstabuyCardProps> = ({ id, modalObj }) => {
             <div className='direction-column' style={{ paddingTop: '5%' }}>
               <span className='indetails-type'>{name}</span>
               <span className='indetails-title'>{description}</span>
-              <span className='indetails-title'>1 per wallet ({nftInfo.maxMints.minus(totalSupply).toString()} remaining).</span>
+              <span className='indetails-title'>{nftInfo.maxMintsPerUser.toString()} per wallet ({nftInfo.maxMints.minus(totalSupply).toString()} remaining).</span>
             </div>
           }
         </CardFooter>
