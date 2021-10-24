@@ -219,7 +219,7 @@ const graves: Grave[] = [
     liquidityDetails: '',
     isNew: false,
     isFeatured: true,
-    isClosed: true,
+    // isClosed: true,
     isEnding: true,
     endDate: 1637750171,
     rarity: "Legendary",

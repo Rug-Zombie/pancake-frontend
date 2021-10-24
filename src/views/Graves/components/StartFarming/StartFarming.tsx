@@ -190,7 +190,8 @@ const StartFarming: React.FC<StartFarmingProps> = ({ pid, zombieUsdPrice, update
 
   const renderButtonsForTraditionalGraves = () => {
     return <div className="space-between">
-      {get.account() ?
+      {get.account() ? isClosed ?
+        <button disabled className="btn btn-disabled w-100" type="button">Grave is Retiring</button> :
         isAllowanceForRugToken ?
         userInfo.rugDeposited.toString() === '0' ?
           renderDepositRugButtons() :
