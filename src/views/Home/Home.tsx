@@ -11,6 +11,7 @@ import * as fetch from '../../redux/fetch'
 import WhatsNewCard from './components/WhatsNewCard'
 import Title from './components/Title'
 import EnterGravesCard from './components/EnterGravesCard'
+import VictimPoolsCard from './components/VictimPool/VictimPoolsCard'
 import useEagerConnect from '../../hooks/useEagerConnect'
 
 const Cards = styled(BaseLayout)`
@@ -49,6 +50,7 @@ const Home: React.FC = () => {
         <Cards>
           <GraveStakingCard />
           <AnnouncementCard />
+          <VictimPoolsCard />
         </Cards>
         <Cards>
           <EnterGravesCard/>

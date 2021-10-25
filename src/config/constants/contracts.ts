@@ -103,5 +103,9 @@ export default {
   tombOverlay: {
     56: '0x2974b990787aeC9fAAf4f210F841095389768A5D',
     97: '0x38b3566D6Ce10F605a1EA308CAA6c681e1BdE69b',
-  }
+  },
+  ztokenSwapper: {
+    56: '',
+    97: '0xb1E96dA5a08423C5f0646C0eBfd135FB896d1477',
+  },
 }

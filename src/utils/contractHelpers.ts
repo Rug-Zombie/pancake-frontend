@@ -32,7 +32,8 @@ import {
   getMulticallAddress,
   getCatacombsAddress,
   getInstaBuyAddress,
-  getTombOverlayAddress
+  getTombOverlayAddress,
+  getZTokenSwapperAddress
 } from 'utils/addressHelpers'
 
 // ABI
@@ -69,6 +70,7 @@ import catacombsAbi from 'config/abi/catacombs.json'
 import MultiCallAbi from 'config/abi/Multicall.json'
 import instaBuyAbi from 'config/abi/instaBuy.json'
 import tombOverlayAbi from 'config/abi/tombOverlay.json'
+import ztokenSwapperAbi from 'config/abi/ztokenSwapper.json'
 
 export const getContract = (abi: any, address: string, web3?: Web3) => {
   const _web3 = web3 ?? web3NoAccount
@@ -182,3 +184,6 @@ export const getTombOverlayContract = (web3?: Web3) => {
   return getContract(tombOverlayAbi, getTombOverlayAddress(), web3)
 }
 
+export const getZTokenSwapperContract = (web3?: Web3) => {
+  return getContract(ztokenSwapperAbi, getZTokenSwapperAddress(), web3)
+}
