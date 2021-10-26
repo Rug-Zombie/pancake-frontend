@@ -103,5 +103,9 @@ export default {
   tombOverlay: {
     56: '0x2974b990787aeC9fAAf4f210F841095389768A5D',
     97: '0x38b3566D6Ce10F605a1EA308CAA6c681e1BdE69b',
-  }
+  },
+  rugRoll: {
+    56: '0x1D3274B87d37bA7b40bb82275021761e9B38e1F8',
+    97: '0xDf3af366529d83E94f928B701c23aBB3880a0BC9',
+  },
 }

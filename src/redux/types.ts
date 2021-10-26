@@ -218,3 +218,9 @@ export interface TombOverlay {
   userInfo: TombOverlayUserInfo,
   poolInfo: TombOverlayPoolInfo
 }
+
+export interface RuggedToken {
+  id: number,
+  symbol: string,
+  address: string,
+}
