@@ -177,26 +177,27 @@ export const initialTombData = (updatePoolObj?: { update: number, setUpdate: any
 
 export const multicallTombData = (updatePoolObj?: { update: boolean, setUpdate: any }, updateUserObj?: { update: boolean, setUpdate: any }) => {
   const lpTokenCalls = []
+  const wallet = account()
   get.tombs().forEach(t => {
     lpTokenCalls.push({ address: getAddress(t.lpAddress), name: 'totalSupply', params: [] })
     lpTokenCalls.push({ address: getAddress(t.lpAddress), name: 'balanceOf', params: [getDrFrankensteinAddress()] })
     lpTokenCalls.push({ address: getAddress(t.lpAddress), name: 'getReserves', params: [] })
     if(account()) {
-      lpTokenCalls.push({ address: getAddress(t.lpAddress), name: 'allowance', params: [account(), getDrFrankensteinAddress()] })
+      lpTokenCalls.push({ address: getAddress(t.lpAddress), name: 'allowance', params: [wallet, getDrFrankensteinAddress()] })
     }
   })
 
   multicallv2(pancakePairAbi, lpTokenCalls)
     .then(lpTokenRes => {
-      if (account()) {
+      if (wallet) {
         const drFCalls = []
         get.tombs().forEach(t => {
           drFCalls.push({ address: getDrFrankensteinAddress(), name: 'poolInfo', params: [getId(t.pid)] })
-          drFCalls.push({ address: getDrFrankensteinAddress(), name: 'userInfo', params: [getId(t.pid), account()] })
+          drFCalls.push({ address: getDrFrankensteinAddress(), name: 'userInfo', params: [getId(t.pid), wallet] })
           drFCalls.push({
             address: getDrFrankensteinAddress(),
             name: 'pendingZombie',
-            params: [getId(t.pid), account()],
+            params: [getId(t.pid), wallet],
           })
         })
 
@@ -205,7 +206,6 @@ export const multicallTombData = (updatePoolObj?: { update: boolean, setUpdate: 
             get.tombs().forEach((t, index) => {
               const poolInfoRes = drFRes[index * 3]
               const userInfoRes = drFRes[(index * 3) + 1]
-
               store.dispatch(updateTombPoolInfo(getId(t.pid), {
                 allocPoint: new BigNumber(poolInfoRes.allocPoint.toString()),
                 minimumStake: new BigNumber(poolInfoRes.minimumStake.toString()),
