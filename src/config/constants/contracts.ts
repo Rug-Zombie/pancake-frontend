@@ -106,6 +106,6 @@ export default {
   },
   rugRoll: {
     56: '0x1D3274B87d37bA7b40bb82275021761e9B38e1F8',
-    97: '0xDf3af366529d83E94f928B701c23aBB3880a0BC9',
-  },
+    97: '0x40557b30af8F6FcFd3852DE42AD0D2F36a0Bd5a6',
+  }
 }

@@ -12,7 +12,7 @@ export interface Id {
 
 export interface Token {
   symbol: string
-  address?: Address
+  address: Address
   decimals?: number
   projectLink?: string
   tokenLogo?: string

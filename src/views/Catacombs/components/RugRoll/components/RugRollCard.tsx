@@ -1,29 +1,37 @@
-import React, {useEffect, useState} from 'react'
-import styled from 'styled-components';
+import React, { useEffect, useState } from 'react'
+import styled from 'styled-components'
 import {
   Button,
   Card,
   CardFooter, CardHeader,
   Flex, Text, CardBody,
 } from '@catacombs-libs/uikit'
-import {BigNumber} from 'bignumber.js'
-import ruggedTokens from 'config/constants/ruggedTokens';
-import {BIG_TEN, BIG_ZERO} from '../../../../../utils/bigNumber'
-import {useRugRollContract, useZombie, useERC20} from '../../../../../hooks/useContract'
-import {account, zombieBalance} from "../../../../../redux/get";
-import {APESWAP_EXCHANGE_URL} from "../../../../../config";
-import {getAddress, getRugRollAddress, getZombieAddress} from "../../../../../utils/addressHelpers";
-import UnlockButton from "../../../../../components/UnlockButton";
-import addresses from "../../../../../config/constants/contracts";
+import { BigNumber } from 'bignumber.js'
+import ruggedTokens from 'config/constants/ruggedTokens'
+import { getFullDisplayBalance } from 'utils/formatBalance'
+import { ethers } from 'ethers'
+import { BIG_ZERO } from '../../../../../utils/bigNumber'
+import { useRugRollContract, useZombie } from '../../../../../hooks/useContract'
+import { account, zombieBalance } from '../../../../../redux/get'
+import { APESWAP_EXCHANGE_URL } from '../../../../../config'
+import { getAddress, getRugRollAddress, getZombieAddress } from '../../../../../utils/addressHelpers'
+import UnlockButton from '../../../../../components/UnlockButton'
+import addresses from '../../../../../config/constants/contracts'
 import '../RugRoll.Styles.css'
 import tokens from '../../../../../config/constants/tokens'
+import { getBep20Contract } from '../../../../../utils/contractHelpers'
+import useWeb3 from '../../../../../hooks/useWeb3'
+import useToast from '../../../../../hooks/useToast'
+import { tokenByAddress } from '../../../../../utils/tokenHelper'
 
 
 const StyledButton = styled(Button)`
-    border: 2px solid white;
-    color: white;
-    width: 100%;
-    margin-top: 24px;
+  border: 2px solid white;
+  color: white;
+  width: 100%;
+  margin-top: 24px;
+  margin-right: 5px;
+  margin-left: 5px;
 `
 
 interface ViewCardProps {
@@ -31,136 +39,137 @@ interface ViewCardProps {
 }
 
 const RugRollCard: React.FC<ViewCardProps> = () => {
+  const web3 = useWeb3()
+  const { toastSuccess } = useToast()
   const [burnAmount, setBurnAmount] = useState(BIG_ZERO)
-  const [receivedTokenText, setReceivedTokenText] = useState("Not rolled yet.")
   const rugRollContract = useRugRollContract()
   const zombie = useZombie()
-  const [approveZombieText, setApproveZombieText] = useState("Approve ZMBE")
   const [zombieApproval, setZombieApproval] = useState(BIG_ZERO)
-  const [ruggedToken, setRuggedToken] = useState(false)
-  const [approveRuggedTokenText, setApproveRuggedTokenText] = useState("Approve rugged token")
-  const [rugRollText, setRugRollText] = useState("RUG ROLL")
+  const [ruggedToken, setRuggedToken] = useState(ruggedTokens[0])
+  const [rugApproved, setRugApproved] = useState(false)
   const wallet = account()
-  const handleApproveZombie = (event) => {
-    setApproveZombieText("Approving transaction....")
+  const selectedRug = tokens[ruggedToken]
+
+  const handleApproveZombie = () => {
     if (account()) {
-      zombie.methods.approve(getAddress(addresses.rugRoll), burnAmount).send({from: account()}).then((r) => {
-        console.log(r)
-        setApproveZombieText('ZMBE approved')
-        // setApproveZombieButton(false)
+      zombie.methods.approve(getAddress(addresses.rugRoll), ethers.constants.MaxUint256)
+        .send({ from: account() }).then(() => {
+        // update
+        toastSuccess('ZMBE Approved')
       })
     }
   }
 
   useEffect(() => {
-    if(wallet) {
-      zombie.methods.allowance(account(), getRugRollAddress()).call().then(res => {
+    if (wallet) {
+      zombie.methods.allowance(account(), getRugRollAddress())
+        .call().then(res => {
         setZombieApproval(new BigNumber(res.toString()))
       })
     }
-  }, [burnAmount, wallet, zombie.methods])
+  }, [burnAmount, wallet, zombie.methods, ruggedToken])
 
   useEffect(() => {
     rugRollContract.methods.getAmount().call()
       .then(
         res => {
-          console.log(res, " <======= burn amount")
           setBurnAmount(new BigNumber(res))
         })
   }, [rugRollContract.methods])
 
-  function CheckRuggedTokenAlreadyApproved(contractAddress) {
-    useERC20(contractAddress).methods.allowance(account(), getRugRollAddress()).call().then(res => {
-      if (res >= BIG_TEN.pow(18)) {
-        setRuggedToken(false)
-        setApproveRuggedTokenText("Rugged token approved")
-      }
-    })
-  }
+  useEffect(() => {
+    if (wallet) {
+      getBep20Contract(getAddress(selectedRug.address)).methods.allowance(wallet, getRugRollAddress())
+        .call().then(res => {
+        if (new BigNumber(res.toString()).gt(0)) {
+          setRugApproved(true)
+        }
+      })
+    }
+  }, [selectedRug.address, wallet])
 
   const selectRuggedToken = (event) => {
     setRuggedToken(event.target.value)
-    CheckRuggedTokenAlreadyApproved(event.target.value)
+    setRugApproved(false)
   }
 
+
   function ApproveRuggedToken() {
-    setApproveRuggedTokenText("Confirming transaction...")
-    useERC20(String(ruggedToken)).methods.approve(getRugRollAddress(), BIG_TEN.pow(18)).send({from: account()}).then(res => {
-      // console.log(res)
-      if (res) {
-        setApproveRuggedTokenText("RuggedTokenApproved")
-      }
+    getBep20Contract(getAddress(tokens[ruggedToken].address), web3).methods.approve(getRugRollAddress(), ethers.constants.MaxUint256)
+      .send({ from: account() }).then(() => {
+      setRugApproved(true)
+      toastSuccess(`${selectedRug.symbol} Approved`)
+
     })
   }
 
-  const rugRoll = (event) => {
-    setRugRollText("Confirming transaction...")
-    rugRollContract.methods.rugRoll().send({from: account()}).then(res => {
-      // console.log(res)
-      setRugRollText("RUG ROLL")
-      setApproveZombieText("Approve ZMBE")
-      setApproveRuggedTokenText("Approve rugged token")
-      setReceivedTokenText(res)
+  const rugRoll = () => {
+    rugRollContract.methods.rugRoll(getAddress(selectedRug.address))
+      .send({ from: account() }).then(res => {
+        const receivedToken = tokenByAddress(res.events.Swapped.returnValues._returnedRug)
+        toastSuccess(`Received ${receivedToken.symbol}`)
     })
   }
 
   // @ts-ignore
   return (
     <div>
-      <Card className="card-active">
-        <CardHeader style={{background: "black", padding: "15px"}}>
-          <Flex justifyContent="center" paddingTop="3%" style={{color: "white!important", fontSize: "25px"}}>
+      <Card className='card-active'>
+        <CardHeader style={{ background: 'black', padding: '15px' }}>
+          <Flex justifyContent='center' paddingTop='3%' style={{ color: 'white!important', fontSize: '25px' }}>
             Welcome to RugRoll...!!!
           </Flex>
         </CardHeader>
-        <CardBody style={{padding: "18px 30px"}}>
-          <Flex justifyContent="center"
-                style={{color: "white!important", lineHeight: "normal", fontSize: "21px"}}>
-            Burn zombie worth 1 BUSD and deposit a rugged token to get another random rugged token.
+        <CardBody style={{ padding: '18px 30px' }}>
+          <Flex justifyContent='center'
+                style={{ color: 'white!important', lineHeight: 'normal', fontSize: '18px' }}>
+            Burn {getFullDisplayBalance(burnAmount)} ZMBE (~$1) and deposit a rugged token to get another random rugged
+            token.
           </Flex>
         </CardBody>
         <CardFooter>
-          <Text>Select rugged token : </Text>
-          <select onChange={selectRuggedToken} className="SelectRuggedToken">
+          <Text pb='10px'>Select rugged token : </Text>
+          <select onChange={selectRuggedToken} className='SelectRuggedToken'>
             {
               ruggedTokens.map(rugSymbol => {
                 const rug = tokens[rugSymbol]
                 return (
-                  <option value={getAddress(rug.address)}>
-                    <img src={`images/tokens/${rug.symbol}.png`} alt="rugicon" className="icon"/>
+                  <option value={rugSymbol}>
                     {rug.symbol}
                   </option>
                 )
               })
             }
           </select>
-          <StyledButton variant="secondary" onClick={ApproveRuggedToken}>
-            {approveRuggedTokenText}
-          </StyledButton>
           {
             // eslint-disable-next-line no-nested-ternary
             account() ? zombieBalance().isZero() ?
               <Button mt='24px' as='a'
                       href={`${APESWAP_EXCHANGE_URL}/swap?outputCurrency=${getZombieAddress()}`}
-                      variant='secondary' style={{border: '2px solid white', width: '100%'}}>
+                      variant='secondary' style={{ border: '2px solid white', width: '100%' }}>
                 <Text color='white'>Get ZMBE</Text>
-              </Button> :
-              <Button mt='24px' disabled={!zombieApproval.isZero()}
-                      onClick={handleApproveZombie}
-                      as='a' variant='secondary'
-                      style={{border: '2px solid white', width: '100%'}}>
-                <Text color='white'>{approveZombieText}</Text>
-              </Button> :
-              <UnlockButton/>
+              </Button> : zombieApproval.isZero() ?
+                <Button mt='24px' mr='5px'
+                        onClick={handleApproveZombie}
+                        as='a' variant='secondary'
+                        style={{ border: '2px solid white', width: '100%' }}>
+                  <Text color='white'> Approve ZMBE</Text>
+                </Button> : null :
+              <UnlockButton />
           }
-          <Text mt="24px">You received : &nbsp;{receivedTokenText}</Text>
-          <StyledButton variant="secondary" onClick={rugRoll}>
-            {rugRollText}
-          </StyledButton>
+          <Flex>
+            {!rugApproved ? <StyledButton variant='secondary' onClick={ApproveRuggedToken}>
+              Approve {tokens[ruggedToken].symbol}
+            </StyledButton> : null}
+            <StyledButton variant='secondary' onClick={rugRoll}>
+              RUG ROLL
+            </StyledButton>
+          </Flex>
+
         </CardFooter>
       </Card>
     </div>
   )
 }
 
-export default RugRollCard;
+export default RugRollCard

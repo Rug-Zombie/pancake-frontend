@@ -57,7 +57,13 @@
       {
         "indexed": false,
         "internalType": "address",
-        "name": "_ruggedTokenAddress",
+        "name": "_depositedRug",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "_returnedRug",
         "type": "address"
       }
     ],
@@ -269,7 +275,7 @@
         "type": "address"
       }
     ],
-    "name": "rugSwap",
+    "name": "rugRoll",
     "outputs": [
       {
         "internalType": "string",

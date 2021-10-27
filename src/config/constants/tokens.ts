@@ -1,6 +1,11 @@
 const tokens = {
   bnb: {
     symbol: 'BNB',
+    address: {
+      56: 'BNB',
+      97: 'BNB',
+    },
+    decimals: 18,
     projectLink: 'https://www.binance.com/',
   },
   cake: {
@@ -99,7 +104,7 @@ const tokens = {
     symbol: 'BONFIRE',
     address: {
       56: '0x5e90253fbae4dab78aa351f4e6fed08a64ab5590',
-      97: '',
+      97: '0x67ca1d4bf1d90D712F8Cf0aecA4581Fb4056ADc9',
     },
     decimals: 9,
     projectLink: 'https://www.bonfiretoken.co/',
@@ -153,7 +158,7 @@ const tokens = {
     symbol: 'ZMPR',
     address: {
       56: '0x103ED7038914AB877cfA4A8961333D9af8236852',
-      97: ''
+      97: '0x559fbDb3D4bfAC687037607E5C342Df7F6fAEd7B'
     },
     decimals: 0,
   },
