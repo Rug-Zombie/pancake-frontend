@@ -86,7 +86,7 @@ const Graves: React.FC = () => {
               <Text fontSize="25px" color="lime" textTransform="uppercase" mb="25px" padding='30px'>
                 You can now buy and sell your NFTs on
               </Text> 
-              <img src={LootExLogo} alt='lootex-logo' width='200' />                           
+              <img src={LootExLogo} alt='lootex-logo' width='140' />                           
             </Flex>
             <br/>
             <LinkExternal href="https://lootex.io/stores/rug-zombie" fontSize='20px'>
