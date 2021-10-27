@@ -1,9 +1,10 @@
 /* eslint-disable no-param-reassign */
 import React, { useEffect, useState } from 'react'
 import PageHeader from 'components/PageHeader'
-import { Flex, Heading, LinkExternal } from '@rug-zombie-libs/uikit'
+import { Flex, Heading, LinkExternal, Text } from '@rug-zombie-libs/uikit'
 import { useWeb3React } from '@web3-react/core'
 import { getDrFrankensteinAddress } from 'utils/addressHelpers'
+import LootExLogo from 'images/lootex-logo.png'
 import Page from '../../components/layout/Page'
 import Table from './components/Table'
 import './Graves.Styles.css'
@@ -81,12 +82,15 @@ const Graves: React.FC = () => {
             <Heading as='h1' size='xxl' color='secondary' mb='24px'>
               Graves
             </Heading>
-            <Heading size='md' color='text'>
-              Stake $ZMBE to Earn NFTs
-            </Heading>
+            <Flex flexDirection='row' mr={['8px', 0]}>
+              <Text fontSize="25px" color="lime" textTransform="uppercase" mb="25px" padding='30px'>
+                You can now buy and sell your NFTs on
+              </Text> 
+              <img src={LootExLogo} alt='lootex-logo' width='200' />                           
+            </Flex>
             <br/>
-            <LinkExternal href="https://rugzombie.medium.com/new-basic-grave-retiring-old-grave-on-aug-30th-54fd10eb3654">
-              Learn more about the RugZombie Common grave migration.
+            <LinkExternal href="https://lootex.io/stores/rug-zombie" fontSize='20px'>
+              Check out the Rug Zombie store on LootEX
             </LinkExternal>
           </Flex>
         </Flex>
