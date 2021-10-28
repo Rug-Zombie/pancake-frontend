@@ -94,7 +94,6 @@ const nfts: Nft[] = [
     address: {
       56: '0xFEf72C8d941F4F2D308E2Ae892AEDc084b280bB0',
       97: '0x2d8b022125f4afbf9594a4dff269eb44e15ae295',
-
     },
     totalSupply: BIG_ZERO,
     path: '/images/rugZombie/Patient Zero.jpg',
@@ -126,7 +125,6 @@ const nfts: Nft[] = [
     address: {
       56: '0x4659c3ad5d487c8de34744120559d48dcf288a22',
       97: '0x2d8b022125f4afbf9594a4dff269eb44e15ae295',
-
     },
     totalSupply: BIG_ZERO,
     path: 'images/rugZombie/VikingBrains.jpeg',
@@ -142,7 +140,6 @@ const nfts: Nft[] = [
     address: {
       56: '0xbd7f3130cB219e47584591051b5806556006B0A9',
       97: '0x2d8b022125f4afbf9594a4dff269eb44e15ae295',
-
     },
     totalSupply: BIG_ZERO,
     path: 'images/rugZombie/ZombieSlayer.gif',
@@ -540,7 +537,7 @@ const nfts: Nft[] = [
     symbol: 'MUTANT',
     description: 'This ape is never bored.',
     address: {
-      56: '0xDB47182F403114872b8d219cc54Ad68a08a15d1D',
+      56: '0xe6BCC4522FbBC2B6B064b3614D3a8d578aB077A4',
       97: '0x2d8b022125f4afbf9594a4dff269eb44e15ae295',
 
     },
