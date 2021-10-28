@@ -85,8 +85,8 @@ const Graves: React.FC = () => {
               Stake $ZMBE to Earn NFTs
             </Heading>
             <br/>
-            <LinkExternal href="https://rugzombie.medium.com/new-basic-grave-retiring-old-grave-on-aug-30th-54fd10eb3654">
-              Learn more about the RugZombie Common grave migration.
+            <LinkExternal href="https://lootex.io/stores/rug-zombie">
+              You can now buy and sell your NFTs on LootEX
             </LinkExternal>
           </Flex>
         </Flex>
