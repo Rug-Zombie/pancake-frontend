@@ -10,7 +10,7 @@ import { BigNumber } from 'bignumber.js'
 import ruggedTokens from 'config/constants/ruggedTokens'
 import { getFullDisplayBalance } from 'utils/formatBalance'
 import { ethers } from 'ethers'
-import { BIG_ZERO } from '../../../../../utils/bigNumber'
+import { BIG_TEN, BIG_ZERO } from '../../../../../utils/bigNumber'
 import { useRugRollContract, useZombie } from '../../../../../hooks/useContract'
 import { account, zombieBalance } from '../../../../../redux/get'
 import { APESWAP_EXCHANGE_URL } from '../../../../../config'
@@ -47,6 +47,7 @@ const RugRollCard: React.FC<ViewCardProps> = () => {
   const [zombieApproval, setZombieApproval] = useState(BIG_ZERO)
   const [ruggedToken, setRuggedToken] = useState(ruggedTokens[0])
   const [rugApproved, setRugApproved] = useState(false)
+  const [rugBalance, setRugBalance] = useState(BIG_ZERO)
   const wallet = account()
   const selectedRug = tokens[ruggedToken]
 
@@ -54,7 +55,7 @@ const RugRollCard: React.FC<ViewCardProps> = () => {
     if (account()) {
       zombie.methods.approve(getAddress(addresses.rugRoll), ethers.constants.MaxUint256)
         .send({ from: account() }).then(() => {
-        // update
+        setZombieApproval(BIG_TEN)
         toastSuccess('ZMBE Approved')
       })
     }
@@ -88,9 +89,19 @@ const RugRollCard: React.FC<ViewCardProps> = () => {
     }
   }, [selectedRug.address, wallet])
 
+  useEffect(() => {
+    if (wallet) {
+      getBep20Contract(getAddress(selectedRug.address)).methods.balanceOf(wallet)
+        .call().then(res => {
+          setRugBalance(new BigNumber(res.toString()))
+      })
+    }
+  }, [selectedRug.address, wallet])
+
   const selectRuggedToken = (event) => {
     setRuggedToken(event.target.value)
     setRugApproved(false)
+    setRugBalance(BIG_ZERO)
   }
 
 
@@ -123,7 +134,7 @@ const RugRollCard: React.FC<ViewCardProps> = () => {
         <CardBody style={{ padding: '18px 30px' }}>
           <Flex justifyContent='center'
                 style={{ color: 'white!important', lineHeight: 'normal', fontSize: '18px' }}>
-            Burn {getFullDisplayBalance(burnAmount)} ZMBE (~$1) and deposit a rugged token to get another random rugged
+            Burn {getFullDisplayBalance(burnAmount, 18, 0)} ZMBE (~$1) and deposit a rugged token to get another random rugged
             token.
           </Flex>
         </CardBody>
@@ -158,10 +169,14 @@ const RugRollCard: React.FC<ViewCardProps> = () => {
               <UnlockButton />
           }
           <Flex>
-            {!rugApproved ? <StyledButton variant='secondary' onClick={ApproveRuggedToken}>
+            {/* eslint-disable-next-line no-nested-ternary */}
+            {rugBalance.lt(BIG_TEN.pow(selectedRug.decimals)) ? <StyledButton variant='secondary' >
+              Insufficient {tokens[ruggedToken].symbol}
+            </StyledButton> : !rugApproved ? <StyledButton variant='secondary' onClick={ApproveRuggedToken}>
               Approve {tokens[ruggedToken].symbol}
-            </StyledButton> : null}
-            <StyledButton variant='secondary' onClick={rugRoll}>
+            </StyledButton> : null
+            }
+            <StyledButton variant='secondary' disabled={!rugApproved || rugBalance.lt(BIG_TEN.pow(selectedRug.decimals))} onClick={rugRoll}>
               RUG ROLL
             </StyledButton>
           </Flex>
